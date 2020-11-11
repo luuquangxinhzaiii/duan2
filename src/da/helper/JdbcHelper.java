@@ -5,6 +5,8 @@
  */
 package da.helper;
 
+import at.favre.lib.crypto.bcrypt.BCrypt;
+import at.favre.lib.crypto.bcrypt.BCrypt.Hasher;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -17,18 +19,18 @@ import java.sql.SQLException;
  */
 public class JdbcHelper {
 
-//    private static String driver = "com.mysql.cj.jdbc.Driver";
-    private static String dburl = "jdbc:mysql://localhost:3306/duanfinalfpl2";
-    private static String username = "root";
-    private static String password = "kien5620";
+    private static String driver = "org.postgresql.Driver";
+    private static String dburl = "jdbc:postgresql://ec2-54-159-107-189.compute-1.amazonaws.com:5432/db21s56kp3iqdc";
+    private static String username = "cwswlwvqgwdjjt";
+    private static String password = "fde245c1c3cc11a3816192a3dcaff53c2661c1ed59aeb3ab5e16f1c784f4ede3";
 
-//    static {
-//        try {
-//            Class.forName(driver);
-//        } catch (ClassNotFoundException ex) {
-//            throw new RuntimeException(ex);
-//        }
-//    }
+    static {
+        try {
+            Class.forName(driver);
+        } catch (ClassNotFoundException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
 
 //     test ket noi
     public static void main(String[] args) throws SQLException {
@@ -36,7 +38,6 @@ public class JdbcHelper {
         try {
             Connection connection = DriverManager.getConnection(dburl, username, password);
             System.out.println("ok");
-
         } catch (Exception e) {
             System.out.println("thatbai");
             e.printStackTrace();
