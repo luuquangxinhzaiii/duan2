@@ -13,6 +13,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  *
@@ -24,14 +25,13 @@ public class PhanCongDAO {
 
     private PhanCong readFromResultSet(ResultSet rs) throws SQLException {
         PhanCong model = new PhanCong();
-        model.setiD(rs.getInt("id"));
-        model.setMaPC(rs.getString("mapc"));
-        model.setMaLop(rs.getString("malop"));
-        model.setMaGV(rs.getString("magiaovien"));
+        model.setMaPC(UUID.fromString(rs.getString("mapc")));
+        model.setMaLop(UUID.fromString(rs.getString("lop_id")));
+        model.setMaGV(UUID.fromString(rs.getString("giaovien_id")));
         model.setVaiTro(rs.getBoolean("vaitro"));
-        model.setMaMon(rs.getString("mamon"));
+        model.setMaMon(UUID.fromString(rs.getString("mon_mamon")));
         model.setHocKi(rs.getBoolean("hocki"));
-        model.setMaNamHoc(rs.getString("manamhoc"));
+        model.setMaNamHoc(UUID.fromString(rs.getString("namhoc_manamhoc")));
         return model;
     }
 
@@ -108,7 +108,7 @@ public class PhanCongDAO {
     }
     
     public ResultSet select5(String magv, boolean hocKi) {
-        String sql = "select pc.mapc,pc.malop,gv.hoten,m.tenmon,m.hinhthucdanhgia,pc.vaitro,pc.magiaovien from phancong as pc join mon as m on pc.mamon=m.mamon join giaovien as gv on pc.magiaovien=gv.magiaovien join namhoc as nh on pc.manamhoc=nh.manamhoc and pc.magiaovien=? and pc.hocki=?";
+        String sql = "select pc.maphancong,pc.lop_id,gv.hoten,m.ten_mon,m.hinhthucdanhgia,pc.vaitro,pc.giaovien_id from phancong as pc join mon as m on pc.mon_mamon=m.mamon join giaovien as gv on pc.giaovien_id=gv.id join namhoc as nh on pc.namhoc_manamhoc=nh.manamhoc and pc.giaovien_id=? and pc.hocki=?";
         try {
             PreparedStatement ps = Jdbc.prepareStatement(sql);
             ps.setString(1, magv);

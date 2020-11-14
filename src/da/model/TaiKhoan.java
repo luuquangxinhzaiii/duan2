@@ -5,67 +5,42 @@
  */
 package da.model;
 
+import java.util.UUID;
+
 /**
  *
  * @author BNC
  */
 public class TaiKhoan {
 
-    private int stt;
-
+    private UUID stt;
     private String passWord;
     private String role;
-   
     private String email;
-    private String maGiaoVien;
-    private String maHocSinh;
+    private UUID giaovien_id;
+    private String hoten;
+    private UUID hocsinh_id;
 
     public TaiKhoan() {
     }
 
-    public TaiKhoan(int stt, String passWord, String role,  String email, String maGiaoVien, String maHocSinh) {
+    public TaiKhoan(UUID stt, String passWord, String role,  String email, UUID giaovien_id, UUID hocsinh_id, String hoten) {
         this.stt = stt;
-        this.maGiaoVien = maGiaoVien;
-        this.maHocSinh = maHocSinh;
+        this.giaovien_id = giaovien_id;
+        this.hocsinh_id = hocsinh_id;
         this.passWord = passWord;
         this.role = role;
-       
+        this.hoten = hoten;
         this.email = email;
     }
 
-    public String getMaGiaoVien() {
-        return maGiaoVien;
-    }
-
-    public void setMaGiaoVien(String maGiaoVien) {
-        this.maGiaoVien = maGiaoVien;
-    }
-
-    public String getMaHocSinh() {
-        return maHocSinh;
-    }
-
-    public void setMaHocSinh(String maHocSinh) {
-        this.maHocSinh = maHocSinh;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public int getStt() {
+    public UUID getStt() {
         return stt;
     }
 
-    public void setStt(int stt) {
+    public void setStt(UUID stt) {
         this.stt = stt;
     }
-
-   
 
     public String getPassWord() {
         return passWord;
@@ -82,6 +57,42 @@ public class TaiKhoan {
     public void setRole(String role) {
         this.role = role;
     }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public UUID getGiaovien_id() {
+        return giaovien_id;
+    }
+
+    public void setGiaovien_id(UUID giaovien_id) {
+        this.giaovien_id = giaovien_id;
+    }
+
+    public String getHoten() {
+        return hoten;
+    }
+
+    public void setHoten(String hoten) {
+        this.hoten = hoten;
+    }
+
+    public UUID getHocsinh_id() {
+        return hocsinh_id;
+    }
+
+    public void setHocsinh_id(UUID hocsinh_id) {
+        this.hocsinh_id = hocsinh_id;
+    }
+
+    
+
+    
 
    
 

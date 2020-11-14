@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  *
@@ -83,9 +84,10 @@ public class DiemDanhDAO {
 
     private DiemDanh readFromResultSet(ResultSet rs) throws SQLException {
         DiemDanh model = new DiemDanh();
-        model.setNgay(rs.getString("ngay"));
-        model.setMaGv(rs.getString("magiaovien"));
-        model.setMaHs(rs.getString("mahocsinh"));
+        model.setId(UUID.fromString(rs.getString("id")));
+        model.setNgay(rs.getDate("ngay"));
+        model.setMaGv(UUID.fromString(rs.getString("giaovien_magiaovien")));
+        model.setMaHs(UUID.fromString(rs.getString("hocsinh_id")));
         model.setTrangThai(rs.getBoolean("trangthai"));       
         return model;
     }

@@ -158,44 +158,44 @@ public class CsvDao {
         }
     }
 
-    private PhanCong readFromResultSet(ResultSet rs) throws SQLException {
-        PhanCong model = new PhanCong();
-        model.setMaPC(rs.getString("mapc"));
-        model.setMaLop(rs.getString("malop"));
-        model.setMaGV(rs.getString("magiaovien"));
-        model.setVaiTro(rs.getBoolean("vaitro"));
-        model.setMaMon(rs.getString("mamon"));
-        model.setHocKi(rs.getBoolean("hocki"));
-        model.setMaNamHoc(rs.getString("manamhoc"));
-        return model;
-    }
-public PhanCong findMaPC(String tenMon, String tenLop, boolean ki, String nienhoc) {
-        String sql = "SELECT * FROM phancong LEFT JOIN lophoc ON phancong.malop = lophoc.malop LEFT JOIN namhoc ON lophoc.manamhoc = namhoc.manamhoc LEFT JOIN mon ON phancong.mamon = mon.mamon WHERE lophoc.tenlop = ? AND namhoc.nienhoc = ? AND mon.tenmon = ? AND phancong.hocki = ?";
-        List<PhanCong> list = select(sql, tenLop, nienhoc, tenMon, ki);
-        return list.size() > 0 ? list.get(0) : null;
-    }
-    private List<PhanCong> select(String sql, Object... args) {
-        List<PhanCong> list = new ArrayList<>();
-        try {
-            ResultSet rs = null;
+//    private PhanCong readFromResultSet(ResultSet rs) throws SQLException {
+//        PhanCong model = new PhanCong();
+//        model.setMaPC(rs.getString("mapc"));
+//        model.setMaLop(rs.getString("malop"));
+//        model.setMaGV(rs.getString("magiaovien"));
+//        model.setVaiTro(rs.getBoolean("vaitro"));
+//        model.setMaMon(rs.getString("mamon"));
+//        model.setHocKi(rs.getBoolean("hocki"));
+//        model.setMaNamHoc(rs.getString("manamhoc"));
+//        return model;
+//    }
+//public PhanCong findMaPC(String tenMon, String tenLop, boolean ki, String nienhoc) {
+//        String sql = "SELECT * FROM phancong LEFT JOIN lophoc ON phancong.malop = lophoc.malop LEFT JOIN namhoc ON lophoc.manamhoc = namhoc.manamhoc LEFT JOIN mon ON phancong.mamon = mon.mamon WHERE lophoc.tenlop = ? AND namhoc.nienhoc = ? AND mon.tenmon = ? AND phancong.hocki = ?";
+//        List<PhanCong> list = select(sql, tenLop, nienhoc, tenMon, ki);
+//        return list.size() > 0 ? list.get(0) : null;
+//    }
+//    private List<PhanCong> select(String sql, Object... args) {
+//        List<PhanCong> list = new ArrayList<>();
+//        try {
+//            ResultSet rs = null;
+//
+//            rs = JdbcHelper.executeQuery(sql, args);
+//            while (rs.next()) {
+//                PhanCong model = readFromResultSet(rs);
+//                list.add(model);
+//
+//            }
+//            rs.getStatement().getConnection().close();
+//
+//        } catch (SQLException ex) {
+//            throw new RuntimeException(ex);
+//        }
+//        return list;
+//
+//    }
 
-            rs = JdbcHelper.executeQuery(sql, args);
-            while (rs.next()) {
-                PhanCong model = readFromResultSet(rs);
-                list.add(model);
-
-            }
-            rs.getStatement().getConnection().close();
-
-        } catch (SQLException ex) {
-            throw new RuntimeException(ex);
-        }
-        return list;
-
-    }
-
-    public List<PhanCong> select() {
-        String sql = "select * from phancong";
-        return select(sql);
-    }
+//    public List<PhanCong> select() {
+//        String sql = "select * from phancong";
+//        return select(sql);
+//    }
 }

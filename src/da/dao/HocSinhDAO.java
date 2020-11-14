@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  *
@@ -24,7 +25,7 @@ public class HocSinhDAO {
 
     private HocSinh readFromResultSet(ResultSet rs) throws SQLException {
         HocSinh model = new HocSinh();
-        model.setiD(rs.getInt("id"));
+        model.setiD(UUID.fromString(rs.getString("id")));
         model.setMaHS(rs.getString("mahocsinh"));
         model.setHoTen(rs.getString("hoten"));
         model.setGioiTinh(rs.getBoolean("gioitinh"));
@@ -36,13 +37,13 @@ public class HocSinhDAO {
         model.setNgayVD(rs.getDate("ngayvaodoan"));
         model.setNoiSinh(rs.getString("noisinh"));
         model.setCmND(rs.getString("cmnd"));
-        model.setLop(rs.getString("lop"));
-        model.setHotenBo(rs.getString("hotenBo"));
-        model.setHotenMe(rs.getString("hotenMe"));
-        model.setDienThoaiBo(rs.getString("dienthoaiBo"));
-        model.setDienThoaiMe(rs.getString("dienthoaiMe"));
-        model.setDvctBo(rs.getString("dvCongTacBo"));
-        model.setDvctMe(rs.getString("dvCongTacMe"));
+        model.setLop(rs.getString("lop_id"));
+        model.setHotenBo(rs.getString("hoten_bo"));
+        model.setHotenMe(rs.getString("hoten_me"));
+        model.setDienThoaiBo(rs.getString("dienthoai_bo"));
+        model.setDienThoaiMe(rs.getString("dienthoai_me"));
+        model.setDvctBo(rs.getString("dv_cong_tac_bo"));
+        model.setDvctMe(rs.getString("dv_cong_tac_me"));
         model.setNguoiDamHo(rs.getString("nguoidamho"));
         model.setTrangThai(rs.getBoolean("trangthai"));
         model.setAnh(rs.getString("anh"));
@@ -96,6 +97,12 @@ public class HocSinhDAO {
 
         }
     }
+    
+    public HocSinh select3(String mahocsinh) {
+        String sql = "select * from hocsinh where mahocsinh=?";
+        List<HocSinh> list = select(sql, mahocsinh);
+        return list.size() >0 ? list.get(0) : null;
+    }
 
     public ResultSet loadWith2(String tenlop, boolean ki, String nienhoc) {
         String sql = "select hs.mahocsinh,hs.hoten,hs.gioitinh,hs.ngaysinh from hocsinh as hs  join lophoc as lh on hs.lop=lh.malop  join phancong as pc on lh.manamhoc=pc.manamhoc  join namhoc as nh on pc.manamhoc=nh.manamhoc   and lh.tenlop=? and pc.hocki=? and nh.nienhoc=? group by hs.mahocsinh,hs.hoten,hs.gioitinh,hs.ngaysinh ";
@@ -128,7 +135,7 @@ public class HocSinhDAO {
     }
 
     public ResultSet selectWithMaGV(String magiaovien) {
-        String sql = "select gv.hoten,lh.tenlop from giaovien as gv  join phancong as pc on gv.magiaovien=pc.magiaovien join lophoc as lh on pc.malop=lh.malop and gv.magiaovien=?";
+        String sql = "select gv.hoten,lh.tenlop from giaovien as gv  join phancong as pc on gv.id=pc.giaovien_id join lophoc as lh on pc.lop_id=lh.id and gv.magiaovien=?";
         try {
             PreparedStatement ps = Jdbc.prepareStatement(sql);
             ps.setString(1, magiaovien);
@@ -142,7 +149,7 @@ public class HocSinhDAO {
     }
 
     public HocSinh findByName(String tl) {
-        String sql = " select * from hocsinh  join lophoc on hocsinh.lop=lophoc.malop and lophoc.tenlop= ?";
+        String sql = " select * from hocsinh  join lophoc on hocsinh.lop_id=lophoc.malop and lophoc.tenlop= ?";
         List<HocSinh> list = select(sql, tl);
         return list.size() > 0 ? list.get(0) : null;
     }
@@ -161,10 +168,9 @@ public class HocSinhDAO {
     }
 
     public ResultSet selectSiSoTong(String tenLop, boolean ki, String nienhoc) {
-        String sql = "select count(*) as ss from hocsinh join lophoc as lh on hocsinh.lop=lh.malop join phancong as pc on lh.malop=pc.malop join namhoc as nh on pc.manamhoc=nh.manamhoc and lh.tenlop=? and hocsinh.trangthai=1 and pc.hocki=? and nh.nienhoc=?";
+        String sql = "select count(*) as ss from hocsinh join lophoc as lh on hocsinh.lop_id=lh.id join phancong as pc on lh.id=pc.lop_id join namhoc as nh on pc.namhoc_manamhoc=nh.manamhoc and lh.tenlop=? and hocsinh.trangthai=true and pc.hocki=? and nh.nienhoc=?";
         try {
             PreparedStatement ps = Jdbc.prepareStatement(sql);
-
             ps.setString(1, tenLop);
             ps.setBoolean(2, ki);
             ps.setString(3, nienhoc);
@@ -177,7 +183,7 @@ public class HocSinhDAO {
     }
 
     public ResultSet selectSiSoNam(String tenLop, boolean ki, String nienhoc) {
-        String sql = "select count(*) as ss from hocsinh join lophoc as lh on hocsinh.lop=lh.malop join phancong as pc on lh.malop=pc.malop join namhoc as nh on pc.manamhoc=nh.manamhoc and lh.tenlop=? and hocsinh.trangthai=1 and pc.hocki=? and nh.nienhoc=? and hocsinh.gioitinh=1";
+        String sql = "select count(*) as ss from hocsinh join lophoc as lh on hocsinh.lop_id=lh.id join phancong as pc on lh.id=pc.lop_id join namhoc as nh on pc.namhoc_manamhoc=nh.manamhoc and lh.tenlop=? and hocsinh.trangthai=true and pc.hocki=? and nh.nienhoc=? and hocsinh.gioitinh=true";
         try {
             PreparedStatement ps = Jdbc.prepareStatement(sql);
 

@@ -6,13 +6,14 @@
 package da.model;
 
 import java.util.Date;
+import java.util.UUID;
 
 /**
  *
  * @author Administrator
  */
 public class HocSinh {
-    private int iD;
+    private UUID iD;
     private String maHS;
     private String hoTen;
     private Boolean gioiTinh;
@@ -24,7 +25,7 @@ public class HocSinh {
     private Date ngayVD;
     private String noiSinh;
     private String cmND;
-    private String lop;
+    private String lop_id;
     private String hotenBo;
     private String hotenMe;
     private String dienThoaiBo;
@@ -38,7 +39,7 @@ public class HocSinh {
     public HocSinh() {
     }
 
-    public HocSinh(int iD, String maHS, String hoTen, Boolean gioiTinh, Date ngaySinh, String diaChi, String dienThoai, String danToc, String tonGiao, Date ngayVD, String noiSinh, String cmND, String lop, String hotenBo, String hotenMe, String dienThoaiBo, String dienThoaiMe, String dvctBo, String dvctMe, String nguoiDamHo, boolean trangThai, String anh) {
+    public HocSinh(UUID iD, String maHS, String hoTen, Boolean gioiTinh, Date ngaySinh, String diaChi, String dienThoai, String danToc, String tonGiao, Date ngayVD, String noiSinh, String cmND, String lop_id, String hotenBo, String hotenMe, String dienThoaiBo, String dienThoaiMe, String dvctBo, String dvctMe, String nguoiDamHo, boolean trangThai, String anh) {
         this.iD = iD;
         this.maHS = maHS;
         this.hoTen = hoTen;
@@ -51,7 +52,7 @@ public class HocSinh {
         this.ngayVD = ngayVD;
         this.noiSinh = noiSinh;
         this.cmND = cmND;
-        this.lop = lop;
+        this.lop_id = lop_id;
         this.hotenBo = hotenBo;
         this.hotenMe = hotenMe;
         this.dienThoaiBo = dienThoaiBo;
@@ -63,11 +64,11 @@ public class HocSinh {
         this.anh = anh;
     }
 
-    public int getiD() {
+    public UUID getiD() {
         return iD;
     }
 
-    public void setiD(int iD) {
+    public void setiD(UUID iD) {
         this.iD = iD;
     }
 
@@ -160,11 +161,11 @@ public class HocSinh {
     }
 
     public String getLop() {
-        return lop;
+        return lop_id;
     }
 
-    public void setLop(String lop) {
-        this.lop = lop;
+    public void setLop(String lop_id) {
+        this.lop_id = lop_id;
     }
 
     public String getHotenBo() {

@@ -5,22 +5,24 @@
  */
 package da.model;
 
+import java.util.UUID;
+
 /**
  *
  * @author Administrator
  */
 public class LopHoc {
 
-    private int iD;
+    private UUID iD;
     private String maLop;
     private String tenLop;
-    private String maNH;
-    private String maKhoi;
+    private UUID maNH;
+    private UUID maKhoi;
 
     public LopHoc() {
     }
 
-    public LopHoc(int iD, String maLop, String tenLop, String maNH, String maKhoi) {
+    public LopHoc(UUID iD, String maLop, String tenLop, UUID maNH, UUID maKhoi) {
         this.iD = iD;
         this.maLop = maLop;
         this.tenLop = tenLop;
@@ -28,11 +30,11 @@ public class LopHoc {
         this.maKhoi = maKhoi;
     }
 
-    public int getiD() {
+    public UUID getiD() {
         return iD;
     }
 
-    public void setiD(int iD) {
+    public void setiD(UUID iD) {
         this.iD = iD;
     }
 
@@ -52,19 +54,19 @@ public class LopHoc {
         this.tenLop = tenLop;
     }
 
-    public String getMaNH() {
+    public UUID getMaNH() {
         return maNH;
     }
 
-    public void setMaNH(String maNH) {
+    public void setMaNH(UUID maNH) {
         this.maNH = maNH;
     }
 
-    public String getMaKhoi() {
+    public UUID getMaKhoi() {
         return maKhoi;
     }
 
-    public void setMaKhoi(String maKhoi) {
+    public void setMaKhoi(UUID maKhoi) {
         this.maKhoi = maKhoi;
     }
    

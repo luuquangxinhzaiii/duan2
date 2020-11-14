@@ -6,13 +6,14 @@
 package da.model;
 
 import java.util.Date;
+import java.util.UUID;
 
 /**
  *
  * @author Administrator
  */
 public class GiaoVien {
-
+    private UUID id;
     private String maGV;
     private String hoTen;
     private boolean gioiTinh;
@@ -25,7 +26,8 @@ public class GiaoVien {
     public GiaoVien() {
     }
 
-    public GiaoVien(String maGV, String hoTen, boolean gioiTinh, Date ngaySinh, String diaChi, String dienThoai, String cmnd) {
+    public GiaoVien(UUID id, String maGV, String hoTen, boolean gioiTinh, Date ngaySinh, String diaChi, String dienThoai, String cmnd) {
+        this.id =id;
         this.maGV = maGV;
         this.hoTen = hoTen;
         this.gioiTinh = gioiTinh;
@@ -33,6 +35,14 @@ public class GiaoVien {
         this.diaChi = diaChi;
         this.dienThoai = dienThoai;
         this.cmnd = cmnd;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public String getMaGV() {
@@ -90,6 +100,8 @@ public class GiaoVien {
     public void setCmnd(String cmnd) {
         this.cmnd = cmnd;
     }
+
+    
      
 
 }

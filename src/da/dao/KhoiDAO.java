@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  *
@@ -20,7 +21,7 @@ public class KhoiDAO {
 
     private Khoi readFromResultSet(ResultSet rs) throws SQLException {
         Khoi model = new Khoi();
-        model.setMaKhoi(rs.getString("makhoi"));
+        model.setMaKhoi(UUID.fromString(rs.getString("makhoi")));
         model.setTenKhoi(rs.getString("tenkhoi"));
 
         return model;

@@ -5,27 +5,29 @@
  */
 package da.model;
 
+import java.util.UUID;
+
 /**
  *
  * @author Administrator
  */
 public class Khoi {
-    private String maKhoi;
+    private UUID maKhoi;
     private String tenKhoi;
 
     public Khoi() {
     }
 
-    public Khoi(String maKhoi, String tenKhoi) {
+    public Khoi(UUID maKhoi, String tenKhoi) {
         this.maKhoi = maKhoi;
         this.tenKhoi = tenKhoi;
     }
 
-    public String getMaKhoi() {
+    public UUID getMaKhoi() {
         return maKhoi;
     }
 
-    public void setMaKhoi(String maKhoi) {
+    public void setMaKhoi(UUID maKhoi) {
         this.maKhoi = maKhoi;
     }
 

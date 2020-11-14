@@ -14,6 +14,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  *
@@ -29,10 +30,7 @@ public class TaiKhoanDAO {
 //        String sql = "insert into account values(?,?,?,?)";
 //        Jdbc.executeUpdate(sql, model.getUserName(), passWord, model.getRole(), model.getID());
 //    }
-    public void delete(String MaNV) {
-        String sql = "DELETE FROM account WHERE username=?";
-        Jdbc.executeUpdate(sql, MaNV);
-    }
+   
 
     public List<TaiKhoan> select() {
         String sql = "SELECT * FROM account";
@@ -40,7 +38,20 @@ public class TaiKhoanDAO {
     }
 
     public ResultSet select2() {
-        String sql = "select *  from account";
+        String sql = "select acc.email, acc.roles, gv.magiaovien  from account acc join giaovien gv on acc.giaovien_id=gv.id where roles = 'DT' or roles = 'GV' or roles = 'BGH'";
+        try {
+            PreparedStatement ps = Jdbc.prepareStatement(sql);
+
+            ResultSet rs = ps.executeQuery();
+            return rs;
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+
+        }
+    }
+    
+    public ResultSet select4() {
+        String sql = "select acc.email, acc.roles, hs.mahocsinh  from account acc join hocsinh hs on acc.hocsinh_id=hs.id where roles = 'HS'";
         try {
             PreparedStatement ps = Jdbc.prepareStatement(sql);
 
@@ -92,9 +103,14 @@ public class TaiKhoanDAO {
 
     private TaiKhoan readFromResultSet(ResultSet rs) throws SQLException {
         TaiKhoan model = new TaiKhoan();
-        model.setStt(rs.getInt("stt"));
-        model.setMaGiaoVien(rs.getString("magiaovien"));
-        model.setMaHocSinh(rs.getString("mahocsinh"));
+        model.setStt(UUID.fromString(rs.getString("stt")));
+        if(!rs.getString("giaovien_id").isEmpty()){
+            model.setGiaovien_id(UUID.fromString(rs.getString("giaovien_id")));
+            model.setHocsinh_id(null);
+        }else{
+            model.setGiaovien_id(null);
+            model.setHocsinh_id(UUID.fromString(rs.getString("hocsinh_id")));
+        }
         model.setPassWord(rs.getString("pass"));
         model.setRole(rs.getString("roles"));
 
@@ -110,32 +126,32 @@ public class TaiKhoanDAO {
     public void update(TaiKhoan model) {
 
         String sql = "update account set email=?,pass=?,roles=?,magiaovien=?,mahocsinh=? where stt=?";
-        JdbcHelper.executeUpdate(sql, model.getEmail(), model.getPassWord(), model.getRole(), model.getMaGiaoVien(), model.getMaHocSinh(), model.getStt());
+        JdbcHelper.executeUpdate(sql, model.getEmail(), model.getPassWord(), model.getRole(), model.getGiaovien_id(), model.getHocsinh_id(), model.getStt());
     }
 
     public void insertTKGV(TaiKhoan model) {
 
-        String sql = "insert into account (email,pass,roles,magiaovien) values(?,?,?,?)";
+        String sql = "insert into account (stt,email,pass,roles,giaovien_id) values(?,?,?,?,?)";
 
-        JdbcHelper.executeUpdate(sql, model.getEmail(), model.getPassWord(), model.getRole(), model.getMaGiaoVien());
+        JdbcHelper.executeUpdate(sql, UUID.randomUUID(),model.getEmail(), model.getPassWord(), model.getRole(), model.getGiaovien_id());
     }
 
     public void insertTKHS(TaiKhoan model) {
 
-        String sql = "insert into account (email,pass,roles,mahocsinh) values(?,?,?,?)";
+        String sql = "insert into account (stt,email,pass,roles,hocsinh_id) values(?,?,?,?,?)";
 
-        JdbcHelper.executeUpdate(sql, model.getEmail(), model.getPassWord(), model.getRole(), model.getMaHocSinh());
+        JdbcHelper.executeUpdate(sql, UUID.randomUUID(), model.getEmail(), model.getPassWord(), model.getRole(), model.getHocsinh_id());
     }
 
     public void update3(TaiKhoan model) {
 
-        String sql = "update account set email=?,pass=?,roles=? where stt=?";
-        JdbcHelper.executeUpdate(sql, model.getEmail(), model.getPassWord(), model.getRole(), model.getStt());
+        String sql = "update account set email=?,roles=? where stt=?";
+        JdbcHelper.executeUpdate(sql, model.getEmail(), model.getRole(), model.getStt());
     }
 
-    public void delete(int stt) {
-        String sql = "delete from account where stt=?";
-        JdbcHelper.executeUpdate(sql, stt);
+    public void delete(String email) {
+        String sql = "delete from account where email=?";
+        JdbcHelper.executeUpdate(sql, email);
     }
 
 }

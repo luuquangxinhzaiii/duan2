@@ -6,6 +6,7 @@
 package da.model;
 
 import java.util.Date;
+import java.util.UUID;
 
 /**
  *
@@ -13,9 +14,9 @@ import java.util.Date;
  */
 public class Diem {
 
-    private int stt;
+    private UUID stt;
     private Date ngay;
-    private String maHocSinh;
+    private UUID maHocSinh;
     private int diemMieng1;
     private int diemMieng2;
     private int diemMieng3;
@@ -26,11 +27,11 @@ public class Diem {
     private float diem1Tiet2;
     private float diemThi;
     private float diemTBM;
-    private String mapc;
+    private UUID mapc;
 
     public Diem() {}
 
-    public Diem(int stt, Date ngay, String maHocSinh, int diemMieng1, int diemMieng2, int diemMieng3, int diem15p1, int diem15p2, int diem15p3, float diem1Tiet1, float diem1Tiet2, float diemThi, float diemTBM, String mapc) {
+    public Diem(UUID stt, Date ngay, UUID maHocSinh, int diemMieng1, int diemMieng2, int diemMieng3, int diem15p1, int diem15p2, int diem15p3, float diem1Tiet1, float diem1Tiet2, float diemThi, float diemTBM, UUID mapc) {
         this.stt = stt;
         this.ngay = ngay;
         this.maHocSinh = maHocSinh;
@@ -47,7 +48,7 @@ public class Diem {
         this.mapc = mapc;
     }
 
-    public void setStt(int stt) {
+    public void setStt(UUID stt) {
         this.stt = stt;
     }
 
@@ -55,7 +56,7 @@ public class Diem {
         this.ngay = ngay;
     }
 
-    public void setMaHocSinh(String maHocSinh) {
+    public void setMaHocSinh(UUID maHocSinh) {
         this.maHocSinh = maHocSinh;
     }
 
@@ -99,11 +100,11 @@ public class Diem {
         this.diemTBM = diemTBM;
     }
 
-    public void setMapc(String mapc) {
+    public void setMapc(UUID mapc) {
         this.mapc = mapc;
     }
 
-    public int getStt() {
+    public UUID getStt() {
         return stt;
     }
 
@@ -111,7 +112,7 @@ public class Diem {
         return ngay;
     }
 
-    public String getMaHocSinh() {
+    public UUID getMaHocSinh() {
         return maHocSinh;
     }
 
@@ -155,7 +156,7 @@ public class Diem {
         return diemTBM;
     }
 
-    public String getMapc() {
+    public UUID getMapc() {
         return mapc;
     }
 

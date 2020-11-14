@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  *
@@ -176,20 +177,20 @@ public class diemDAO {
 
     private Diem readFromResultSet(ResultSet rs) throws SQLException {
         Diem model = new Diem();
-        model.setStt(rs.getInt("stt"));
+        model.setStt(UUID.fromString(rs.getString("id")));
         model.setNgay(rs.getDate("ngay"));
-        model.setMaHocSinh(rs.getString("mahocsinh"));
-        model.setDiemMieng1(rs.getInt("diemMieng1")); 
-        model.setDiemMieng2(rs.getInt("diemMieng2")); 
-        model.setDiemMieng3(rs.getInt("diemMieng3")); 
+        model.setMaHocSinh(UUID.fromString(rs.getString("hocsinh_id")));
+        model.setDiemMieng1(rs.getInt("diemmieng1")); 
+        model.setDiemMieng2(rs.getInt("diemmieng2")); 
+        model.setDiemMieng3(rs.getInt("diemmieng3")); 
 	model.setDiem15p1(rs.getInt("diem15phut1"));
 	model.setDiem15p2(rs.getInt("diem15phut2"));
 	model.setDiem15p3(rs.getInt("diem15phut3"));
-	model.setDiem1Tiet1(rs.getFloat("diem1Tiet1"));
-	model.setDiem1Tiet2(rs.getFloat("diem1Tiet2"));
+	model.setDiem1Tiet1(rs.getFloat("diem1tiet1"));
+	model.setDiem1Tiet2(rs.getFloat("diem1tiet2"));
 	model.setDiemThi(rs.getFloat("diemthi"));
-        model.setDiemTBM(rs.getFloat("diemTBM"));
-        model.setMapc(rs.getString("mapc"));
+        model.setDiemTBM(rs.getFloat("diemybm"));
+        model.setMapc(UUID.fromString(rs.getString("phancong_maphancong")));
         return model;
     }
 }

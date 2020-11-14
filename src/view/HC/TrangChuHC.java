@@ -33,6 +33,7 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.UUID;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -76,7 +77,7 @@ public class TrangChuHC extends javax.swing.JFrame {
     CsvFile fv = new CsvFile();
     public TrangChuHC() {
         initComponents();
-        lbl_Gv.setText(ShareHelper.TaiKhoan.getMaGiaoVien());
+        lbl_Gv.setText(ShareHelper.TaiKhoan.getHoten());
         this.loadtoCBBNamHoc();
 
         this.loadCBB();
@@ -106,7 +107,7 @@ public class TrangChuHC extends javax.swing.JFrame {
     
     public void UpdateSubject(){
         Mon mon = new Mon();
-        mon.setMaMon(lbl_maMon.getText());
+        mon.setMaMon(UUID.fromString(lbl_maMon.getText()));
         mon.setTenMon(lbl_tenMon.getText());
         mon.setHinhThucDG(cbo_hinhthuc.getSelectedItem().toString().equals("Chấm điểm") ? true : false);
         mon.setMaKhoi(kDAO.selectByTenKhoi(cbo_Khoi.getSelectedItem().toString()).getMaKhoi());
@@ -123,7 +124,7 @@ public class TrangChuHC extends javax.swing.JFrame {
     
     public void addSubject(){
         Mon mon = new Mon();
-        mon.setMaMon(lbl_maMon.getText());
+        mon.setMaMon(UUID.fromString(lbl_maMon.getText()));
         mon.setTenMon(lbl_tenMon.getText());
         mon.setHinhThucDG(cbo_hinhthuc.getSelectedItem().toString().equals("Chấm điểm") ? true : false);
         mon.setMaKhoi(kDAO.selectByTenKhoi(cbo_Khoi.getSelectedItem().toString()).getMaKhoi());
@@ -141,7 +142,7 @@ public class TrangChuHC extends javax.swing.JFrame {
             row.add(mon.getMaMon());
             row.add(mon.getTenMon());
             row.add(mon.getHinhThucDG() == true ? "Chấm điểm" : "Đánh giá");
-            row.add(kDAO.selectByMaKhoi(mon.getMaKhoi()).getTenKhoi());
+            row.add(kDAO.selectByMaKhoi(mon.getMaKhoi().toString()).getTenKhoi());
             modelMonHoc.addRow(row);
         }
         tbl_DanhSachMon.setModel(modelMonHoc);
@@ -446,19 +447,19 @@ public class TrangChuHC extends javax.swing.JFrame {
             model.setMaLop(lbl_malop.getText());
             model.setTenLop(txtTenLop.getText());
             if (CbbKhoiHoc.getSelectedIndex() == 0) {
-                model.setMaKhoi("khoi01");
+                model.setMaKhoi(UUID.fromString("khoi01"));
             } else if (CbbKhoiHoc.getSelectedIndex() == 1) {
-                model.setMaKhoi("khoi02");
+                model.setMaKhoi(UUID.fromString("khoi02"));
             } else if (CbbKhoiHoc.getSelectedIndex() == 2) {
-                model.setMaKhoi("khoi03");
+                model.setMaKhoi(UUID.fromString("khoi03"));
             } else {
-                model.setMaKhoi("khoi04");
+                model.setMaKhoi(UUID.fromString("khoi04"));
             }
             String nh = (String) cbbNamHoc.getSelectedItem();
             ResultSet rs = nhDAO.select2(nh);
 
             if (rs.next()) {
-                model.setMaNH(rs.getString("manamhoc"));
+                model.setMaNH(UUID.fromString(rs.getString("manamhoc")));
 
             }
         } catch (Exception e) {
@@ -471,9 +472,9 @@ public class TrangChuHC extends javax.swing.JFrame {
     PhanCong getModel2() {
         PhanCong model = new PhanCong();
         try {
-            model.setMaPC(lbl_maPc.getText());
-            model.setMaLop(lbl_malop2.getText());
-            model.setMaGV(txt_Magv.getText());
+            model.setMaPC(UUID.fromString(lbl_maPc.getText()));
+            model.setMaLop(UUID.fromString(lbl_malop2.getText()));
+            model.setMaGV(UUID.fromString(txt_Magv.getText()));
             if (rdoChuNghiem.isSelected()) {
 
                 model.setVaiTro(true);
@@ -487,8 +488,8 @@ public class TrangChuHC extends javax.swing.JFrame {
             ResultSet rs = mDAO.select3(m);
             ResultSet rs1 = nhDAO.select2(nh);
             if (rs.next() && rs1.next()) {
-                model.setMaMon(rs.getString("mamon"));
-                model.setMaNamHoc(rs1.getString("manamhoc"));
+                model.setMaMon(UUID.fromString(rs.getString("mamon")));
+                model.setMaNamHoc(UUID.fromString(rs1.getString("manamhoc")));
             }
 
             if (cbo_hocKi.getSelectedIndex() == 0) {

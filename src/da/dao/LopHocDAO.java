@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  *
@@ -23,12 +24,12 @@ public class LopHocDAO {
 
     private LopHoc readFromResultSet(ResultSet rs) throws SQLException {
         LopHoc model = new LopHoc();
-        model.setiD(rs.getInt("id"));
+        model.setiD(UUID.fromString(rs.getString("id")));
         model.setMaLop(rs.getString("malop"));
         model.setTenLop(rs.getString("tenlop"));
 
-        model.setMaNH(rs.getString("manamhoc"));
-        model.setMaKhoi(rs.getString("makhoi"));
+        model.setMaNH(UUID.fromString(rs.getString("namhoc_manamhoc")));
+        model.setMaKhoi(UUID.fromString(rs.getString("khoi_makhoi")));
         return model;
 
     }

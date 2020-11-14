@@ -422,46 +422,46 @@ public class CsvFile {
         }
     }
 
-    public void readDiemCsv(String filePath, String tenMon, String tenLop, String ki, String nienhoc) {
-
-        BufferedReader reader = null;
-        try {
-            Diem model = new Diem();
-            String line = "";
-            reader = new BufferedReader(new FileReader(filePath));
-            reader.readLine();
-            System.out.println("đã chạy 1");
-            while ((line = reader.readLine()) != null) {
-                String[] fields = line.split(",");
-                if (fields.length > 0) {
-                    model.setDiemMieng1(Integer.parseInt(fields[3]));
-                    model.setDiemMieng2(Integer.parseInt(fields[4]));
-                    model.setDiemMieng3(Integer.parseInt(fields[5]));
-                    model.setDiem15p1(Integer.parseInt(fields[6]));
-                    model.setDiem15p2(Integer.parseInt(fields[7]));
-                    model.setDiem15p3(Integer.parseInt(fields[8]));
-                    model.setDiem1Tiet1(Float.parseFloat(fields[9]));
-                    model.setDiem1Tiet2(Float.parseFloat(fields[10]));
-                    model.setDiemThi(Float.parseFloat(fields[11]));
-                    model.setDiemTBM(TinhDiemTB(model.getDiemMieng1(), model.getDiemMieng2(), model.getDiemMieng3(), model.getDiem15p1(), model.getDiem15p2(), model.getDiem15p3(), model.getDiem1Tiet1(), model.getDiem1Tiet2(), model.getDiemThi()));
-                    model.setMaHocSinh(fields[0]);
-                    model.setMapc(Dao.findMaPC(tenMon, tenLop, sethocki(ki), nienhoc).getMaPC());
-                    System.out.println(TinhDiemTB(model.getDiemMieng1(), model.getDiemMieng2(), model.getDiemMieng3(), model.getDiem15p1(), model.getDiem15p2(), model.getDiem15p3(), model.getDiem1Tiet1(), model.getDiem1Tiet2(), model.getDiemThi()));
-                    Dao.update(model);
-
-                }
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        } finally {
-            try {
-                reader.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
-    }
+//    public void readDiemCsv(String filePath, String tenMon, String tenLop, String ki, String nienhoc) {
+//
+//        BufferedReader reader = null;
+//        try {
+//            Diem model = new Diem();
+//            String line = "";
+//            reader = new BufferedReader(new FileReader(filePath));
+//            reader.readLine();
+//            System.out.println("đã chạy 1");
+//            while ((line = reader.readLine()) != null) {
+//                String[] fields = line.split(",");
+//                if (fields.length > 0) {
+//                    model.setDiemMieng1(Integer.parseInt(fields[3]));
+//                    model.setDiemMieng2(Integer.parseInt(fields[4]));
+//                    model.setDiemMieng3(Integer.parseInt(fields[5]));
+//                    model.setDiem15p1(Integer.parseInt(fields[6]));
+//                    model.setDiem15p2(Integer.parseInt(fields[7]));
+//                    model.setDiem15p3(Integer.parseInt(fields[8]));
+//                    model.setDiem1Tiet1(Float.parseFloat(fields[9]));
+//                    model.setDiem1Tiet2(Float.parseFloat(fields[10]));
+//                    model.setDiemThi(Float.parseFloat(fields[11]));
+//                    model.setDiemTBM(TinhDiemTB(model.getDiemMieng1(), model.getDiemMieng2(), model.getDiemMieng3(), model.getDiem15p1(), model.getDiem15p2(), model.getDiem15p3(), model.getDiem1Tiet1(), model.getDiem1Tiet2(), model.getDiemThi()));
+//                    model.setMaHocSinh(fields[0]);
+//                    model.setMapc(Dao.findMaPC(tenMon, tenLop, sethocki(ki), nienhoc).getMaPC());
+//                    System.out.println(TinhDiemTB(model.getDiemMieng1(), model.getDiemMieng2(), model.getDiemMieng3(), model.getDiem15p1(), model.getDiem15p2(), model.getDiem15p3(), model.getDiem1Tiet1(), model.getDiem1Tiet2(), model.getDiemThi()));
+//                    Dao.update(model);
+//
+//                }
+//            }
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
+//        } finally {
+//            try {
+//                reader.close();
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+//        }
+//
+//    }
 // public void readHSCsv(String filePath, String tenMon, String tenLop, String ki, String nienhoc) {
 //
 //        BufferedReader reader = null;

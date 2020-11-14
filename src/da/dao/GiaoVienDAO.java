@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  *
@@ -24,7 +25,7 @@ public class GiaoVienDAO {
 
     private GiaoVien readFromResultSet(ResultSet rs) throws SQLException {
         GiaoVien model = new GiaoVien();
-
+        model.setId(UUID.fromString(rs.getString("id")));
         model.setMaGV(rs.getString("magiaovien"));
         model.setHoTen(rs.getString("hoten"));
         model.setGioiTinh(rs.getBoolean("gioitinh"));
@@ -53,6 +54,18 @@ public class GiaoVienDAO {
         }
         return list;
 
+    }
+    
+    public GiaoVien findByUUID(UUID id){
+        String sql = "select * from giaovien where id=?";
+        List<GiaoVien> list = select(sql, id);
+        return list.size() > 0 ? list.get(0) : null;
+    }
+    
+    public GiaoVien findBymagiaovien(String id){
+        String sql = "select * from giaovien where magiaovien=?";
+        List<GiaoVien> list = select(sql, id);
+        return list.size() > 0 ? list.get(0) : null;
     }
 
     public ResultSet select() {

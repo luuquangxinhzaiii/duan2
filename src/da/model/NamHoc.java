@@ -6,6 +6,7 @@
 package da.model;
 
 import java.util.Date;
+import java.util.UUID;
 
 /**
  *
@@ -13,45 +14,27 @@ import java.util.Date;
  */
 public class NamHoc {
    
-    private String maNamHoc;
+    private UUID maNamHoc;
     private String nienHoc;
     private Date   ngayBD;
     private Date   ngayKT;
-    private String trangThai;
-    private int xoa;
+    private Boolean trangThai;
     public NamHoc() {
     }
 
-    public NamHoc(String maNamHoc, String nienHoc, Date ngayBD, Date ngayKT,String trangThai, int xoa) {
+    public NamHoc(UUID maNamHoc, String nienHoc, Date ngayBD, Date ngayKT,Boolean trangThai) {
         this.maNamHoc = maNamHoc;
         this.nienHoc = nienHoc;
         this.ngayBD = ngayBD;
         this.ngayKT = ngayKT;
         this.trangThai=trangThai;
-        this.xoa=xoa;
     }
 
-    public String getTrangThai() {
-        return trangThai;
-    }
-
-    public void setTrangThai(String trangThai) {
-        this.trangThai = trangThai;
-    }
-
-    public int getXoa() {
-        return xoa;
-    }
-
-    public void setXoa(int xoa) {
-        this.xoa = xoa;
-    }
-
-    public String getMaNamHoc() {
+    public UUID getMaNamHoc() {
         return maNamHoc;
     }
 
-    public void setMaNamHoc(String maNamHoc) {
+    public void setMaNamHoc(UUID maNamHoc) {
         this.maNamHoc = maNamHoc;
     }
 
@@ -78,7 +61,16 @@ public class NamHoc {
     public void setNgayKT(Date ngayKT) {
         this.ngayKT = ngayKT;
     }
-    
+
+    public Boolean getTrangThai() {
+        return trangThai;
+    }
+
+    public void setTrangThai(Boolean trangThai) {
+        this.trangThai = trangThai;
+    }
+
+   
     
     
 }

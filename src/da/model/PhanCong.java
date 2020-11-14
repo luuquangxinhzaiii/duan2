@@ -5,25 +5,25 @@
  */
 package da.model;
 
+import java.util.UUID;
+
 /**
  *
  * @author Administrator
  */
 public class PhanCong {
-    private int iD;
-    private String maPC;
-    private String maLop;
-    private String maGV;
-    private boolean vaiTro;
-    private String maMon;
-    private boolean hocKi;
-    private String maNamHoc;
+    private UUID maPC;
+    private UUID maLop;
+    private UUID maGV;
+    private Boolean vaiTro;
+    private UUID maMon;
+    private Boolean hocKi;
+    private UUID maNamHoc;
 
     public PhanCong() {
     }
 
-    public PhanCong(int iD, String maPC, String maLop, String maGV, boolean vaiTro, String maMon, boolean hocKi, String maNamHoc) {
-        this.iD = iD;
+    public PhanCong(UUID maPC, UUID maLop, UUID maGV, Boolean vaiTro, UUID maMon, Boolean hocKi, UUID maNamHoc) {
         this.maPC = maPC;
         this.maLop = maLop;
         this.maGV = maGV;
@@ -33,70 +33,63 @@ public class PhanCong {
         this.maNamHoc = maNamHoc;
     }
 
-    public int getiD() {
-        return iD;
-    }
-
-    public void setiD(int iD) {
-        this.iD = iD;
-    }
-
-    public String getMaPC() {
+    public UUID getMaPC() {
         return maPC;
     }
 
-    public void setMaPC(String maPC) {
+    public void setMaPC(UUID maPC) {
         this.maPC = maPC;
     }
 
-    public String getMaLop() {
+    public UUID getMaLop() {
         return maLop;
     }
 
-    public void setMaLop(String maLop) {
+    public void setMaLop(UUID maLop) {
         this.maLop = maLop;
     }
 
-    public String getMaGV() {
+    public UUID getMaGV() {
         return maGV;
     }
 
-    public void setMaGV(String maGV) {
+    public void setMaGV(UUID maGV) {
         this.maGV = maGV;
     }
 
-    public boolean getVaiTro() {
+    public Boolean getVaiTro() {
         return vaiTro;
     }
 
-    public void setVaiTro(boolean vaiTro) {
+    public void setVaiTro(Boolean vaiTro) {
         this.vaiTro = vaiTro;
     }
 
-    public String getMaMon() {
+    public UUID getMaMon() {
         return maMon;
     }
 
-    public void setMaMon(String maMon) {
+    public void setMaMon(UUID maMon) {
         this.maMon = maMon;
     }
 
-    public boolean getHocKi() {
+    public Boolean getHocKi() {
         return hocKi;
     }
 
-    public void setHocKi(boolean hocKi) {
+    public void setHocKi(Boolean hocKi) {
         this.hocKi = hocKi;
     }
 
-    public String getMaNamHoc() {
+    public UUID getMaNamHoc() {
         return maNamHoc;
     }
 
-    public void setMaNamHoc(String maNamHoc) {
+    public void setMaNamHoc(UUID maNamHoc) {
         this.maNamHoc = maNamHoc;
     }
 
+   
   
   
     

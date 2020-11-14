@@ -6,10 +6,13 @@
 package view;
 
 import AppPackage.AnimationClass;
+import da.dao.GiaoVienDAO;
 import da.dao.RanDom;
 import da.dao.TaiKhoanDAO;
+import da.helper.BCrypt;
 import da.helper.DialogHelper;
 import da.helper.ShareHelper;
+import da.model.GiaoVien;
 import da.model.TaiKhoan;
 
 import java.awt.Color;
@@ -31,6 +34,7 @@ import view.BDH.TrangChuBDH;
 import java.util.Scanner;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.UUID;
 import view.GV.TrangChuGV;
 import view.HC.TrangChuHC;
 
@@ -48,7 +52,7 @@ public class dangnhap extends javax.swing.JFrame {
     AnimationClass ac = new AnimationClass();
     TaiKhoanDAO uDAO = new TaiKhoanDAO();
     int numberOfCharactor = 8;
-
+    GiaoVienDAO gvDAO = new GiaoVienDAO();
     public dangnhap() {
         initComponents();
         slidershow();
@@ -102,23 +106,23 @@ public class dangnhap extends javax.swing.JFrame {
             if (taikhoan != null) {
                 String matKhau2 = taikhoan.getPassWord();
                 String roles = taikhoan.getRole();
-                if (matKhau.equals(matKhau2)) {
-                    ShareHelper.TaiKhoan = taikhoan;
-
+                if (BCrypt.checkpw(matKhau, matKhau2)) {
                     if (roles.equals("BGH")) {
                         TrangChuBDH bdh = new TrangChuBDH();
                         bdh.setVisible(maximized);
                         this.dispose();
                     }else if(roles.equals("GV")) {
+                        GiaoVien giaovien = gvDAO.findByUUID(taikhoan.getGiaovien_id());
+                        taikhoan.setHoten(giaovien.getHoTen());
+                        ShareHelper.TaiKhoan = taikhoan;
                         TrangChuGV bdh = new TrangChuGV();
                         bdh.setVisible(maximized);
                         this.dispose();
-                    }else if(roles.equals("HC")) {
+                    }else if(roles.equals("DT")) {
                         TrangChuHC bdh = new TrangChuHC();
                         bdh.setVisible(maximized);
                         this.dispose();
                     }
-
                 } else {
                     txt_tbdn.setText("Sai mật khẩu");
                 }

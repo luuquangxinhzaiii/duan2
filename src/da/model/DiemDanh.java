@@ -5,18 +5,22 @@
  */
 package da.model;
 
+import java.util.Date;
+import java.util.UUID;
+
 /**
  *
  * @author BNC
  */
 public class DiemDanh {
-    private String Ngay;
-    private String maGv;
-    private String maHs;
-    private boolean trangThai;
+    private UUID id;
+    private Date Ngay;
+    private UUID maGv;
+    private UUID maHs;
+    private Boolean trangThai;
     
     public DiemDanh(){}
-    public DiemDanh(String Ngay, String maGv, String maHs, boolean trangThai){
+    public DiemDanh(UUID id, Date Ngay, UUID maGv, UUID maHs, Boolean trangThai){
         super();
         this.Ngay = Ngay;
         this.maGv = maGv;
@@ -24,35 +28,45 @@ public class DiemDanh {
         this.trangThai = trangThai;
     }
 
-    public String getNgay() {
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public Date getNgay() {
         return Ngay;
     }
 
-    public void setNgay(String Ngay) {
+    public void setNgay(Date Ngay) {
         this.Ngay = Ngay;
     }
 
-    public String getMaGv() {
+    public UUID getMaGv() {
         return maGv;
     }
 
-    public void setMaGv(String maGv) {
+    public void setMaGv(UUID maGv) {
         this.maGv = maGv;
     }
 
-    public String getMaHs() {
+    public UUID getMaHs() {
         return maHs;
     }
 
-    public void setMaHs(String maHs) {
+    public void setMaHs(UUID maHs) {
         this.maHs = maHs;
     }
 
-    public boolean isTrangThai() {
+    public Boolean getTrangThai() {
         return trangThai;
     }
 
-    public void setTrangThai(boolean trangThai) {
+    public void setTrangThai(Boolean trangThai) {
         this.trangThai = trangThai;
     }
+
+    
 }

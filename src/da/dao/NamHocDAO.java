@@ -13,6 +13,7 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  *
@@ -25,11 +26,11 @@ public class NamHocDAO {
     private NamHoc readFromResultSet(ResultSet rs) throws SQLException {
         NamHoc model = new NamHoc();
         
-        model.setMaNamHoc(rs.getString("manamhoc"));
+        model.setMaNamHoc(UUID.fromString(rs.getString("manamhoc")));
         model.setNienHoc(rs.getString("nienhoc"));
         model.setNgayBD(rs.getDate("ngaybatdau"));
         model.setNgayKT(rs.getDate("ngayketthuc"));
-        model.setTrangThai(rs.getString("trangthai"));
+        model.setTrangThai(rs.getBoolean("trangthai"));
         return model;
     }
 

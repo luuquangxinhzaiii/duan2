@@ -35,6 +35,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -77,7 +78,7 @@ public class TrangChuGV extends javax.swing.JFrame {
 
     public TrangChuGV() {
         initComponents();
-        lbl_magiaovien.setText( ShareHelper.TaiKhoan.getMaGiaoVien());
+        lbl_magiaovien.setText( ShareHelper.TaiKhoan.getHoten());
         this.loadtoCBBNamHoc();
         this.LoadTenLop();
         this.loadCBB();
@@ -95,7 +96,7 @@ public class TrangChuGV extends javax.swing.JFrame {
             while (rs.next()) {
                 Diem themdiem = new Diem();
                 themdiem.setNgay(Date.valueOf(LocalDate.now()));
-                themdiem.setMaHocSinh(rs.getString("mahocsinh"));
+                themdiem.setMaHocSinh(UUID.fromString(rs.getString("hocsinh_id")));
                 themdiem.setDiemMieng1(0);
                 themdiem.setDiemMieng2(0);
                 themdiem.setDiemMieng3(0);
@@ -106,7 +107,7 @@ public class TrangChuGV extends javax.swing.JFrame {
                 themdiem.setDiem1Tiet2(0);
                 themdiem.setDiemThi(0);
                 themdiem.setDiemTBM(0);
-                themdiem.setMapc(maPc);
+                themdiem.setMapc(UUID.fromString(maPc));
                 dDAO.insert(themdiem);
             }
         } catch (Exception e) {
@@ -189,7 +190,7 @@ public class TrangChuGV extends javax.swing.JFrame {
             model.setDiem1Tiet2(cbo_diemTX8.getSelectedItem().toString() == "Đạt" ? 1 : 0);
             model.setDiemThi(cbo_diemTX9.getSelectedItem().toString() == "Đạt" ? 1 : 0);
             model.setDiemTBM(lbl_diemTBMDG.getText() == "Đạt" ? 1 : 0);
-            model.setMaHocSinh(lbl_mhs3.getText());
+            model.setMaHocSinh(UUID.fromString(lbl_mhs3.getText()));
             model.setMapc(pcDAO.selectPc(lbl_magiaovien.getText(), cbo_Lop_Diem.getSelectedItem().toString(), cbo_Mon_Diem.getSelectedItem().toString(), cbo_hocKi.getSelectedItem().toString() == "Học kỳ 1" ? true : false).getMaPC());
             dDAO.update(model);
         } catch (Exception e) {
@@ -213,7 +214,7 @@ public class TrangChuGV extends javax.swing.JFrame {
             model.setDiem1Tiet2(Float.parseFloat(txt_45p2.getText()));
             model.setDiemThi(Float.parseFloat(txt_hk.getText()));
             model.setDiemTBM(Float.parseFloat(lbl_diemTBM.getText()));
-            model.setMaHocSinh(lbl_mhs3.getText());
+            model.setMaHocSinh(UUID.fromString(lbl_mhs3.getText()));
             model.setMapc(pcDAO.selectPc(lbl_magiaovien.getText(), cbo_Lop_Diem.getSelectedItem().toString(), cbo_Mon_Diem.getSelectedItem().toString(), cbo_hocKi.getSelectedItem().toString() == "Học kỳ 1" ? true : false).getMaPC());
             dDAO.update(model);
         } catch (Exception e) {
@@ -229,7 +230,7 @@ public class TrangChuGV extends javax.swing.JFrame {
                 if (cbo_cacchamdiem.getSelectedItem().toString().equals("Chấm điểm") == true) {
                     Diem themdiem = new Diem();
                     themdiem.setNgay(Date.valueOf(LocalDate.now()));
-                    themdiem.setMaHocSinh(tblGridView_Diem.getValueAt(i, 0).toString());
+                    themdiem.setMaHocSinh(UUID.fromString(tblGridView_Diem.getValueAt(i, 0).toString()));
                     themdiem.setDiemMieng1(Integer.parseInt(tblGridView_Diem.getValueAt(i, 3).toString()));
                     themdiem.setDiemMieng2(Integer.parseInt(tblGridView_Diem.getValueAt(i, 4).toString()));
                     themdiem.setDiemMieng3(Integer.parseInt(tblGridView_Diem.getValueAt(i, 5).toString()));
@@ -245,7 +246,7 @@ public class TrangChuGV extends javax.swing.JFrame {
                 } else if (cbo_cacchamdiem.getSelectedItem().toString().equals("Đánh giá") == true) {
                     Diem themdiem = new Diem();
                     themdiem.setNgay(Date.valueOf(LocalDate.now()));
-                    themdiem.setMaHocSinh(tblGridView_Diem.getValueAt(i, 0).toString());
+                    themdiem.setMaHocSinh(UUID.fromString(tblGridView_Diem.getValueAt(i, 0).toString()));
                     themdiem.setDiemMieng1(tblGridView_Diem.getValueAt(i, 3).toString() == "Đạt" ? 1 : 0);
                     themdiem.setDiemMieng2(tblGridView_Diem.getValueAt(i, 4).toString() == "Đạt" ? 1 : 0);
                     themdiem.setDiemMieng3(tblGridView_Diem.getValueAt(i, 5).toString() == "Đạt" ? 1 : 0);
@@ -362,7 +363,7 @@ public class TrangChuGV extends javax.swing.JFrame {
     public int TongMonCoDiem(){
         try{
             int i=0;
-            ResultSet rs = mhDAO.loadDataNotExits(lhDAO.findByTenLop(cbo_LoCN_KQCN.getSelectedItem().toString()).getMaKhoi());
+            ResultSet rs = mhDAO.loadDataNotExits(lhDAO.findByTenLop(cbo_LoCN_KQCN.getSelectedItem().toString()).getMaKhoi().toString());
             while (rs.next()) {
                 i++;
             }
@@ -377,7 +378,7 @@ public class TrangChuGV extends javax.swing.JFrame {
     public int countSubject(){
         try{
             int i=0;
-            ResultSet rs = mhDAO.selectByKhoi(lhDAO.findByTenLop(cbo_LoCN_KQCN.getSelectedItem().toString()).getMaKhoi());
+            ResultSet rs = mhDAO.selectByKhoi(lhDAO.findByTenLop(cbo_LoCN_KQCN.getSelectedItem().toString()).getMaKhoi().toString());
             while (rs.next()) {
                 i++;
             }
@@ -406,7 +407,7 @@ public class TrangChuGV extends javax.swing.JFrame {
 
     public void LoadMonDay() {
         DefaultComboBoxModel model = (DefaultComboBoxModel) cbo_Mon_Diem.getModel();
-        String maGV = (String) ShareHelper.TaiKhoan.getMaGiaoVien();
+        String maGV = (String) ShareHelper.TaiKhoan.getGiaovien_id().toString();
         try {
             ResultSet rs = pcDAO.select5(maGV,cbo_hocKi.getSelectedItem().toString() == "Học kỳ 1" ? true : false);
             while (rs.next()) {
@@ -422,14 +423,14 @@ public class TrangChuGV extends javax.swing.JFrame {
     
     public void LoadLopChuNhiem() {
         DefaultComboBoxModel model = (DefaultComboBoxModel) cbo_LoCN_KQCN.getModel();
-        String maGV = (String) ShareHelper.TaiKhoan.getMaGiaoVien();
+        String maGV = (String) ShareHelper.TaiKhoan.getHoten();
         try {
             if (model != null) {
                 model.removeAllElements();
             }
             List<PhanCong> list = pcDAO.selectLopCN(maGV);
             for (PhanCong pc : list) {
-                List<LopHoc> listLh = lhDAO.findClass(pc.getMaLop());
+                List<LopHoc> listLh = lhDAO.findClass(pc.getMaLop().toString());
                 for (LopHoc lh : listLh) {
                     model.addElement(lh.getTenLop());
                 }
@@ -442,14 +443,14 @@ public class TrangChuGV extends javax.swing.JFrame {
 
     public void LoadLopDay() {
         DefaultComboBoxModel model = (DefaultComboBoxModel) cbo_Lop_Diem.getModel();
-        String maGV = (String) ShareHelper.TaiKhoan.getMaGiaoVien();
+        String maGV = (String) ShareHelper.TaiKhoan.getHoten();
         try {
             if (model != null) {
                 model.removeAllElements();
             }
             List<PhanCong> list = pcDAO.select6(maGV, cbo_hocKi.getSelectedItem().toString() == "Học kỳ 1" ? true : false);
             for (PhanCong pc : list) {
-                List<LopHoc> listLh = lhDAO.findClass(pc.getMaLop());
+                List<LopHoc> listLh = lhDAO.findClass(pc.getMaLop().toString());
                 for (LopHoc lh : listLh) {
                     model.addElement(lh.getTenLop());
                 }
@@ -461,7 +462,7 @@ public class TrangChuGV extends javax.swing.JFrame {
     }
 
     public void LoadTenLop() {
-        String maGV = (String) ShareHelper.TaiKhoan.getMaGiaoVien();
+        String maGV = (String) ShareHelper.TaiKhoan.getHoten();
         ResultSet rs = hsDAO.selectWithMaGV(maGV);
 
         try {
@@ -5195,29 +5196,29 @@ public class TrangChuGV extends javax.swing.JFrame {
     }//GEN-LAST:event_Xuat_DiemActionPerformed
 
     private void Nhap_DiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Nhap_DiemActionPerformed
-        try {
-            FileNameExtensionFilter filter = new FileNameExtensionFilter("File csv", "csv");
-            jFileChooser1.setFileFilter(filter);
-            jFileChooser1.showSaveDialog(null);
-            File file = jFileChooser1.getSelectedFile();
-            if (file.exists()) {
-                int dialogButton = JOptionPane.YES_NO_OPTION;
-                int dialogResult = JOptionPane.showConfirmDialog(this, "Bạn muốn nhập điểm vào Lớp: " + cbo_Lop_Diem.getSelectedItem().toString() + " || Môn: " + cbo_Mon_Diem.getSelectedItem().toString() + " || Kì: " + (String) cbo_hocKi.getSelectedItem() + " || Năm: " + (String) cbbNamHoc.getSelectedItem(), "Hệ thống quản lý đào tạo", dialogButton);
-                if (dialogResult == 0) {
-                    System.out.println("starting write user.csv file: " + file.getPath());
-                    fv.readDiemCsv(file.getPath(), (String) cbo_Mon_Diem.getSelectedItem(), (String) cbo_Lop_Diem.getSelectedItem(), (String) cbo_hocKi.getSelectedItem(), (String) cbbNamHoc.getSelectedItem());
-                    DialogHelper.alert(this, "Xuất Excel thành công");
-                } else {
-                    System.out.println("No Option");
-                }
-            } else {
-                System.out.println("starting write file: " + file.getPath());
-                fv.readDiemCsv(file.getPath(), (String) cbo_Mon_Diem.getSelectedItem(), (String) cbo_Lop_Diem.getSelectedItem(), (String) cbo_hocKi.getSelectedItem(), (String) cbbNamHoc.getSelectedItem());
-                DialogHelper.alert(this, "Xuất Excel thành công");
-            }
-        } catch (Exception ex) {
-            DialogHelper.alert(this, "Xuất Excel không thành công");
-        }
+//        try {
+//            FileNameExtensionFilter filter = new FileNameExtensionFilter("File csv", "csv");
+//            jFileChooser1.setFileFilter(filter);
+//            jFileChooser1.showSaveDialog(null);
+//            File file = jFileChooser1.getSelectedFile();
+//            if (file.exists()) {
+//                int dialogButton = JOptionPane.YES_NO_OPTION;
+//                int dialogResult = JOptionPane.showConfirmDialog(this, "Bạn muốn nhập điểm vào Lớp: " + cbo_Lop_Diem.getSelectedItem().toString() + " || Môn: " + cbo_Mon_Diem.getSelectedItem().toString() + " || Kì: " + (String) cbo_hocKi.getSelectedItem() + " || Năm: " + (String) cbbNamHoc.getSelectedItem(), "Hệ thống quản lý đào tạo", dialogButton);
+//                if (dialogResult == 0) {
+//                    System.out.println("starting write user.csv file: " + file.getPath());
+//                    fv.readDiemCsv(file.getPath(), (String) cbo_Mon_Diem.getSelectedItem(), (String) cbo_Lop_Diem.getSelectedItem(), (String) cbo_hocKi.getSelectedItem(), (String) cbbNamHoc.getSelectedItem());
+//                    DialogHelper.alert(this, "Xuất Excel thành công");
+//                } else {
+//                    System.out.println("No Option");
+//                }
+//            } else {
+//                System.out.println("starting write file: " + file.getPath());
+//                fv.readDiemCsv(file.getPath(), (String) cbo_Mon_Diem.getSelectedItem(), (String) cbo_Lop_Diem.getSelectedItem(), (String) cbo_hocKi.getSelectedItem(), (String) cbbNamHoc.getSelectedItem());
+//                DialogHelper.alert(this, "Xuất Excel thành công");
+//            }
+//        } catch (Exception ex) {
+//            DialogHelper.alert(this, "Xuất Excel không thành công");
+//        }
     }//GEN-LAST:event_Nhap_DiemActionPerformed
 
     private void Tai_Form_DiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Tai_Form_DiemActionPerformed
@@ -5299,7 +5300,7 @@ public class TrangChuGV extends javax.swing.JFrame {
             if(tblGridView_Diem.getRowCount() != this.countClass((String) cbo_Lop_Diem.getSelectedItem())){
             DialogHelper.alert(this, "Danh sách lớp có dữ liệu mới, vui lòng update");
             if (DialogHelper.confirm(this, "bạn có muốn tạo lại danh sách") == true) {
-                this.LoadNewDataDiem((String) cbo_Lop_Diem.getSelectedItem(), pcDAO.selectPc(lbl_magiaovien.getText(), cbo_Lop_Diem.getSelectedItem().toString(), cbo_Mon_Diem.getSelectedItem().toString(), cbo_hocKi.getSelectedItem().toString() == "Học kỳ 1" ? false : true).getMaPC());
+                this.LoadNewDataDiem((String) cbo_Lop_Diem.getSelectedItem(), pcDAO.selectPc(lbl_magiaovien.getText(), cbo_Lop_Diem.getSelectedItem().toString(), cbo_Mon_Diem.getSelectedItem().toString(), cbo_hocKi.getSelectedItem().toString() == "Học kỳ 1" ? false : true).getMaPC().toString());
                 this.LoadDataToTableGrade((String) cbo_Lop_Diem.getSelectedItem(), (String) cbo_Mon_Diem.getSelectedItem(), cbo_hocKi.getSelectedItem().toString().equals("Học kỳ 1") ? false : true);
                 DialogHelper.alert(this, "Update dữ liệu thành công");
             } else {

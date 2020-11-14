@@ -5,31 +5,33 @@
  */
 package da.model;
 
+import java.util.UUID;
+
 /**
  *
  * @author Administrator
  */
 public class Mon {
-    private String maMon;
+    private UUID maMon;
     private String tenMon;
     private Boolean hinhThucDG;
-    private String maKhoi;
+    private UUID maKhoi;
 
     public Mon() {
     }
 
-    public Mon(String maMon, String tenMon, Boolean hinhThucDG, String maKhoi) {
+    public Mon(UUID maMon, String tenMon, Boolean hinhThucDG, UUID maKhoi) {
         this.maMon = maMon;
         this.tenMon = tenMon;
         this.hinhThucDG = hinhThucDG;
         this.maKhoi = maKhoi;
     }
 
-    public String getMaMon() {
+    public UUID getMaMon() {
         return maMon;
     }
 
-    public void setMaMon(String maMon) {
+    public void setMaMon(UUID maMon) {
         this.maMon = maMon;
     }
 
@@ -49,11 +51,11 @@ public class Mon {
         this.hinhThucDG = hinhThucDG;
     }
 
-    public String getMaKhoi() {
+    public UUID getMaKhoi() {
         return maKhoi;
     }
 
-    public void setMaKhoi(String maKhoi) {
+    public void setMaKhoi(UUID maKhoi) {
         this.maKhoi = maKhoi;
     }
     

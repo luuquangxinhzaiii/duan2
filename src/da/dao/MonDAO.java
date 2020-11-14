@@ -12,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  *
@@ -23,10 +24,10 @@ public class MonDAO {
 
     private Mon readFromResultSet(ResultSet rs) throws SQLException {
         Mon model = new Mon();
-        model.setMaMon(rs.getString("mamon"));
-        model.setTenMon(rs.getString("tenmon"));
+        model.setMaMon(UUID.fromString(rs.getString("mamon")));
+        model.setTenMon(rs.getString("ten_mon"));
         model.setHinhThucDG(rs.getBoolean("hinhthucdanhgia"));
-        model.setMaKhoi(rs.getString("makhoi"));
+        model.setMaKhoi(UUID.fromString(rs.getString("khoi_makhoi")));
         return model;
     }
     

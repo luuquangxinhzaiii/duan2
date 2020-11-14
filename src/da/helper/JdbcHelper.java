@@ -5,8 +5,6 @@
  */
 package da.helper;
 
-import at.favre.lib.crypto.bcrypt.BCrypt;
-import at.favre.lib.crypto.bcrypt.BCrypt.Hasher;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -18,7 +16,7 @@ import java.sql.SQLException;
  * @author Administrator
  */
 public class JdbcHelper {
-
+    BCrypt bcrypt;
     private static String driver = "org.postgresql.Driver";
     private static String dburl = "jdbc:postgresql://ec2-54-159-107-189.compute-1.amazonaws.com:5432/db21s56kp3iqdc";
     private static String username = "cwswlwvqgwdjjt";
@@ -37,6 +35,8 @@ public class JdbcHelper {
 
         try {
             Connection connection = DriverManager.getConnection(dburl, username, password);
+            String s = BCrypt.hashpw("123", BCrypt.gensalt(12));
+            boolean saa = BCrypt.checkpw("123", "$2a$12$8Qi8sI6aqNKLS1Vmw3FVOedjb.dhXznGIaplOdWFsP/2ubhm2DxIe");
             System.out.println("ok");
         } catch (Exception e) {
             System.out.println("thatbai");
