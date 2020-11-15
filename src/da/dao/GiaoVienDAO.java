@@ -115,14 +115,14 @@ public class GiaoVienDAO {
     public void insert(GiaoVien model) {
         SimpleDateFormat sfd = new SimpleDateFormat("yyyy-MM-dd");
         String sql = "insert into giaovien(magiaovien,hoten,gioitinh,ngaysinh,dienthoai,cmnd,diachi) values(?,?,?,?,?,?,?)";
-        JdbcHelper.executeUpdate(sql, model.getMaGV(), model.getHoTen(), model.isGioiTinh(), sfd.format(model.getNgaySinh()), model.getDienThoai(), model.getCmnd(), model.getDiaChi());
+        JdbcHelper.executeUpdate(sql, model.getMaGV(), model.getHoTen(), model.getGioiTinh(), sfd.format(model.getNgaySinh()), model.getDienThoai(), model.getCmnd(), model.getDiaChi());
 
     }
 
     public void update(GiaoVien model) {
         SimpleDateFormat sfd = new SimpleDateFormat("yyyy-MM-dd");
         String sql = "update giaovien set hoten=?,gioitinh=?,ngaysinh=?,dienthoai=?,cmnd=?,diachi=? where magiaovien=?";
-        JdbcHelper.executeUpdate(sql, model.getHoTen(),model.isGioiTinh(), sfd.format(model.getNgaySinh()),model.getDienThoai(),model.getCmnd(),model.getDiaChi(),model.getMaGV());
+        JdbcHelper.executeUpdate(sql, model.getHoTen(),model.getGioiTinh(), sfd.format(model.getNgaySinh()),model.getDienThoai(),model.getCmnd(),model.getDiaChi(),model.getMaGV());
     }
 
 }

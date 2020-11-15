@@ -30,25 +30,18 @@ public class MonDAO {
         model.setMaKhoi(UUID.fromString(rs.getString("khoi_makhoi")));
         return model;
     }
-    
-    
-    public ResultSet loadDataNotExits(String maKhoi){
-        String sql = "SELECT * from mon where mon.makhoi =? and not EXISTS(SELECT * from phancong WHERE phancong.mamon = mon.mamon)";
-        try {
-            PreparedStatement ps = Jdbc.prepareStatement(sql);
-            ps.setString(1, maKhoi);
-            ResultSet rs = ps.executeQuery();
-            return rs;
-        } catch (Exception ex) {
-            throw new RuntimeException(ex);
-        }
+
+    public List<Mon> loadDataNotExits(UUID maKhoi) {
+        String sql = "SELECT * from mon where mon.khoi_makhoi =? and not EXISTS(SELECT * from phancong WHERE phancong.mon_mamon = mon.mamon)";
+        return select(sql, maKhoi);
     }
-    
-    public void update(Mon model){
+
+    public void update(Mon model) {
         String sql = "update mon set tenmon=?, hinhthucdanhgia=?, makhoi=? where mamon =?";
         Jdbc.executeUpdate(sql, model.getTenMon(), model.getHinhThucDG(), model.getMaKhoi(), model.getMaMon());
     }
-    public void insert(Mon model){
+
+    public void insert(Mon model) {
         String sql = "insert into mon values(?,?,?,?)";
         Jdbc.executeUpdate(sql, model.getMaMon(), model.getTenMon(), model.getHinhThucDG(), model.getMaKhoi());
     }
@@ -57,6 +50,7 @@ public class MonDAO {
         String sql = "select * from mon";
         return select(sql);
     }
+
     private List<Mon> select(String sql, Object... args) {
         List<Mon> list = new ArrayList<>();
         try {
@@ -76,7 +70,7 @@ public class MonDAO {
         return list;
 
     }
-    
+
     public ResultSet selectByKhoi(String maKhoi) {
         String sql = "select * from mon where makhoi=?";
         try {
@@ -102,13 +96,13 @@ public class MonDAO {
 
         }
     }
-    
-       public ResultSet select2(String mamon) {
+
+    public ResultSet select2(String mamon) {
         String sql = "select tenmon from mon where mamon=?";
         try {
             PreparedStatement ps = Jdbc.prepareStatement(sql);
             ps.setString(1, mamon);
-            
+
             ResultSet rs = ps.executeQuery();
             return rs;
         } catch (Exception ex) {
@@ -116,12 +110,13 @@ public class MonDAO {
 
         }
     }
-         public ResultSet select3(String tenmon) {
-        String sql = "select hinhthucdanhgia from mon where tenmon=?";
+
+    public ResultSet select3(String tenmon) {
+        String sql = "select hinhthucdanhgia from mon where ten_mon=?";
         try {
             PreparedStatement ps = Jdbc.prepareStatement(sql);
             ps.setString(1, tenmon);
-            
+
             ResultSet rs = ps.executeQuery();
             return rs;
         } catch (Exception ex) {

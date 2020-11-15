@@ -16,7 +16,7 @@ public class GiaoVien {
     private UUID id;
     private String maGV;
     private String hoTen;
-    private boolean gioiTinh;
+    private Boolean gioiTinh;
     private Date ngaySinh;
     private String diaChi;
     private String dienThoai;
@@ -26,7 +26,7 @@ public class GiaoVien {
     public GiaoVien() {
     }
 
-    public GiaoVien(UUID id, String maGV, String hoTen, boolean gioiTinh, Date ngaySinh, String diaChi, String dienThoai, String cmnd) {
+    public GiaoVien(UUID id, String maGV, String hoTen, Boolean gioiTinh, Date ngaySinh, String diaChi, String dienThoai, String cmnd) {
         this.id =id;
         this.maGV = maGV;
         this.hoTen = hoTen;
@@ -61,11 +61,11 @@ public class GiaoVien {
         this.hoTen = hoTen;
     }
 
-    public boolean isGioiTinh() {
+    public Boolean getGioiTinh() {
         return gioiTinh;
     }
 
-    public void setGioiTinh(boolean gioiTinh) {
+    public void setGioiTinh(Boolean gioiTinh) {
         this.gioiTinh = gioiTinh;
     }
 

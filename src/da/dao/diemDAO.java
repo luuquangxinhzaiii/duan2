@@ -23,35 +23,30 @@ public class diemDAO {
     JdbcHelper Jdbc = new JdbcHelper();
     public void insert(Diem model) {
         SimpleDateFormat sfd = new SimpleDateFormat("yyyy-MM-dd");
-        String sql = "insert into diem(ngay,mahocsinh,diemMieng1,diemMieng2,diemMieng3,diem15phut1,diem15phut2,diem15phut3,diem1Tiet1,diem1Tiet2,diemthi,diemTBM,mapc) values(?,?,?,?,?,?,?,?,?,?,?,?,?)";
-        Jdbc.executeUpdate(sql, sfd.format(model.getNgay()), model.getMaHocSinh(), model.getDiemMieng1(), model.getDiemMieng2()
+        String sql = "insert into diem(id,ngay,hocsinh_id,diemmieng1,diemmieng2,diemmieng3,diem15phut1,diem15phut2,diem15phut3,diem1tiet1,diem1tiet2,diemthi,diemtbm,phancong_maphancong) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        Jdbc.executeUpdate(sql, UUID.randomUUID(),model.getNgay(), model.getMaHocSinh(), model.getDiemMieng1(), model.getDiemMieng2()
         , model.getDiemMieng3(), model.getDiem15p1(), model.getDiem15p2(), model.getDiem15p3(), model.getDiem1Tiet1(), model.getDiem1Tiet2(), model.getDiemThi()
         , model.getDiemTBM(), model.getMapc());
     }
     
-    public ResultSet LoadNewData(String tenLop, String maPc){
-        String sql = "select mahocsinh, hoten, ngaysinh from hocsinh inner join lophoc on hocsinh.lop = lophoc.malop where lophoc.tenlop= ? and not exists (select * from diem where hocsinh.mahocsinh = diem.mahocsinh and diem.mapc = ?) ";
+    public ResultSet LoadNewData(String tenLop, UUID maPc){
+        ResultSet rs = null;
         try{
-            PreparedStatement ps = Jdbc.prepareStatement(sql);
-            ps.setString(1, tenLop);
-            ps.setString(2, maPc);
-            ResultSet rs = ps.executeQuery();
+            String sql = "select hocsinh.id,mahocsinh, hoten, ngaysinh from hocsinh inner join lophoc on hocsinh.lop_id = lophoc.id where lophoc.tenlop= ? and not exists (select * from diem where hocsinh.id = diem.hocsinh_id and diem.phancong_maphancong = ?) ";
+            rs = Jdbc.executeQuery(sql, tenLop,maPc);
             return rs;
-        }catch(SQLException ex){
-            throw new RuntimeException(ex);
+        }catch(Exception e){
+            e.printStackTrace();
         }
+        return rs;
     }
     
-//    public void insertDG(diemDG model) {
-//        String sql = "insert into diem(ngay,magiaovien,mahocsinh,mamon,diemTX1,diemTX2,diemTX3,diemDK1,diemDK2,diemHK,diemTBMdanhgia,hocki) values(?,?,?,?,?,?,?,?,?,?,?,?)";
-//        Jdbc.executeUpdate(sql, model.getNgay(), model.getMaGiaoVien(), model.getMaHocSinh(), model.getMaMon(), model.isDiemTX1(), model.isDiemTX2(), model.isDiemTX3(), model.isDiemDK1(), model.isDiemDK2(), model.isDiemHK(), model.isDiemTBMDanhGia(), model.isHocKi());
-//    }
     
     
     public void update(Diem model) {
         SimpleDateFormat sfd = new SimpleDateFormat("yyyy-MM-dd");
-        String sql = "UPDATE diem SET ngay=?, diemMieng1=?, diemMieng2=?, diemMieng3=?, diem15phut1=?, diem15phut2=?, diem15phut3=?, diem1Tiet1=?, diem1Tiet2=?, diemthi=?, diemTBM=?  WHERE mahocsinh=? and mapc=?";
-        Jdbc.executeUpdate(sql,sfd.format(model.getNgay()),model.getDiemMieng1(), model.getDiemMieng2(), model.getDiemMieng3(), model.getDiem15p1(), model.getDiem15p2(), model.getDiem15p3(),
+        String sql = "UPDATE diem SET ngay=?, diemmieng1=?, diemmieng2=?, diemmieng3=?, diem15phut1=?, diem15phut2=?, diem15phut3=?, diem1tiet1=?, diem1tiet2=?, diemthi=?, diemtbm=?  WHERE hocsinh_id=? and phancong_maphancong=?";
+        Jdbc.executeUpdate(sql,model.getNgay(),model.getDiemMieng1(), model.getDiemMieng2(), model.getDiemMieng3(), model.getDiem15p1(), model.getDiem15p2(), model.getDiem15p3(),
                 model.getDiem1Tiet1(), model.getDiem1Tiet2(), model.getDiemThi(), model.getDiemTBM(), model.getMaHocSinh(), model.getMapc()); 
     }
     
@@ -84,10 +79,10 @@ public class diemDAO {
     }
     
     
-    public ResultSet LoadDataGrade(String maLop, String maMon, boolean ki){        
-        String sql = "SELECT hocsinh.mahocsinh, hocsinh.hoten, hocsinh.gioitinh, diemMieng1, diemMieng2, diemMieng3, diem15phut1, diem15phut2, diem15phut3, diem1Tiet1, diem1Tiet2, diemthi, diemTBM " +
-" FROM diem inner join hocsinh on diem.mahocsinh = hocsinh.mahocsinh inner join phancong on diem.mapc = phancong.mapc inner join mon on phancong.mamon = mon.mamon INNER JOIN lophoc on phancong.malop = lophoc.malop" +
-" where lophoc.tenlop = ? and mon.tenmon = ? and phancong.hocki = ?";
+    public ResultSet LoadDataGrade(String maLop, String maMon, Boolean ki){        
+        String sql = "SELECT hocsinh.mahocsinh, hocsinh.hoten, hocsinh.gioitinh, diemmieng1, diemmieng2, diemmieng3, diem15phut1, diem15phut2, diem15phut3, diem1tiet1, diem1tiet2, diemthi, diemtbm " +
+" FROM diem inner join hocsinh on diem.hocsinh_id = hocsinh.id inner join phancong on diem.phancong_maphancong = phancong.maphancong inner join mon on phancong.mon_mamon = mon.mamon INNER JOIN lophoc on phancong.lop_id = lophoc.id" +
+" where lophoc.tenlop = ? and mon.ten_mon = ? and phancong.hocki = ?";
         try{
             PreparedStatement ps = Jdbc.prepareStatement(sql);
             ps.setString(1, maLop);
@@ -119,7 +114,7 @@ public class diemDAO {
     }
     
     public ResultSet findByClass(String tenLop){
-        String sqll = "select mahocsinh, hoten, gioitinh  from hocsinh inner join lophoc on hocsinh.lop = lophoc.malop where lophoc.tenlop = ?";
+        String sqll = "select mahocsinh, hoten, gioitinh  from hocsinh inner join lophoc on hocsinh.lop_id = lophoc.id where lophoc.tenlop = ?";
         try{
             PreparedStatement ps = Jdbc.prepareStatement(sqll);
             ps.setString(1, tenLop);
@@ -131,8 +126,8 @@ public class diemDAO {
     }
     
     public ResultSet kqHk1(String tenLop){
-        String sql = "select hocsinh.mahocsinh, hocsinh.hoten, hocsinh.ngaysinh, convert(avg(diemTBM),float) as TBhocKi1 FROM diem inner join hocsinh on \n" +
-"diem.mahocsinh = hocsinh.mahocsinh inner join phancong on diem.mapc = phancong.mapc inner join lophoc on phancong.malop = lophoc.malop inner join mon on phancong.mamon = mon.mamon where lophoc.tenlop = ? and mon.hinhthucdanhgia = 1 and hocki = 1 group by hocsinh.hoten, hocsinh.mahocsinh, hocsinh.ngaysinh";
+        String sql = "select hocsinh.mahocsinh, hocsinh.hoten, hocsinh.ngaysinh, avg(diemtbm) as TBhocKi1 FROM diem inner join hocsinh on \n" +
+"diem.hocsinh_id = hocsinh.id inner join phancong on diem.phancong_maphancong = phancong.maphancong inner join lophoc on phancong.lop_id = lophoc.id inner join mon on phancong.mon_mamon = mon.mamon where lophoc.tenlop = ? and mon.hinhthucdanhgia = true and hocki = true group by hocsinh.hoten, hocsinh.mahocsinh, hocsinh.ngaysinh";
         try{
             PreparedStatement ps = Jdbc.prepareStatement(sql);
             ps.setString(1, tenLop);
@@ -144,8 +139,8 @@ public class diemDAO {
     }
     
     public ResultSet kqHk2(String tenLop){
-        String sql = "select hocsinh.mahocsinh, hocsinh.hoten, hocsinh.ngaysinh, convert(avg(diemTBM),float) as TBhocKi2 FROM diem inner join hocsinh on \n" +
-"diem.mahocsinh = hocsinh.mahocsinh inner join phancong on diem.mapc = phancong.mapc inner join lophoc on phancong.malop = lophoc.malop inner join mon on phancong.mamon = mon.mamon where lophoc.tenlop = ? and mon.hinhthucdanhgia = 1 and hocki = 0 group by hocsinh.hoten, hocsinh.mahocsinh, hocsinh.ngaysinh";
+        String sql = "select hocsinh.mahocsinh, hocsinh.hoten, hocsinh.ngaysinh, avg(diemtbm) as TBhocKi2 FROM diem inner join hocsinh on \n" +
+"diem.hocsinh_id = hocsinh.id inner join phancong on diem.phancong_maphancong = phancong.maphancong inner join lophoc on phancong.lop_id = lophoc.id inner join mon on phancong.mon_mamon = mon.mamon where lophoc.tenlop = ? and mon.hinhthucdanhgia = true and hocki = false group by hocsinh.hoten, hocsinh.mahocsinh, hocsinh.ngaysinh";
         try{
             PreparedStatement ps = Jdbc.prepareStatement(sql);
             ps.setString(1, tenLop);

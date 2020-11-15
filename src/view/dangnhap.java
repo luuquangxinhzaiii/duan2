@@ -53,6 +53,7 @@ public class dangnhap extends javax.swing.JFrame {
     TaiKhoanDAO uDAO = new TaiKhoanDAO();
     int numberOfCharactor = 8;
     GiaoVienDAO gvDAO = new GiaoVienDAO();
+
     public dangnhap() {
         initComponents();
         slidershow();
@@ -60,12 +61,10 @@ public class dangnhap extends javax.swing.JFrame {
 
     private void sendmail() {
         RanDom rand = new RanDom();
-        String code = rand.randomAlphaNumeric(numberOfCharactor);       
+        String code = rand.randomAlphaNumeric(numberOfCharactor);
         this.sendmail(txt_email.getText(), code);
         macode.setText(code);
     }
-
-    
 
     public void updatepass() {
 
@@ -106,19 +105,20 @@ public class dangnhap extends javax.swing.JFrame {
             if (taikhoan != null) {
                 String matKhau2 = taikhoan.getPassWord();
                 String roles = taikhoan.getRole();
+
                 if (BCrypt.checkpw(matKhau, matKhau2)) {
                     if (roles.equals("BGH")) {
                         TrangChuBDH bdh = new TrangChuBDH();
                         bdh.setVisible(maximized);
                         this.dispose();
-                    }else if(roles.equals("GV")) {
+                    } else if (roles.equals("GV")) {
                         GiaoVien giaovien = gvDAO.findByUUID(taikhoan.getGiaovien_id());
                         taikhoan.setHoten(giaovien.getHoTen());
                         ShareHelper.TaiKhoan = taikhoan;
                         TrangChuGV bdh = new TrangChuGV();
                         bdh.setVisible(maximized);
                         this.dispose();
-                    }else if(roles.equals("DT")) {
+                    } else if (roles.equals("DT")) {
                         TrangChuHC bdh = new TrangChuHC();
                         bdh.setVisible(maximized);
                         this.dispose();
@@ -192,8 +192,8 @@ public class dangnhap extends javax.swing.JFrame {
         String email = txt_email.getText();
         try {
             TaiKhoan nhanVien = uDAO.findById(email);
-            if (nhanVien != null) {             
-                this.sendmail();                              
+            if (nhanVien != null) {
+                this.sendmail();
                 pnlBody.removeAll();
                 pnlBody.repaint();
                 pnlBody.revalidate();
@@ -1124,21 +1124,21 @@ public class dangnhap extends javax.swing.JFrame {
     }//GEN-LAST:event_lbl_quenmkMouseClicked
 
     private void btn_login1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_login1ActionPerformed
-      this.checkuser();
+        this.checkuser();
     }//GEN-LAST:event_btn_login1ActionPerformed
 
     private void btn_login2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_login2ActionPerformed
-     
-        String code=macode.getText();
-         String ma=txt_code.getText();
-        if(ma.equals(code)){
+
+        String code = macode.getText();
+        String ma = txt_code.getText();
+        if (ma.equals(code)) {
             pnlBody.removeAll();
             pnlBody.repaint();
             pnlBody.revalidate();
             pnlBody.add(pnlNews3);
             pnlBody.repaint();
             pnlBody.revalidate();
-      }else{
+        } else {
             txtthongbao.setText("Vui lòng kiểm tra lại.");
         }
 
@@ -1179,8 +1179,8 @@ public class dangnhap extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_tentkKeyPressed
 
     private void txtthongbaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtthongbaoMouseClicked
-       this.checkuser();
-       txtthongbao.setText(null);
+        this.checkuser();
+        txtthongbao.setText(null);
     }//GEN-LAST:event_txtthongbaoMouseClicked
 
     /**

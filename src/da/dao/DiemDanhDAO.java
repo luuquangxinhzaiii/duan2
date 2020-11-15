@@ -27,7 +27,7 @@ public class DiemDanhDAO {
     }
     
     public int selectNghiCoPhep(String maHS){
-        String sql = "select count(mahocsinh) as solannghihoc from diemdanh where mahocsinh = ? and trangthai = 0 ";
+        String sql = "select count(hocsinh_id) as solannghihoc from diemdanh join hocsinh on diemdanh.hocsinh_id = hocsinh.id where hocsinh.mahocsinh = ? and diemdanh.trangthai = true ";
         int sobuoinghicophep = 0;
         try{
             PreparedStatement ps = Jdbc.prepareStatement(sql);
@@ -43,7 +43,7 @@ public class DiemDanhDAO {
     }
     
     public int selectNghiKoCoPhep(String maHS){
-        String sql = "select count(mahocsinh) as solannghihoc from diemdanh where mahocsinh = ? and trangthai = 1 ";
+        String sql = "select count(hocsinh_id) as solannghihoc from diemdanh join hocsinh on diemdanh.hocsinh_id = hocsinh.id where hocsinh.mahocsinh = ? and diemdanh.trangthai = false ";
         int sobuoinghikophep = 0;
         try{
             PreparedStatement ps = Jdbc.prepareStatement(sql);

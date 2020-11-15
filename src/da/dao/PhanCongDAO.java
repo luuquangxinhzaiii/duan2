@@ -25,12 +25,16 @@ public class PhanCongDAO {
 
     private PhanCong readFromResultSet(ResultSet rs) throws SQLException {
         PhanCong model = new PhanCong();
-        model.setMaPC(UUID.fromString(rs.getString("mapc")));
+        model.setMaPC(UUID.fromString(rs.getString("maphancong")));
         model.setMaLop(UUID.fromString(rs.getString("lop_id")));
         model.setMaGV(UUID.fromString(rs.getString("giaovien_id")));
         model.setVaiTro(rs.getBoolean("vaitro"));
         model.setMaMon(UUID.fromString(rs.getString("mon_mamon")));
-        model.setHocKi(rs.getBoolean("hocki"));
+        if(rs.getBoolean("vaitro") == true){
+            model.setHocKi(rs.getBoolean("hocki"));
+        }else{
+            model.setHocKi(null);
+        }
         model.setMaNamHoc(UUID.fromString(rs.getString("namhoc_manamhoc")));
         return model;
     }
@@ -101,17 +105,17 @@ public class PhanCongDAO {
         }
     }
     
-    public PhanCong selectPc(String maGv,String tenLop, String tenMon, boolean hocKi){
-        String sql = "SELECT * FROM `phancong` inner join mon on phancong.mamon = mon.mamon INNER JOIN lophoc on phancong.malop = lophoc.malop where phancong.magiaovien = ? and lophoc.tenlop = ? and mon.tenmon= ? and hocki= ?";
+    public PhanCong selectPc(UUID maGv,String tenLop, String tenMon, Boolean hocKi){
+        String sql = "SELECT * FROM phancong inner join mon on phancong.mon_mamon = mon.mamon INNER JOIN lophoc on phancong.lop_id = lophoc.id where phancong.giaovien_id = ? and lophoc.tenlop = ? and mon.ten_mon= ? and hocki= ?";
         List<PhanCong> list = select(sql, maGv,tenLop, tenMon, hocKi);
         return list.size()>0 ? list.get(0) : null;
     }
     
     public ResultSet select5(String magv, boolean hocKi) {
-        String sql = "select pc.maphancong,pc.lop_id,gv.hoten,m.ten_mon,m.hinhthucdanhgia,pc.vaitro,pc.giaovien_id from phancong as pc join mon as m on pc.mon_mamon=m.mamon join giaovien as gv on pc.giaovien_id=gv.id join namhoc as nh on pc.namhoc_manamhoc=nh.manamhoc and pc.giaovien_id=? and pc.hocki=?";
+        String sql = "select pc.maphancong,pc.lop_id,gv.hoten,m.ten_mon,m.hinhthucdanhgia,pc.vaitro,pc.giaovien_id from phancong as pc join mon as m on pc.mon_mamon=m.mamon join giaovien as gv on pc.giaovien_id=gv.id join namhoc as nh on pc.namhoc_manamhoc=nh.manamhoc and gv.magiaovien=? and pc.hocki=?";
         try {
             PreparedStatement ps = Jdbc.prepareStatement(sql);
-            ps.setString(1, magv);
+            ps.setString(1, magv.toString());
             ps.setBoolean(2, hocKi);
             ResultSet rs = ps.executeQuery();
             return rs;
@@ -123,15 +127,22 @@ public class PhanCongDAO {
     
     
     
-    public List<PhanCong> selectLopCN(String maGv) {
-        String sql = "select * from phancong where magiaovien = ? and vaitro = 0";
-        List<PhanCong> list = select(sql, maGv);
-        return list;
+    public ResultSet selectLopCN(String maGv) {
+        String sql = "select lophoc.tenlop from phancong join lophoc on phancong.lop_id = lophoc.id join giaovien on phancong.giaovien_id = giaovien.id where giaovien.magiaovien = ? and vaitro = false";
+        try {
+            PreparedStatement ps = Jdbc.prepareStatement(sql);
+            ps.setString(1, maGv);
+            ResultSet rs = ps.executeQuery();
+            return rs;
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+
+        }
     }
     
-    public List<PhanCong> select6(String maGv, boolean hocKi) {
-        String sql = "select * from phancong where magiaovien = ? and hocki=?";
-        List<PhanCong> list = select(sql, maGv, hocKi);
+    public List<PhanCong> select6(String maGv, boolean hocKi, String tenMon) {
+        String sql = "select * from phancong join giaovien on phancong.giaovien_id = giaovien.id join mon on phancong.mon_mamon = mon.mamon where giaovien.magiaovien = ? and phancong.hocki=? and mon.ten_mon=?";
+        List<PhanCong> list = select(sql, maGv, hocKi,tenMon);
         return list;
     }
 
