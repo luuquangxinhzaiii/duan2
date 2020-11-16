@@ -134,8 +134,8 @@ public class LopHocDAO {
         return list.size() > 0 ? list.get(0) : null;
     }
     
-    public List<LopHoc> findClass(String maLop) {
-        String sql = "SELECT * FROM lophoc WHERE malop=?";
+    public List<LopHoc> findClass(UUID maLop) {
+        String sql = "SELECT * FROM lophoc WHERE id=?";
         List<LopHoc> list = select(sql, maLop);
         return list.size() > 0 ? list : null;
     }
