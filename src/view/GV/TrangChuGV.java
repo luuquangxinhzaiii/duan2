@@ -460,13 +460,13 @@ public class TrangChuGV extends javax.swing.JFrame {
     }
 
     public void LoadTenLop() {
-        String maGV = (String) ShareHelper.TaiKhoan.getHoten();
-        ResultSet rs = hsDAO.selectWithMaGV(maGV);
-
+        UUID maGV =  ShareHelper.TaiKhoan.getGiaovien_id();
+        GiaoVien giaoVien = gvDAO.findByUUID(ShareHelper.TaiKhoan.getGiaovien_id());
+        ResultSet rs = pcDAO.selectLopCN(giaoVien.getMaGV());
         try {
-            if (rs.next()) {
-                lbl_Lop1.setText(rs.getString("lh.tenlop"));
-                lbl_giaovien.setText("Tên GV: " + rs.getString("gv.hoten"));
+            while (rs.next()) {
+                lbl_Lop1.setText(rs.getString("tenlop"));
+//                lbl_giaovien.setText("Tên GV: " + rs.getString("gv.hoten"));
             }
         } catch (Exception e) {
             e.printStackTrace();
