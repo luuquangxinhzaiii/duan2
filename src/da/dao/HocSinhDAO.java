@@ -132,11 +132,11 @@ public class HocSinhDAO {
         }
     }
 
-    public ResultSet selectWithMaGV(String magiaovien) {
-        String sql = "select gv.hoten,lh.tenlop from giaovien as gv  join phancong as pc on gv.id=pc.giaovien_id join lophoc as lh on pc.lop_id=lh.id and gv.magiaovien=?";
+    public ResultSet selectWithMaGV(UUID magiaovien) {
+        String sql = "select gv.hoten,lh.tenlop from giaovien as gv  join phancong as pc on gv.id=pc.giaovien_id join lophoc as lh on pc.lop_id=lh.id and gv.magiaovien=? where pc.vaitro = false";
         try {
             PreparedStatement ps = Jdbc.prepareStatement(sql);
-            ps.setString(1, magiaovien);
+            ps.setString(1, magiaovien.toString());
 
             ResultSet rs = ps.executeQuery();
             return rs;
