@@ -5,8 +5,10 @@
  */
 package da.dao;
 
+import da.helper.DateHelper;
 import da.helper.JdbcHelper;
 import da.model.GiaoVien;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -29,6 +31,7 @@ public class GiaoVienDAO {
         model.setMaGV(rs.getString("magiaovien"));
         model.setHoTen(rs.getString("hoten"));
         model.setGioiTinh(rs.getBoolean("gioitinh"));
+        model.setEmail(rs.getString("email"));
         model.setNgaySinh(rs.getDate("ngaysinh"));
         model.setDiaChi(rs.getString("diachi"));
         model.setDienThoai(rs.getString("dienthoai"));
@@ -100,7 +103,7 @@ public class GiaoVienDAO {
     }
 
     public ResultSet select4() {
-        String sql = "select max(id)  from giaovien";
+        String sql = "select max(substring(magiaovien,3,5)) as max from giaovien";
         try {
             PreparedStatement ps = Jdbc.prepareStatement(sql);
 
@@ -113,9 +116,9 @@ public class GiaoVienDAO {
     }
 
     public void insert(GiaoVien model) {
-        SimpleDateFormat sfd = new SimpleDateFormat("yyyy-MM-dd");
-        String sql = "insert into giaovien(magiaovien,hoten,gioitinh,ngaysinh,dienthoai,cmnd,diachi) values(?,?,?,?,?,?,?)";
-        JdbcHelper.executeUpdate(sql, model.getMaGV(), model.getHoTen(), model.getGioiTinh(), sfd.format(model.getNgaySinh()), model.getDienThoai(), model.getCmnd(), model.getDiaChi());
+        Date ngaysinh = Date.valueOf(DateHelper.toString(model.getNgaySinh()));
+        String sql = "insert into giaovien(id,magiaovien,hoten,gioitinh,email,ngaysinh,dienthoai,cmnd,diachi) values(?,?,?,?,?,?,?,?,?)";
+        JdbcHelper.executeUpdate(sql, UUID.randomUUID(),model.getMaGV(), model.getHoTen(), model.getGioiTinh(),model.getEmail(), ngaysinh, model.getDienThoai(), model.getCmnd(), model.getDiaChi());
 
     }
 

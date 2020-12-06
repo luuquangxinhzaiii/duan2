@@ -37,18 +37,24 @@ public class MonDAO {
     }
 
     public void update(Mon model) {
-        String sql = "update mon set tenmon=?, hinhthucdanhgia=?, makhoi=? where mamon =?";
+        String sql = "update mon set ten_mon=?, hinhthucdanhgia=?, khoi_makhoi=? where mamon =?";
         Jdbc.executeUpdate(sql, model.getTenMon(), model.getHinhThucDG(), model.getMaKhoi(), model.getMaMon());
     }
 
     public void insert(Mon model) {
-        String sql = "insert into mon values(?,?,?,?)";
-        Jdbc.executeUpdate(sql, model.getMaMon(), model.getTenMon(), model.getHinhThucDG(), model.getMaKhoi());
+        String sql = "insert into mon(mamon,ten_mon,hinhthucdanhgia,khoi_makhoi) values(?,?,?,?)";
+        Jdbc.executeUpdate(sql, UUID.randomUUID(), model.getTenMon(), model.getHinhThucDG(), model.getMaKhoi());
     }
 
     public List<Mon> selectSubject() {
         String sql = "select * from mon";
         return select(sql);
+    }
+    
+    public Mon findByTenMon(String tenMon) {
+        String sql = "select * from mon where ten_mon=?";
+        List<Mon> list = select(sql, tenMon);
+        return list.size()>0 ? list.get(0) : null ;
     }
 
     private List<Mon> select(String sql, Object... args) {
@@ -88,12 +94,23 @@ public class MonDAO {
         String sql = "select *  from mon";
         try {
             PreparedStatement ps = Jdbc.prepareStatement(sql);
-
             ResultSet rs = ps.executeQuery();
             return rs;
         } catch (Exception ex) {
             throw new RuntimeException(ex);
 
+        }
+    }
+    
+    public ResultSet selecttoPC(String tenkhoi) {
+        String sql = "select * from mon join khoi on mon.khoi_makhoi = khoi.makhoi where khoi.tenkhoi = ? and not exists (select * from phancong where mon.mamon = phancong.mon_mamon ) ";
+        try {
+            PreparedStatement ps = Jdbc.prepareStatement(sql);
+            ps.setString(1, tenkhoi);
+            ResultSet rs = ps.executeQuery();
+            return rs;
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
         }
     }
 

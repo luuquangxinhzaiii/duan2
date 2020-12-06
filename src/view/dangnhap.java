@@ -99,22 +99,20 @@ public class dangnhap extends javax.swing.JFrame {
     public void Login() {
         String email = txt_UserName.getText();
         String matKhau = new String(pas_PassWord.getPassword());
-
         try {
             TaiKhoan taikhoan = uDAO.findById(email);
             if (taikhoan != null) {
                 String matKhau2 = taikhoan.getPassWord();
                 String roles = taikhoan.getRole();
-
+                GiaoVien giaovien = gvDAO.findByUUID(taikhoan.getGiaovien_id());
+                taikhoan.setHoten(giaovien.getHoTen());
+                ShareHelper.TaiKhoan = taikhoan;
                 if (BCrypt.checkpw(matKhau, matKhau2)) {
                     if (roles.equals("BGH")) {
                         TrangChuBDH bdh = new TrangChuBDH();
                         bdh.setVisible(maximized);
                         this.dispose();
                     } else if (roles.equals("GV")) {
-                        GiaoVien giaovien = gvDAO.findByUUID(taikhoan.getGiaovien_id());
-                        taikhoan.setHoten(giaovien.getHoTen());
-                        ShareHelper.TaiKhoan = taikhoan;
                         TrangChuGV bdh = new TrangChuGV();
                         bdh.setVisible(maximized);
                         this.dispose();
@@ -476,8 +474,14 @@ public class dangnhap extends javax.swing.JFrame {
         lbl_user.setText("Email :");
 
         txt_UserName.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
+        txt_UserName.setText("gv01@gmail.com");
         txt_UserName.setToolTipText("");
         txt_UserName.setBorder(null);
+        txt_UserName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txt_UserNameActionPerformed(evt);
+            }
+        });
         txt_UserName.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 txt_UserNameKeyPressed(evt);
@@ -1182,6 +1186,10 @@ public class dangnhap extends javax.swing.JFrame {
         this.checkuser();
         txtthongbao.setText(null);
     }//GEN-LAST:event_txtthongbaoMouseClicked
+
+    private void txt_UserNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txt_UserNameActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txt_UserNameActionPerformed
 
     /**
      * @param args the command line arguments

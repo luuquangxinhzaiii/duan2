@@ -80,15 +80,14 @@ public class TrangChuGV extends javax.swing.JFrame {
 
     public TrangChuGV() {
         initComponents();
-        lbl_magiaovien.setText( ShareHelper.TaiKhoan.getHoten());
+        lbl_magiaovien.setText(ShareHelper.TaiKhoan.getHoten());
         this.loadtoCBBNamHoc();
         this.LoadTenLop();
         this.loadCBB();
         this.sisoTong();
         this.sisoTongNam();
         this.sisoNu();
-        this.LoadMonDay();
-        this.LoadLopDay();
+
         this.LoadLopChuNhiem();
     }
 
@@ -364,29 +363,29 @@ public class TrangChuGV extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
-    
-    public int TongMonCoDiem(){
-        try{
-            int i=0;
+
+    public int TongMonCoDiem() {
+        try {
+            int i = 0;
             List<Mon> mon = mhDAO.loadDataNotExits(lhDAO.findByTenLop(cbo_LoCN_KQCN.getSelectedItem().toString()).getMaKhoi());
             i = mon.size();
             return i;
-        }catch(Exception e){
+        } catch (Exception e) {
             DialogHelper.alert(this, "Lỗi checkDATA");
             e.printStackTrace();
         }
         return 0;
     }
-    
-    public int countSubject(){
-        try{
-            int i=0;
+
+    public int countSubject() {
+        try {
+            int i = 0;
             ResultSet rs = mhDAO.selectByKhoi(lhDAO.findByTenLop(cbo_LoCN_KQCN.getSelectedItem().toString()).getMaKhoi().toString());
             while (rs.next()) {
                 i++;
             }
             return i;
-        }catch(Exception e){
+        } catch (Exception e) {
             DialogHelper.alert(this, "Lỗi checkDATA");
             e.printStackTrace();
         }
@@ -412,7 +411,7 @@ public class TrangChuGV extends javax.swing.JFrame {
         DefaultComboBoxModel model = (DefaultComboBoxModel) cbo_Mon_Diem.getModel();
         GiaoVien giaoVien = gvDAO.findByUUID(ShareHelper.TaiKhoan.getGiaovien_id());
         try {
-            ResultSet rs = pcDAO.select5(giaoVien.getMaGV(),cbo_hocKi.getSelectedItem().toString() == "Học kỳ 1" ? true : false);
+            ResultSet rs = pcDAO.select5(giaoVien.getMaGV(), cbo_hocKi.getSelectedItem().toString() == "Học kỳ 1" ? true : false);
             while (rs.next()) {
                 String tenMon = rs.getString("ten_mon");
                 model.addElement(tenMon);
@@ -423,7 +422,7 @@ public class TrangChuGV extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
-    
+
     public void LoadLopChuNhiem() {
         DefaultComboBoxModel model = (DefaultComboBoxModel) cbo_LoCN_KQCN.getModel();
         GiaoVien giaoVien = gvDAO.findByUUID(ShareHelper.TaiKhoan.getGiaovien_id());
@@ -491,21 +490,35 @@ public class TrangChuGV extends javax.swing.JFrame {
         }
     }
 
+    public void timkiem() {
+        String tenLop = (String) cbo_Lop_Diem.getSelectedItem();
+        String tenMon = (String) cbo_Mon_Diem.getSelectedItem();
+        boolean ki = cbo_hocKi.getSelectedItem().toString().equals("Học kỳ 1") ? true : false;
+        this.LoadDataToTableGrade(tenLop, tenMon, ki);
+        if (tblGridView_Diem.getRowCount() == 0) {
+            DialogHelper.alert(this, "Không có dữ liệu điểm, vui lòng tạo mới");
+            if (DialogHelper.confirm(this, "bạn có muốn tạo mới danh sách") == true) {
+                this.LoadNewDataToTableGrade(tenLop);
+                this.InsertDataFirst();
+                DialogHelper.alert(this, "Thành Công");
+            } else {
+                DialogHelper.alert(this, "vui lòng kiểm tra lại");
+            }
+        } else {
+            this.LoadDataToTableGrade(tenLop, tenMon, ki);
+        }
+    }
+
     public void loadCBB() {
         model.setRowCount(0);
         try {
             String nienHoc = (String) cbbNamHoc.getSelectedItem();
-
-            boolean Ki = cbo_hocKi.getSelectedItem().toString().equals("Học kỳ 1") ? true : false;
-
             String tenLop = lbl_Lop1.getText();
-
-            ResultSet rs = hsDAO.loadWith2(tenLop, Ki, nienHoc);
+            ResultSet rs = hsDAO.loadWith2(tenLop, nienHoc);
 
             while (rs.next()) {
                 Vector row = new Vector();
                 row.add(rs.getString("mahocsinh"));
-
                 row.add(rs.getString("hoten"));
                 row.add(rs.getDate("ngaysinh"));
                 row.add(rs.getBoolean("gioitinh") ? "Nam" : "Nữ");
@@ -554,6 +567,19 @@ public class TrangChuGV extends javax.swing.JFrame {
         }
     }
 
+    public void reset() {
+        if (tblGridView_Diem.getRowCount() != this.countClass((String) cbo_Lop_Diem.getSelectedItem())) {
+            DialogHelper.alert(this, "Danh sách lớp có dữ liệu mới, vui lòng update");
+            if (DialogHelper.confirm(this, "bạn có muốn tạo lại danh sách") == true) {
+                this.LoadNewDataDiem((String) cbo_Lop_Diem.getSelectedItem(), pcDAO.selectPc(ShareHelper.TaiKhoan.getGiaovien_id(), cbo_Lop_Diem.getSelectedItem().toString(), cbo_Mon_Diem.getSelectedItem().toString(), cbo_hocKi.getSelectedItem().toString().equals("Học kỳ 1") ? true : false).getMaPC());
+                this.LoadDataToTableGrade((String) cbo_Lop_Diem.getSelectedItem(), (String) cbo_Mon_Diem.getSelectedItem(), cbo_hocKi.getSelectedItem().toString().equals("Học kỳ 1") ? true : false);
+                DialogHelper.alert(this, "Update dữ liệu thành công");
+            } else {
+                DialogHelper.alert(this, "vui lòng kiểm tra lại");
+            }
+        }
+    }
+
     public void sisoNu() {
         int tong = Integer.parseInt(txtSS.getText());
         int nam = Integer.parseInt(txtSSNam.getText());
@@ -561,6 +587,37 @@ public class TrangChuGV extends javax.swing.JFrame {
         String m = Integer.toString(nu);
 
         txtssNu.setText(m);
+    }
+
+    public void loadkqcuoinam() {
+        String tenLop = cbo_LoCN_KQCN.getSelectedItem().toString();
+        if (tenLop.equals("")) {
+            DialogHelper.alert(this, "vui lòng chọn lớp bạn chủ nhiệm");
+        } else if (this.TongMonCoDiem() != 0) {
+            DialogHelper.alert(this, "vui lòng nhập đầy đủ điểm của từng môn theo dang sách môn");
+            DialogHelper.alert(this, "Dưới đây là tổng hợp điểm của những môn đã có điểm");
+            this.LoadKetQua(tenLop);
+            lbl_SiSo.setText(String.valueOf(tblGridView_KetQuaCuoiNam.getRowCount()));
+        } else {
+            this.LoadKetQua(tenLop);
+            lbl_SiSo.setText(String.valueOf(tblGridView_KetQuaCuoiNam.getRowCount()));
+        }
+    }
+
+    public void resetketquacuoinam() {
+        String tenLop = cbo_LoCN_KQCN.getSelectedItem().toString();
+        if (tblGridView_KetQuaCuoiNam.getRowCount() != this.countClass(tenLop)) {
+            DialogHelper.alert(this, "Danh sách lớp có dữ liệu mới, vui lòng update");
+            if (DialogHelper.confirm(this, "bạn có muốn tạo lại danh sách") == true) {
+                this.LoadKetQua(tenLop);
+                DialogHelper.alert(this, "Update dữ liệu thành công");
+                lbl_SiSo.setText(String.valueOf(tblGridView_KetQuaCuoiNam.getRowCount()));
+            } else {
+                DialogHelper.alert(this, "Vui lòng nhập đầy đủ thông tin điểm cho từng học sinh");
+            }
+        } else {
+            DialogHelper.alert(this, "danh sách đã được làm mới");
+        }
     }
 
     AnimationClass ac = new AnimationClass();
@@ -865,7 +922,7 @@ public class TrangChuGV extends javax.swing.JFrame {
         lbl_gt3 = new javax.swing.JLabel();
         lbl_mhs3 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        txt_searchdiem = new javax.swing.JTextField();
         jLabel24 = new javax.swing.JLabel();
         cbo_Lop_Diem = new javax.swing.JComboBox<>();
         jLabel25 = new javax.swing.JLabel();
@@ -876,8 +933,6 @@ public class TrangChuGV extends javax.swing.JFrame {
         Xuat_Diem = new javax.swing.JButton();
         Nhap_Diem = new javax.swing.JButton();
         Tai_Form_Diem = new javax.swing.JButton();
-        btn_TimKiem = new javax.swing.JButton();
-        btn_Update = new javax.swing.JButton();
         maintrangchu = new javax.swing.JPanel();
         qlyhocba = new javax.swing.JPanel();
         qlyhocsinh = new javax.swing.JPanel();
@@ -947,7 +1002,7 @@ public class TrangChuGV extends javax.swing.JFrame {
         txtssNu = new javax.swing.JLabel();
         kquacuoinam = new javax.swing.JPanel();
         jLabel84 = new javax.swing.JLabel();
-        jTextField7 = new javax.swing.JTextField();
+        txt_timkiemkqcuoinam = new javax.swing.JTextField();
         jLabel85 = new javax.swing.JLabel();
         jLabel124 = new javax.swing.JLabel();
         lbl_SiSo = new javax.swing.JLabel();
@@ -998,8 +1053,6 @@ public class TrangChuGV extends javax.swing.JFrame {
         tblGridView_KetQuaCuoiNam = new javax.swing.JTable();
         Xuat_KQCN = new javax.swing.JButton();
         cbo_LoCN_KQCN = new javax.swing.JComboBox<>();
-        btn_capNhatKqCuoiNam = new javax.swing.JButton();
-        btn_timKiem = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(244, 248, 251));
@@ -1532,10 +1585,10 @@ public class TrangChuGV extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(hocbahocsinh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(dshocsinh, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(dshocsinh, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addComponent(guiphanhoi, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(trangchu, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(trangchu, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addComponent(diemdanh, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(diemmonhoc, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(ketquacuoinam, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -2860,7 +2913,11 @@ public class TrangChuGV extends javax.swing.JFrame {
         jLabel23.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
         jLabel23.setText("Tìm kiếm :");
 
-        jTextField3.setText("jTextField1");
+        txt_searchdiem.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_searchdiemKeyReleased(evt);
+            }
+        });
 
         jLabel24.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
         jLabel24.setText("Lớp dạy :");
@@ -2911,21 +2968,6 @@ public class TrangChuGV extends javax.swing.JFrame {
             }
         });
 
-        btn_TimKiem.setText("Tìm Kiếm");
-        btn_TimKiem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_TimKiemActionPerformed(evt);
-            }
-        });
-
-        btn_Update.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-update-32.png"))); // NOI18N
-        btn_Update.setText("Cập Nhật");
-        btn_Update.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_UpdateActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout qlydiemLayout = new javax.swing.GroupLayout(qlydiem);
         qlydiem.setLayout(qlydiemLayout);
         qlydiemLayout.setHorizontalGroup(
@@ -2956,66 +2998,56 @@ public class TrangChuGV extends javax.swing.JFrame {
                                             .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
                                         .addGap(55, 55, 55)
                                         .addGroup(qlydiemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(txt_searchdiem, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(cbo_Mon_Diem, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
                             .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(73, 73, 73)
+                        .addGap(78, 78, 78)
                         .addGroup(qlydiemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(Xuat_Diem, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(Nhap_Diem, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(Tai_Form_Diem, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnchinhsua, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(qlydiemLayout.createSequentialGroup()
-                                .addComponent(btn_TimKiem)
-                                .addGap(18, 18, 18)
-                                .addComponent(btn_Update, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(37, 37, 37))))
+                            .addComponent(btnchinhsua, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(34, 34, 34))))
         );
         qlydiemLayout.setVerticalGroup(
             qlydiemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(qlydiemLayout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(4, 4, 4)
                 .addGroup(qlydiemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(qlydiemLayout.createSequentialGroup()
-                        .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(4, 4, 4))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, qlydiemLayout.createSequentialGroup()
-                        .addComponent(btnchinhsua, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                .addGroup(qlydiemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(qlydiemLayout.createSequentialGroup()
-                        .addComponent(jPanel25, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(13, 13, 13)
+                        .addGroup(qlydiemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(qlydiemLayout.createSequentialGroup()
+                                .addComponent(jPanel25, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(13, 13, 13))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, qlydiemLayout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(btnchinhsua, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(Xuat_Diem, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(Nhap_Diem, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(Tai_Form_Diem, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(24, 24, 24)))
                         .addComponent(bodydiem, javax.swing.GroupLayout.PREFERRED_SIZE, 346, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(qlydiemLayout.createSequentialGroup()
-                        .addGroup(qlydiemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(qlydiemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(btn_TimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(btn_Update, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, qlydiemLayout.createSequentialGroup()
-                                .addGroup(qlydiemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(qlydiemLayout.createSequentialGroup()
-                                        .addComponent(Xuat_Diem, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(Nhap_Diem, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(Tai_Form_Diem, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(qlydiemLayout.createSequentialGroup()
-                                        .addGroup(qlydiemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                            .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGap(7, 7, 7)
-                                        .addGroup(qlydiemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(jLabel30, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(cbo_Mon_Diem, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addGroup(qlydiemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(cbo_Lop_Diem, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(qlydiemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jLabel25, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(cbo_cacchamdiem, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(qlydiemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_searchdiem, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(7, 7, 7)
+                        .addGroup(qlydiemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel30, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbo_Mon_Diem, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(qlydiemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbo_Lop_Diem, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(qlydiemLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jLabel25, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cbo_cacchamdiem, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -3572,10 +3604,10 @@ public class TrangChuGV extends javax.swing.JFrame {
         jLabel84.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
         jLabel84.setText("Tìm kiếm :");
 
-        jTextField7.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        jTextField7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField7ActionPerformed(evt);
+        txt_timkiemkqcuoinam.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        txt_timkiemkqcuoinam.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txt_timkiemkqcuoinamKeyReleased(evt);
             }
         });
 
@@ -3996,14 +4028,6 @@ public class TrangChuGV extends javax.swing.JFrame {
                 tblGridView_KetQuaCuoiNamMouseClicked(evt);
             }
         });
-        tblGridView_KetQuaCuoiNam.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                tblGridView_KetQuaCuoiNamKeyPressed(evt);
-            }
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                tblGridView_KetQuaCuoiNamKeyReleased(evt);
-            }
-        });
         jScrollPane11.setViewportView(tblGridView_KetQuaCuoiNam);
 
         Xuat_KQCN.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-installing-updates-32.png"))); // NOI18N
@@ -4017,22 +4041,6 @@ public class TrangChuGV extends javax.swing.JFrame {
         cbo_LoCN_KQCN.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbo_LoCN_KQCNActionPerformed(evt);
-            }
-        });
-
-        btn_capNhatKqCuoiNam.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-available-updates-32.png"))); // NOI18N
-        btn_capNhatKqCuoiNam.setText("Làm mới Data");
-        btn_capNhatKqCuoiNam.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_capNhatKqCuoiNamActionPerformed(evt);
-            }
-        });
-
-        btn_timKiem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8_search_32px_1.png"))); // NOI18N
-        btn_timKiem.setText("Tìm Kiếm");
-        btn_timKiem.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_timKiemActionPerformed(evt);
             }
         });
 
@@ -4050,6 +4058,7 @@ public class TrangChuGV extends javax.swing.JFrame {
                             .addComponent(jPanel20, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(kquacuoinamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 784, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(kquacuoinamLayout.createSequentialGroup()
                                 .addGroup(kquacuoinamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(kquacuoinamLayout.createSequentialGroup()
@@ -4061,13 +4070,10 @@ public class TrangChuGV extends javax.swing.JFrame {
                                     .addGroup(kquacuoinamLayout.createSequentialGroup()
                                         .addComponent(jLabel84, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(kquacuoinamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(Xuat_KQCN, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE)
-                                    .addComponent(btn_capNhatKqCuoiNam, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btn_timKiem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 784, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addComponent(txt_timkiemkqcuoinam, javax.swing.GroupLayout.PREFERRED_SIZE, 328, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(18, 18, 18)
+                                .addComponent(Xuat_KQCN, javax.swing.GroupLayout.PREFERRED_SIZE, 168, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, kquacuoinamLayout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel124)
@@ -4076,13 +4082,13 @@ public class TrangChuGV extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel127, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(lbl_SiSo, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                        .addComponent(lbl_SiSo, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12))))
             .addGroup(kquacuoinamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(kquacuoinamLayout.createSequentialGroup()
                     .addGap(17, 17, 17)
                     .addComponent(jLabel85, javax.swing.GroupLayout.PREFERRED_SIZE, 254, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(859, Short.MAX_VALUE)))
+                    .addContainerGap(870, Short.MAX_VALUE)))
         );
         kquacuoinamLayout.setVerticalGroup(
             kquacuoinamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -4103,13 +4109,9 @@ public class TrangChuGV extends javax.swing.JFrame {
                             .addComponent(jPanel16, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jPanel15, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(kquacuoinamLayout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addComponent(btn_timKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(Xuat_KQCN, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btn_capNhatKqCuoiNam, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(56, 56, 56)
+                        .addComponent(Xuat_KQCN, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(25, 25, 25)
                 .addGroup(kquacuoinamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(kquacuoinamLayout.createSequentialGroup()
                         .addComponent(jPanel20, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -4117,7 +4119,7 @@ public class TrangChuGV extends javax.swing.JFrame {
                         .addComponent(jTabbedPane2))
                     .addGroup(kquacuoinamLayout.createSequentialGroup()
                         .addGroup(kquacuoinamLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txt_timkiemkqcuoinam, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel84, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane11, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
@@ -4237,6 +4239,10 @@ public class TrangChuGV extends javax.swing.JFrame {
         body.add(qlydiem);
         body.repaint();
         body.revalidate();
+        this.LoadMonDay();
+        this.LoadLopDay();
+        this.timkiem();
+        this.reset();
     }//GEN-LAST:event_diemmonhocMouseClicked
 
     private void trangchuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_trangchuMouseClicked
@@ -4898,8 +4904,8 @@ public class TrangChuGV extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_hkKeyPressed
 
     private void btn_capNhatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_capNhatActionPerformed
-        String tenLop = (String)cbo_Lop_Diem.getSelectedItem();
-        String tenMon = (String)cbo_Mon_Diem.getSelectedItem();
+        String tenLop = (String) cbo_Lop_Diem.getSelectedItem();
+        String tenMon = (String) cbo_Mon_Diem.getSelectedItem();
         boolean ki = cbo_hocKi.getSelectedItem().toString().equals("Học kỳ 1") ? true : false;
         try {
             if (checkDiem() == true) {
@@ -4931,8 +4937,8 @@ public class TrangChuGV extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_capNhat1ActionPerformed
 
     private void btn_capNhat2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_capNhat2ActionPerformed
-        String tenLop = (String)cbo_Lop_Diem.getSelectedItem();
-        String tenMon = (String)cbo_Mon_Diem.getSelectedItem();
+        String tenLop = (String) cbo_Lop_Diem.getSelectedItem();
+        String tenMon = (String) cbo_Mon_Diem.getSelectedItem();
         boolean ki = cbo_hocKi.getSelectedItem().toString().equals("Học kỳ 1") ? true : false;
         try {
             this.tinhDiemDanhGia();
@@ -5052,21 +5058,173 @@ public class TrangChuGV extends javax.swing.JFrame {
         body.add(kquacuoinam);
         body.repaint();
         body.revalidate();
+        this.loadkqcuoinam();
+        this.resetketquacuoinam();
     }//GEN-LAST:event_ketquacuoinamMouseClicked
 
     private void lbltrangchuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbltrangchuMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_lbltrangchuMouseClicked
 
-    private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
+    private void cbbNamHocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbNamHocActionPerformed
+        this.loadCBB();
+        this.sisoTong();
+        this.sisoTongNam();
+        this.sisoNu();
+
+    }//GEN-LAST:event_cbbNamHocActionPerformed
+
+    private void cbo_hocKiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbo_hocKiActionPerformed
+        this.loadCBB();
+        this.sisoTong();
+        this.sisoTongNam();
+        this.sisoNu();
+        this.LoadLopDay();
+        this.LoadMonDay();
+    }//GEN-LAST:event_cbo_hocKiActionPerformed
+
+    private void txtTimKiemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemKeyReleased
+        DefaultTableModel model = (DefaultTableModel) tblGridView1.getModel();
+        String ft = txtTimKiem.getText();
+        TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(model);
+        tblGridView1.setRowSorter(tr);
+        tr.setRowFilter(RowFilter.regexFilter(ft));
+    }//GEN-LAST:event_txtTimKiemKeyReleased
+
+    private void Xuat_DiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Xuat_DiemActionPerformed
+        try {
+            jFileChooser1.setSelectedFile(new File("C:\\Bảng điểm Lớp " + cbo_Lop_Diem.getSelectedItem().toString() + " Môn " + cbo_Mon_Diem.getSelectedItem().toString() + ".csv"));
+            jFileChooser1.showSaveDialog(null);
+            File file = jFileChooser1.getSelectedFile();
+            if (file.exists()) {
+                int dialogButton = JOptionPane.YES_NO_OPTION;
+                int dialogResult = JOptionPane.showConfirmDialog(this, "Bạn muốn ghi đè lên File đã có", "Hệ thống quản lý đào tạo", dialogButton);
+                if (dialogResult == 0) {
+                    System.out.println("starting write user.csv file: " + file.getPath());
+                    fv.writeDiemCsv(file.getPath(), (String) cbo_Mon_Diem.getSelectedItem(), (String) cbo_Lop_Diem.getSelectedItem(), (String) cbo_hocKi.getSelectedItem());
+                    DialogHelper.alert(this, "Xuất Excel thành công");
+                } else {
+                    System.out.println("No Option");
+                }
+            } else {
+                System.out.println("starting write file: " + file.getPath());
+                fv.writeDiemCsv(file.getPath(), (String) cbo_Mon_Diem.getSelectedItem(), (String) cbo_Lop_Diem.getSelectedItem(), (String) cbo_hocKi.getSelectedItem());
+                DialogHelper.alert(this, "Xuất Excel thành công");
+            }
+        } catch (Exception ex) {
+            DialogHelper.alert(this, "Xuất Excel không thành công");
+        }
+    }//GEN-LAST:event_Xuat_DiemActionPerformed
+
+    private void Nhap_DiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Nhap_DiemActionPerformed
+        try {
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("File csv", "csv");
+            jFileChooser1.setFileFilter(filter);
+            jFileChooser1.showSaveDialog(null);
+            File file = jFileChooser1.getSelectedFile();
+            if (file.exists()) {
+                int dialogButton = JOptionPane.YES_NO_OPTION;
+                int dialogResult = JOptionPane.showConfirmDialog(this, "Bạn muốn nhập điểm vào Lớp: " + cbo_Lop_Diem.getSelectedItem().toString() + " || Môn: " + cbo_Mon_Diem.getSelectedItem().toString() + " || Kì: " + (String) cbo_hocKi.getSelectedItem() + " || Năm: " + (String) cbbNamHoc.getSelectedItem(), "Hệ thống quản lý đào tạo", dialogButton);
+                if (dialogResult == 0) {
+                    System.out.println("starting write user.csv file: " + file.getPath());
+                    fv.readDiemCsv(file.getPath(), (String) cbo_Mon_Diem.getSelectedItem(), (String) cbo_Lop_Diem.getSelectedItem(), (String) cbo_hocKi.getSelectedItem());
+                    DialogHelper.alert(this, "Xuất Excel thành công");
+                } else {
+                    System.out.println("No Option");
+                }
+            } else {
+                System.out.println("starting write file: " + file.getPath());
+                fv.readDiemCsv(file.getPath(), (String) cbo_Mon_Diem.getSelectedItem(), (String) cbo_Lop_Diem.getSelectedItem(), (String) cbo_hocKi.getSelectedItem());
+                DialogHelper.alert(this, "Xuất Excel thành công");
+            }
+        } catch (Exception ex) {
+            DialogHelper.alert(this, "Xuất Excel không thành công");
+        }
+
+    }//GEN-LAST:event_Nhap_DiemActionPerformed
+
+    private void Tai_Form_DiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Tai_Form_DiemActionPerformed
+        try {
+            JFileChooser jFileChooser1 = new JFileChooser();
+            jFileChooser1.setSelectedFile(new File("C:\\Form Bảng điểm.csv"));
+            jFileChooser1.showSaveDialog(null);
+            File file = jFileChooser1.getSelectedFile();
+            if (file.exists()) {
+                int dialogButton = JOptionPane.YES_NO_OPTION;
+                int dialogResult = JOptionPane.showConfirmDialog(this, "Bạn muốn ghi đè lên File đã có", "Hệ thống quản lý đào tạo", dialogButton);
+                if (dialogResult == 0) {
+                    System.out.println("starting write user.csv file: " + file.getPath());
+                    fv.writeFormDMHCsv(file.getPath(), cbo_Lop_Diem.getSelectedItem().toString());
+                    DialogHelper.alert(this, "Xuất Excel thành công");
+                } else {
+                    System.out.println("No Option");
+                }
+            } else {
+                System.out.println("starting write form file: " + file.getPath());
+                fv.writeFormDMHCsv(file.getPath(), cbo_Lop_Diem.getSelectedItem().toString());
+                DialogHelper.alert(this, "Xuất Excel thành công");
+            }
+        } catch (Exception ex) {
+            DialogHelper.alert(this, "Xuất Excel không thành công");
+        }
+    }//GEN-LAST:event_Tai_Form_DiemActionPerformed
+
+    private void cbo_Mon_DiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbo_Mon_DiemActionPerformed
+        String tenMon = cbo_Mon_Diem.getSelectedItem().toString();
+        ResultSet rs = mhDAO.select3(tenMon);
+        LoadLopDay();
+        try {
+            while (rs.next()) {
+                boolean DG = rs.getBoolean("hinhthucdanhgia");
+                cbo_cacchamdiem.setSelectedItem(DG == true ? "Chấm điểm" : "Đánh giá");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(TrangChuGV.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_cbo_Mon_DiemActionPerformed
+
+    private void txt_searchdiemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_searchdiemKeyReleased
+        DefaultTableModel model = (DefaultTableModel) tblGridView_Diem.getModel();
+        String ft = txt_searchdiem.getText();
+        TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(model);
+        tblGridView_Diem.setRowSorter(tr);
+        tr.setRowFilter(RowFilter.regexFilter(ft));
+    }//GEN-LAST:event_txt_searchdiemKeyReleased
+
+    private void cbo_LoCN_KQCNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbo_LoCN_KQCNActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField7ActionPerformed
+    }//GEN-LAST:event_cbo_LoCN_KQCNActionPerformed
+
+    private void Xuat_KQCNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Xuat_KQCNActionPerformed
+        try {
+            jFileChooser1.setSelectedFile(new File("C:\\Kết quả cuối năm lớp " + cbo_LoCN_KQCN.getSelectedItem().toString() + ".csv"));
+            jFileChooser1.showSaveDialog(null);
+            File file = jFileChooser1.getSelectedFile();
+            if (file.exists()) {
+                int dialogButton = JOptionPane.YES_NO_OPTION;
+                int dialogResult = JOptionPane.showConfirmDialog(this, "Bạn muốn ghi đè lên File đã có", "Hệ thống quản lý đào tạo", dialogButton);
+                if (dialogResult == 0) {
+                    System.out.println("starting write user.csv file: " + file.getPath());
+                    fv.writeKQCNCsv(cbo_LoCN_KQCN.getSelectedItem().toString(), file.getPath());
+                    DialogHelper.alert(this, "Xuất Excel thành công");
+                } else {
+                    System.out.println("No Option");
+                }
+            } else {
+                System.out.println("starting write file: " + file.getPath());
+                fv.writeKQCNCsv(cbo_LoCN_KQCN.getSelectedItem().toString(), file.getPath());
+                DialogHelper.alert(this, "Xuất Excel thành công");
+            }
+        } catch (Exception ex) {
+            DialogHelper.alert(this, "Xuất Excel không thành công");
+        }
+    }//GEN-LAST:event_Xuat_KQCNActionPerformed
 
     private void tblGridView_KetQuaCuoiNamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblGridView_KetQuaCuoiNamMouseClicked
         int i = tblGridView_KetQuaCuoiNam.getSelectedRow();
         lbl_mhs.setText(tblGridView_KetQuaCuoiNam.getValueAt(i, 0).toString());
         lbl_hvt.setText(tblGridView_KetQuaCuoiNam.getValueAt(i, 1).toString());
-        lbl_ns.setText(tblGridView_KetQuaCuoiNam.getValueAt(i, 2).toString());      
+        lbl_ns.setText(tblGridView_KetQuaCuoiNam.getValueAt(i, 2).toString());
         lbl_KQTB1.setText(tblGridView_KetQuaCuoiNam.getValueAt(i, 3).toString());
         lbl_KQTB2.setText(tblGridView_KetQuaCuoiNam.getValueAt(i, 4).toString());
         lbl_HanhKiem1.setText(tblGridView_KetQuaCuoiNam.getValueAt(i, 9).toString());
@@ -5109,225 +5267,16 @@ public class TrangChuGV extends javax.swing.JFrame {
         lbl_DanhHieu6.setText(tblGridView_KetQuaCuoiNam.getValueAt(i, 10).toString());
         lbl_VangCP.setText(tblGridView_KetQuaCuoiNam.getValueAt(i, 7).toString());
         lbl_VangCP1.setText(tblGridView_KetQuaCuoiNam.getValueAt(i, 8).toString());
-    
+
     }//GEN-LAST:event_tblGridView_KetQuaCuoiNamMouseClicked
 
-    private void tblGridView_KetQuaCuoiNamKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblGridView_KetQuaCuoiNamKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tblGridView_KetQuaCuoiNamKeyPressed
-
-    private void tblGridView_KetQuaCuoiNamKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblGridView_KetQuaCuoiNamKeyReleased
-        // TODO add your handling code here:
-    }//GEN-LAST:event_tblGridView_KetQuaCuoiNamKeyReleased
-
-    private void cbbNamHocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbNamHocActionPerformed
-        this.loadCBB();
-        this.sisoTong();
-        this.sisoTongNam();
-        this.sisoNu();
-
-    }//GEN-LAST:event_cbbNamHocActionPerformed
-
-    private void cbo_hocKiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbo_hocKiActionPerformed
-        this.loadCBB();
-        this.sisoTong();
-        this.sisoTongNam();
-        this.sisoNu();
-        this.LoadLopDay();
-        this.LoadMonDay();
-    }//GEN-LAST:event_cbo_hocKiActionPerformed
-
-    private void txtTimKiemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemKeyReleased
-        DefaultTableModel model = (DefaultTableModel) tblGridView1.getModel();
-        String ft = txtTimKiem.getText();
+    private void txt_timkiemkqcuoinamKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_timkiemkqcuoinamKeyReleased
+        DefaultTableModel model = (DefaultTableModel) tblGridView_KetQuaCuoiNam.getModel();
+        String ft = txt_timkiemkqcuoinam.getText();
         TableRowSorter<DefaultTableModel> tr = new TableRowSorter<DefaultTableModel>(model);
-        tblGridView1.setRowSorter(tr);
+        tblGridView_KetQuaCuoiNam.setRowSorter(tr);
         tr.setRowFilter(RowFilter.regexFilter(ft));
-    }//GEN-LAST:event_txtTimKiemKeyReleased
-
-    private void Xuat_KQCNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Xuat_KQCNActionPerformed
-        try {
-            jFileChooser1.setSelectedFile(new File("C:\\Kết quả cuối năm lớp " + cbo_LoCN_KQCN.getSelectedItem().toString() + ".csv"));
-            jFileChooser1.showSaveDialog(null);
-            File file = jFileChooser1.getSelectedFile();
-            if (file.exists()) {
-                int dialogButton = JOptionPane.YES_NO_OPTION;
-                int dialogResult = JOptionPane.showConfirmDialog(this, "Bạn muốn ghi đè lên File đã có", "Hệ thống quản lý đào tạo", dialogButton);
-                if (dialogResult == 0) {
-                    System.out.println("starting write user.csv file: " + file.getPath());
-                    fv.writeKQCNCsv(cbo_LoCN_KQCN.getSelectedItem().toString(), file.getPath());
-                    DialogHelper.alert(this, "Xuất Excel thành công");
-                } else {
-                    System.out.println("No Option");
-                }
-            } else {
-                System.out.println("starting write file: " + file.getPath());
-                fv.writeKQCNCsv(cbo_LoCN_KQCN.getSelectedItem().toString(), file.getPath());
-                DialogHelper.alert(this, "Xuất Excel thành công");
-            }
-        } catch (Exception ex) {
-            DialogHelper.alert(this, "Xuất Excel không thành công");
-        }
-    }//GEN-LAST:event_Xuat_KQCNActionPerformed
-
-    private void Xuat_DiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Xuat_DiemActionPerformed
-        try {
-            jFileChooser1.setSelectedFile(new File("C:\\Bảng điểm Lớp " + cbo_Lop_Diem.getSelectedItem().toString() + " Môn " + cbo_Mon_Diem.getSelectedItem().toString() + ".csv"));
-            jFileChooser1.showSaveDialog(null);
-            File file = jFileChooser1.getSelectedFile();
-            if (file.exists()) {
-                int dialogButton = JOptionPane.YES_NO_OPTION;
-                int dialogResult = JOptionPane.showConfirmDialog(this, "Bạn muốn ghi đè lên File đã có", "Hệ thống quản lý đào tạo", dialogButton);
-                if (dialogResult == 0) {
-                    System.out.println("starting write user.csv file: " + file.getPath());
-                    fv.writeDiemCsv(file.getPath(), (String) cbo_Mon_Diem.getSelectedItem(), (String) cbo_Lop_Diem.getSelectedItem(), (String) cbo_hocKi.getSelectedItem());
-                    DialogHelper.alert(this, "Xuất Excel thành công");
-                } else {
-                    System.out.println("No Option");
-                }
-            } else {
-                System.out.println("starting write file: " + file.getPath());
-                fv.writeDiemCsv(file.getPath(), (String) cbo_Mon_Diem.getSelectedItem(), (String) cbo_Lop_Diem.getSelectedItem(), (String) cbo_hocKi.getSelectedItem());
-                DialogHelper.alert(this, "Xuất Excel thành công");
-            }
-        } catch (Exception ex) {
-            DialogHelper.alert(this, "Xuất Excel không thành công");
-        }
-    }//GEN-LAST:event_Xuat_DiemActionPerformed
-
-    private void Nhap_DiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Nhap_DiemActionPerformed
-//        try {
-//            FileNameExtensionFilter filter = new FileNameExtensionFilter("File csv", "csv");
-//            jFileChooser1.setFileFilter(filter);
-//            jFileChooser1.showSaveDialog(null);
-//            File file = jFileChooser1.getSelectedFile();
-//            if (file.exists()) {
-//                int dialogButton = JOptionPane.YES_NO_OPTION;
-//                int dialogResult = JOptionPane.showConfirmDialog(this, "Bạn muốn nhập điểm vào Lớp: " + cbo_Lop_Diem.getSelectedItem().toString() + " || Môn: " + cbo_Mon_Diem.getSelectedItem().toString() + " || Kì: " + (String) cbo_hocKi.getSelectedItem() + " || Năm: " + (String) cbbNamHoc.getSelectedItem(), "Hệ thống quản lý đào tạo", dialogButton);
-//                if (dialogResult == 0) {
-//                    System.out.println("starting write user.csv file: " + file.getPath());
-//                    fv.readDiemCsv(file.getPath(), (String) cbo_Mon_Diem.getSelectedItem(), (String) cbo_Lop_Diem.getSelectedItem(), (String) cbo_hocKi.getSelectedItem(), (String) cbbNamHoc.getSelectedItem());
-//                    DialogHelper.alert(this, "Xuất Excel thành công");
-//                } else {
-//                    System.out.println("No Option");
-//                }
-//            } else {
-//                System.out.println("starting write file: " + file.getPath());
-//                fv.readDiemCsv(file.getPath(), (String) cbo_Mon_Diem.getSelectedItem(), (String) cbo_Lop_Diem.getSelectedItem(), (String) cbo_hocKi.getSelectedItem(), (String) cbbNamHoc.getSelectedItem());
-//                DialogHelper.alert(this, "Xuất Excel thành công");
-//            }
-//        } catch (Exception ex) {
-//            DialogHelper.alert(this, "Xuất Excel không thành công");
-//        }
-    }//GEN-LAST:event_Nhap_DiemActionPerformed
-
-    private void Tai_Form_DiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Tai_Form_DiemActionPerformed
-        try {
-            JFileChooser jFileChooser1 = new JFileChooser();
-            jFileChooser1.setSelectedFile(new File("C:\\Form Bảng điểm.csv"));
-            jFileChooser1.showSaveDialog(null);
-            File file = jFileChooser1.getSelectedFile();
-            if (file.exists()) {
-                int dialogButton = JOptionPane.YES_NO_OPTION;
-                int dialogResult = JOptionPane.showConfirmDialog(this, "Bạn muốn ghi đè lên File đã có", "Hệ thống quản lý đào tạo", dialogButton);
-                if (dialogResult == 0) {
-                    System.out.println("starting write user.csv file: " + file.getPath());
-                    fv.writeFormDMHCsv(file.getPath(), cbo_Lop_Diem.getSelectedItem().toString());
-                    DialogHelper.alert(this, "Xuất Excel thành công");
-                } else {
-                    System.out.println("No Option");
-                }
-            } else {
-                System.out.println("starting write form file: " + file.getPath());
-                fv.writeFormDMHCsv(file.getPath(), cbo_Lop_Diem.getSelectedItem().toString());
-                DialogHelper.alert(this, "Xuất Excel thành công");
-            }
-        } catch (Exception ex) {
-            DialogHelper.alert(this, "Xuất Excel không thành công");
-        }
-    }//GEN-LAST:event_Tai_Form_DiemActionPerformed
-
-    private void btn_TimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_TimKiemActionPerformed
-        String tenLop = (String) cbo_Lop_Diem.getSelectedItem();
-        String tenMon = (String) cbo_Mon_Diem.getSelectedItem();
-        boolean ki = cbo_hocKi.getSelectedItem().toString().equals("Học kỳ 1") ? true : false;
-        this.LoadDataToTableGrade(tenLop, tenMon, ki);
-        if (tblGridView_Diem.getRowCount() == 0) {
-            DialogHelper.alert(this, "Không có dữ liệu điểm, vui lòng tạo mới");
-            if (DialogHelper.confirm(this, "bạn có muốn tạo mới danh sách") == true) {
-                this.LoadNewDataToTableGrade(tenLop);
-                this.InsertDataFirst();
-                DialogHelper.alert(this, "Thành Công");
-            } else {
-                DialogHelper.alert(this, "vui lòng kiểm tra lại");
-            }
-        }
-        else {
-            this.LoadDataToTableGrade(tenLop, tenMon, ki);
-        }
-    }//GEN-LAST:event_btn_TimKiemActionPerformed
-
-    private void cbo_Mon_DiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbo_Mon_DiemActionPerformed
-        String tenMon = cbo_Mon_Diem.getSelectedItem().toString();
-        ResultSet rs = mhDAO.select3(tenMon);
-        LoadLopDay();
-        try {
-            while(rs.next()){
-                boolean DG = rs.getBoolean("hinhthucdanhgia");
-                cbo_cacchamdiem.setSelectedItem(DG == true ? "Chấm điểm" : "Đánh giá");
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(TrangChuGV.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_cbo_Mon_DiemActionPerformed
-
-    private void btn_capNhatKqCuoiNamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_capNhatKqCuoiNamActionPerformed
-        String tenLop = cbo_LoCN_KQCN.getSelectedItem().toString();
-        if(tblGridView_KetQuaCuoiNam.getRowCount() != this.countClass(tenLop)){
-            DialogHelper.alert(this, "Danh sách lớp có dữ liệu mới, vui lòng update");
-            if (DialogHelper.confirm(this, "bạn có muốn tạo lại danh sách") == true) {
-                this.LoadKetQua(tenLop);
-                DialogHelper.alert(this, "Update dữ liệu thành công");
-                lbl_SiSo.setText(String.valueOf(tblGridView_KetQuaCuoiNam.getRowCount()));
-            } else {
-                DialogHelper.alert(this, "Vui lòng nhập đầy đủ thông tin điểm cho từng học sinh");
-            }
-        }else {
-            DialogHelper.alert(this, "danh sách đã được làm mới");
-        }
-    }//GEN-LAST:event_btn_capNhatKqCuoiNamActionPerformed
-
-    private void btn_UpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_UpdateActionPerformed
-            if(tblGridView_Diem.getRowCount() != this.countClass((String) cbo_Lop_Diem.getSelectedItem())){
-            DialogHelper.alert(this, "Danh sách lớp có dữ liệu mới, vui lòng update");
-            if (DialogHelper.confirm(this, "bạn có muốn tạo lại danh sách") == true) {
-                this.LoadNewDataDiem((String) cbo_Lop_Diem.getSelectedItem(), pcDAO.selectPc(ShareHelper.TaiKhoan.getGiaovien_id(), cbo_Lop_Diem.getSelectedItem().toString(), cbo_Mon_Diem.getSelectedItem().toString(), cbo_hocKi.getSelectedItem().toString().equals("Học kỳ 1") ? true : false).getMaPC());
-                this.LoadDataToTableGrade((String) cbo_Lop_Diem.getSelectedItem(), (String) cbo_Mon_Diem.getSelectedItem(), cbo_hocKi.getSelectedItem().toString().equals("Học kỳ 1") ? true : false);
-                DialogHelper.alert(this, "Update dữ liệu thành công");
-            } else {
-                DialogHelper.alert(this, "vui lòng kiểm tra lại");
-            }
-        }
-    }//GEN-LAST:event_btn_UpdateActionPerformed
-
-    private void btn_timKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_timKiemActionPerformed
-        String tenLop = cbo_LoCN_KQCN.getSelectedItem().toString();
-        if(tenLop.equals("")){
-        DialogHelper.alert(this, "vui lòng chọn lớp bạn chủ nhiệm");       
-        }else if(this.TongMonCoDiem() != 0) {
-            DialogHelper.alert(this, "vui lòng nhập đầy đủ điểm của từng môn theo dang sách môn");  
-            DialogHelper.alert(this, "Dưới đây là tổng hợp điểm của những môn đã có điểm");  
-            this.LoadKetQua(tenLop);
-            lbl_SiSo.setText(String.valueOf(tblGridView_KetQuaCuoiNam.getRowCount()));
-        } else{
-            this.LoadKetQua(tenLop);
-            lbl_SiSo.setText(String.valueOf(tblGridView_KetQuaCuoiNam.getRowCount()));
-        }       
-    }//GEN-LAST:event_btn_timKiemActionPerformed
-
-    private void cbo_LoCN_KQCNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbo_LoCN_KQCNActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cbo_LoCN_KQCNActionPerformed
+    }//GEN-LAST:event_txt_timkiemkqcuoinamKeyReleased
 
     /**
      * @param args the command line arguments
@@ -5502,14 +5451,10 @@ public class TrangChuGV extends javax.swing.JFrame {
     private javax.swing.JButton btnExit;
     private javax.swing.JButton btnMinimize;
     private javax.swing.JButton btnMinimize4;
-    private javax.swing.JButton btn_TimKiem;
-    private javax.swing.JButton btn_Update;
     private javax.swing.JButton btn_capNhat;
     private javax.swing.JButton btn_capNhat1;
     private javax.swing.JButton btn_capNhat2;
     private javax.swing.JButton btn_capNhat3;
-    private javax.swing.JButton btn_capNhatKqCuoiNam;
-    private javax.swing.JButton btn_timKiem;
     private javax.swing.JButton btnchinhsua;
     private javax.swing.JButton btntab1;
     private javax.swing.JButton btntab2;
@@ -5671,10 +5616,8 @@ public class TrangChuGV extends javax.swing.JFrame {
     private javax.swing.JTextArea jTextArea5;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
     private javax.swing.JPanel ketquacuoinam;
     private javax.swing.JPanel kquacuoinam;
     private javax.swing.JLabel lane1;
@@ -5779,6 +5722,8 @@ public class TrangChuGV extends javax.swing.JFrame {
     private javax.swing.JTextField txt_diemMieng2;
     private javax.swing.JTextField txt_diemMieng3;
     private javax.swing.JTextField txt_hk;
+    private javax.swing.JTextField txt_searchdiem;
+    private javax.swing.JTextField txt_timkiemkqcuoinam;
     private javax.swing.JLabel txtssNu;
     // End of variables declaration//GEN-END:variables
 

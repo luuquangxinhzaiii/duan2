@@ -78,7 +78,9 @@ public class PhanCongDAO {
     }
 
     public ResultSet select3(String nienhoc, Boolean ki) {
-        String sql = "select pc.mapc,pc.malop,gv.hoten,m.tenmon,pc.vaitro,pc.mamon from phancong as pc join mon as m on pc.mamon=m.mamon join giaovien as gv on pc.magiaovien=gv.magiaovien join namhoc as nh on pc.manamhoc=nh.manamhoc and nh.nienhoc=? and pc.hocki=?";
+        String sql = "select phancong.maphancong, lophoc.tenlop, giaovien.hoten, mon.ten_mon, phancong.vaitro from phancong join lophoc on phancong.lop_id = lophoc.id"
+                + " join giaovien on phancong.giaovien_id = giaovien.id join mon on phancong.mon_mamon = mon.mamon join namhoc on phancong.namhoc_manamhoc = namhoc.manamhoc "
+                + "where namhoc.nienhoc=? and phancong.hocki=?";
         try {
             PreparedStatement ps = Jdbc.prepareStatement(sql);
             ps.setString(1, nienhoc);
@@ -147,10 +149,8 @@ public class PhanCongDAO {
     }
 
     public void insert(PhanCong model) {
-
-        String sql = "insert into phancong(mapc,malop,magiaovien,vaitro,mamon,hocki,manamhoc) values(?,?,?,?,?,?,?)";
-
-        JdbcHelper.executeUpdate(sql, model.getMaPC(), model.getMaLop(), model.getMaGV(), model.getVaiTro(), model.getMaMon(), model.getVaiTro(), model.getMaNamHoc());
+        String sql = "insert into phancong(maphancong,lop_id,giaovien_id,vaitro,mon_mamon,hocki,namhoc_manamhoc) values(?,?,?,?,?,?,?)";
+        JdbcHelper.executeUpdate(sql, UUID.randomUUID(), model.getMaLop(), model.getMaGV(), model.getVaiTro(), model.getMaMon(), model.getHocKi(), model.getMaNamHoc());
     }
 
     public void update(PhanCong model) {

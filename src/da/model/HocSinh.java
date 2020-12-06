@@ -25,7 +25,7 @@ public class HocSinh {
     private Date ngayVD;
     private String noiSinh;
     private String cmND;
-    private String lop_id;
+    private UUID lop_id;
     private String hotenBo;
     private String hotenMe;
     private String dienThoaiBo;
@@ -39,7 +39,7 @@ public class HocSinh {
     public HocSinh() {
     }
 
-    public HocSinh(UUID iD, String maHS, String hoTen, Boolean gioiTinh, Date ngaySinh, String diaChi, String dienThoai, String danToc, String tonGiao, Date ngayVD, String noiSinh, String cmND, String lop_id, String hotenBo, String hotenMe, String dienThoaiBo, String dienThoaiMe, String dvctBo, String dvctMe, String nguoiDamHo, boolean trangThai, String anh) {
+    public HocSinh(UUID iD, String maHS, String hoTen, Boolean gioiTinh, Date ngaySinh, String diaChi, String dienThoai, String danToc, String tonGiao, Date ngayVD, String noiSinh, String cmND, UUID lop_id, String hotenBo, String hotenMe, String dienThoaiBo, String dienThoaiMe, String dvctBo, String dvctMe, String nguoiDamHo, boolean trangThai, String anh) {
         this.iD = iD;
         this.maHS = maHS;
         this.hoTen = hoTen;
@@ -160,11 +160,11 @@ public class HocSinh {
         this.cmND = cmND;
     }
 
-    public String getLop() {
+    public UUID getLop() {
         return lop_id;
     }
 
-    public void setLop(String lop_id) {
+    public void setLop(UUID lop_id) {
         this.lop_id = lop_id;
     }
 

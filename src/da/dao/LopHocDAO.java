@@ -58,13 +58,24 @@ public class LopHocDAO {
         String sql = "select * from lophoc";
         return select(sql);
     }
+    
+    public ResultSet selectmax() {
+        String sql = "select max(substring(malop,4,8)) as max from lophoc";
+        try {
+            PreparedStatement ps = Jdbc.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            return rs;
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+
+        }
+    }
 
     public ResultSet selectWithTenKhoi(String tenkhoi) {
-        String sql = "select lophoc.tenlop from lophoc join khoi on lophoc.makhoi=khoi.makhoi and khoi.tenkhoi=?";
+        String sql = "select lophoc.tenlop from lophoc join khoi on lophoc.khoi_makhoi=khoi.makhoi and khoi.tenkhoi=?";
         try {
             PreparedStatement ps = Jdbc.prepareStatement(sql);
             ps.setString(1, tenkhoi);
-
             ResultSet rs = ps.executeQuery();
             return rs;
         } catch (Exception ex) {
@@ -73,21 +84,10 @@ public class LopHocDAO {
         }
     }
 
-    public ResultSet selectID() {
-        String sql = "select max(id)  from lophoc";
-        try {
-            PreparedStatement ps = Jdbc.prepareStatement(sql);
-
-            ResultSet rs = ps.executeQuery();
-            return rs;
-        } catch (Exception ex) {
-            throw new RuntimeException(ex);
-
-        }
-    }
+    
 
     public ResultSet selectLopByNienhoc(String nienhoc) {
-        String sql = "select lh.malop,lh.tenlop,nh.nienhoc from lophoc as lh join namhoc as nh on lh.manamhoc=nh.manamhoc and nh.nienhoc=?";
+        String sql = "select lh.malop,lh.tenlop,nh.nienhoc from lophoc as lh join namhoc as nh on lh.namhoc_manamhoc=nh.manamhoc and nh.nienhoc=?";
         try {
             PreparedStatement ps = Jdbc.prepareStatement(sql);
             ps.setString(1, nienhoc);
@@ -105,7 +105,6 @@ public class LopHocDAO {
         try {
             PreparedStatement ps = Jdbc.prepareStatement(sql);
             ps.setString(1, malop);
-
             ResultSet rs = ps.executeQuery();
             return rs;
         } catch (Exception ex) {
@@ -115,7 +114,7 @@ public class LopHocDAO {
     }
 
     public ResultSet countWithMalop(String malop) {
-        String sql = "select count(*) as ss from hocsinh where lop=?";
+        String sql = "select count(*) as ss from hocsinh join lophoc on hocsinh.lop_id = lophoc.id where lophoc.malop=?";
         try {
             PreparedStatement ps = Jdbc.prepareStatement(sql);
             ps.setString(1, malop);
@@ -134,6 +133,12 @@ public class LopHocDAO {
         return list.size() > 0 ? list.get(0) : null;
     }
     
+    public LopHoc findBymalop(String malop){
+        String sql = "SELECT * FROM lophoc WHERE malop=?";
+        List<LopHoc> list = select(sql, malop);
+        return list.size() > 0 ? list.get(0) : null;
+    }
+    
     public List<LopHoc> findClass(UUID maLop) {
         String sql = "SELECT * FROM lophoc WHERE id=?";
         List<LopHoc> list = select(sql, maLop);
@@ -142,9 +147,9 @@ public class LopHocDAO {
 
     public void insert(LopHoc model) {
 
-        String sql = "insert into lophoc(malop,tenlop,manamhoc,makhoi) values(?,?,?,?)";
+        String sql = "insert into lophoc(id,malop,tenlop,namhoc_manamhoc,khoi_makhoi) values(?,?,?,?,?)";
 
-        JdbcHelper.executeUpdate(sql, model.getMaLop(), model.getTenLop(), model.getMaNH(), model.getMaKhoi());
+        JdbcHelper.executeUpdate(sql, UUID.randomUUID(), model.getMaLop(), model.getTenLop(), model.getMaNH(), model.getMaKhoi());
     }
 
     public ResultSet selectWithTenlop(String tenlop) {

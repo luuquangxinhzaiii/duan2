@@ -17,6 +17,7 @@ public class GiaoVien {
     private String maGV;
     private String hoTen;
     private Boolean gioiTinh;
+    private String email;
     private Date ngaySinh;
     private String diaChi;
     private String dienThoai;
@@ -26,11 +27,12 @@ public class GiaoVien {
     public GiaoVien() {
     }
 
-    public GiaoVien(UUID id, String maGV, String hoTen, Boolean gioiTinh, Date ngaySinh, String diaChi, String dienThoai, String cmnd) {
+    public GiaoVien(UUID id, String maGV, String hoTen, Boolean gioiTinh,String email, Date ngaySinh, String diaChi, String dienThoai, String cmnd) {
         this.id =id;
         this.maGV = maGV;
         this.hoTen = hoTen;
         this.gioiTinh = gioiTinh;
+        this.email = email;
         this.ngaySinh = ngaySinh;
         this.diaChi = diaChi;
         this.dienThoai = dienThoai;
@@ -69,6 +71,14 @@ public class GiaoVien {
         this.gioiTinh = gioiTinh;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public Date getNgaySinh() {
         return ngaySinh;
     }
@@ -101,6 +111,9 @@ public class GiaoVien {
         this.cmnd = cmnd;
     }
 
+   
+
+    
     
      
 

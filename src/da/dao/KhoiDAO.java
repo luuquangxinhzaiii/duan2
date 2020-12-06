@@ -54,7 +54,7 @@ public class KhoiDAO {
         return select(sql);
     }
      
-    public Khoi selectByMaKhoi(String maKhoi){
+    public Khoi selectByMaKhoi(UUID maKhoi){
         String sql="select * from khoi where makhoi=?";
         List<Khoi> list = select(sql, maKhoi);
         return list.size() > 0 ? list.get(0) : null;

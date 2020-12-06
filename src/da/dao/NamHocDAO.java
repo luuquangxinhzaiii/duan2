@@ -5,8 +5,10 @@
  */
 package da.dao;
 
+import da.helper.DateHelper;
 import da.helper.JdbcHelper;
 import da.model.NamHoc;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -55,12 +57,18 @@ public class NamHocDAO {
     }
 
     public List<NamHoc> select() {
-        String sql = "select * from namhoc";
+        String sql = "select * from namhoc where trangthai = true";
         return select(sql);
+    }
+    
+    public NamHoc findByNienHoc(String nienhoc) {
+        String sql = "select * from namhoc where trangthai = true and nienhoc = ?";
+        List<NamHoc> list = select(sql, nienhoc);
+        return list.size() >0 ? list.get(0) : null;
     }
 
     public ResultSet select2(String nienhoc) {
-        String sql = "select manamhoc from namhoc where nienhoc=?";
+        String sql = "select manamhoc from namhoc where nienhoc=? and trangthai=true";
         try {
             PreparedStatement ps = Jdbc.prepareStatement(sql);
             ps.setString(1, nienhoc);
@@ -73,10 +81,10 @@ public class NamHocDAO {
     }
 
     public void insert(NamHoc model) {
-        SimpleDateFormat sfd = new SimpleDateFormat("yyyy-MM-dd");
-        String sql = "insert into namhoc(manamhoc,nienhoc,ngaybatdau,ngayketthuc,trangthai,xoa) values(?,?,?,?,'Đang học','1')";
-
-        JdbcHelper.executeUpdate(sql, model.getMaNamHoc(), model.getNienHoc(), sfd.format(model.getNgayBD()), sfd.format(model.getNgayKT()));
+        Date ngaybd = Date.valueOf(DateHelper.toString(model.getNgayBD()));
+        Date ngaykt = Date.valueOf(DateHelper.toString(model.getNgayKT()));
+        String sql = "insert into namhoc(manamhoc,nienhoc,ngaybatdau,ngayketthuc,trangthai) values(?,?,?,?,true)";
+        JdbcHelper.executeUpdate(sql, UUID.randomUUID(), model.getNienHoc(), ngaybd, ngaykt);
 
     }
 
@@ -95,15 +103,10 @@ public class NamHocDAO {
 
     public void ketthuc(NamHoc model) {
         String sql
-                = "UPDATE namhoc SET trangthai='Kết thúc' WHERE  manamhoc =  ?";
+                = "UPDATE namhoc SET trangthai=false WHERE  manamhoc =  ?";
         JdbcHelper.executeUpdate(sql,
                 model.getMaNamHoc());
     }
 
-    public void xoanamhoc(NamHoc model) {
-        String sql
-                = "UPDATE namhoc SET xoa='0' WHERE  manamhoc =  ?";
-        JdbcHelper.executeUpdate(sql,
-                model.getMaNamHoc());
-    }
+    
 }
