@@ -5643,17 +5643,17 @@ public class TrangChuGV extends javax.swing.JFrame {
     }//GEN-LAST:event_tblGridView3KeyReleased
 
     private void cbo_Mon_DiemItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cbo_Mon_DiemItemStateChanged
-        String tenMon = cbo_Mon_Diem.getSelectedItem().toString();
-        ResultSet rs = mhDAO.select3(tenMon);
-        LoadLopDay();
-        try {
-            while (rs.next()) {
-                boolean DG = rs.getBoolean("hinhthucdanhgia");
-                cbo_cacchamdiem.setSelectedItem(DG == true ? "Chấm điểm" : "Đánh giá");
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(TrangChuGV.class.getName()).log(Level.SEVERE, null, ex);
-        }
+//        String tenMon = cbo_Mon_Diem.getSelectedItem().toString();
+//        ResultSet rs = mhDAO.select3(tenMon);
+//        LoadLopDay();
+//        try {
+//            while (rs.next()) {
+//                boolean DG = rs.getBoolean("hinhthucdanhgia");
+//                cbo_cacchamdiem.setSelectedItem(DG == true ? "Chấm điểm" : "Đánh giá");
+//            }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(TrangChuGV.class.getName()).log(Level.SEVERE, null, ex);
+//        }
     }//GEN-LAST:event_cbo_Mon_DiemItemStateChanged
 
     private void cbo_hocKiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbo_hocKiActionPerformed
@@ -5663,6 +5663,17 @@ public class TrangChuGV extends javax.swing.JFrame {
         this.sisoNu();
         this.LoadLopDay();
         this.LoadMonDay();
+        String tenLop = (String) cbo_Lop_Diem.getSelectedItem();
+        String tenMon = (String) cbo_Mon_Diem.getSelectedItem();
+        boolean ki = cbo_hocKi.getSelectedItem().toString().equals("Học kỳ 1") ? true : false;
+        this.LoadDataToTableGrade(tenLop, tenMon, ki);
+        if (DialogHelper.confirm(this, "bạn có muốn tạo mới danh sách") == true) {
+            this.LoadNewDataToTableGrade(tenLop);
+            this.InsertDataFirst();
+            DialogHelper.alert(this, "Thành Công");
+        } else {
+            DialogHelper.alert(this, "vui lòng kiểm tra lại");
+        }
     }//GEN-LAST:event_cbo_hocKiActionPerformed
 
     /**

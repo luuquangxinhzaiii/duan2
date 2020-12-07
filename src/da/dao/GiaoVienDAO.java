@@ -103,7 +103,7 @@ public class GiaoVienDAO {
     }
 
     public ResultSet select4() {
-        String sql = "select max(substring(magiaovien,3,5)) as max from giaovien";
+        String sql = "select max(substring(magiaovien,3,7)) as max from giaovien";
         try {
             PreparedStatement ps = Jdbc.prepareStatement(sql);
 
