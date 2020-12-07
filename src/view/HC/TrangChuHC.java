@@ -2027,7 +2027,7 @@ public class TrangChuHC extends javax.swing.JFrame {
                     .addComponent(bodythaotac, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel25, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(24, 24, 24)
-                .addComponent(bodylop, javax.swing.GroupLayout.DEFAULT_SIZE, 331, Short.MAX_VALUE)
+                .addComponent(bodylop, javax.swing.GroupLayout.PREFERRED_SIZE, 331, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -2035,7 +2035,6 @@ public class TrangChuHC extends javax.swing.JFrame {
 
         quanlyhocsinh.setBackground(new java.awt.Color(255, 255, 255));
 
-        tblGridView.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         tblGridView.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"1", "1", "1", null}
@@ -2152,7 +2151,7 @@ public class TrangChuHC extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel58, javax.swing.GroupLayout.DEFAULT_SIZE, 107, Short.MAX_VALUE)
+                            .addComponent(jLabel58, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jLabel57, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel59)
@@ -2213,7 +2212,7 @@ public class TrangChuHC extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(suaCMND, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel67, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Chi tiết học sinh", jPanel2);
@@ -2268,7 +2267,7 @@ public class TrangChuHC extends javax.swing.JFrame {
                             .addComponent(cbbSuaTrangThai, 0, 274, Short.MAX_VALUE)
                             .addComponent(jScrollPane3)
                             .addComponent(jScrollPane6, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addGap(0, 3, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jDateChooser6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -2400,7 +2399,7 @@ public class TrangChuHC extends javax.swing.JFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel77, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(24, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Phụ huynh học sinh", jPanel4);
@@ -2444,7 +2443,6 @@ public class TrangChuHC extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Excel", jPanel5);
 
-        btn_Luu.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         btn_Luu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-update-32.png"))); // NOI18N
         btn_Luu.setText("Lưu");
         btn_Luu.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -2454,7 +2452,6 @@ public class TrangChuHC extends javax.swing.JFrame {
             }
         });
 
-        btnThemMoi.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         btnThemMoi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8_add_user_male_32px.png"))); // NOI18N
         btnThemMoi.setText("Làm Mới");
         btnThemMoi.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -2485,7 +2482,6 @@ public class TrangChuHC extends javax.swing.JFrame {
             }
         });
 
-        btn_ChinhSua.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         btn_ChinhSua.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-update-32.png"))); // NOI18N
         btn_ChinhSua.setText("Chỉnh Sửa");
         btn_ChinhSua.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -2565,7 +2561,6 @@ public class TrangChuHC extends javax.swing.JFrame {
         jLabel36.setForeground(new java.awt.Color(0, 51, 255));
         jLabel36.setText("Danh sách môn học");
 
-        tbl_DanhSachMon.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         tbl_DanhSachMon.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"1", "1", "1", null}
@@ -2613,7 +2608,6 @@ public class TrangChuHC extends javax.swing.JFrame {
             }
         });
 
-        btn_reloadSubject.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         btn_reloadSubject.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-update-32.png"))); // NOI18N
         btn_reloadSubject.setText("Làm mới");
         btn_reloadSubject.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -2623,7 +2617,6 @@ public class TrangChuHC extends javax.swing.JFrame {
             }
         });
 
-        btn_addSubject.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         btn_addSubject.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8_add_user_male_32px.png"))); // NOI18N
         btn_addSubject.setText("Thêm mới");
         btn_addSubject.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -2633,7 +2626,6 @@ public class TrangChuHC extends javax.swing.JFrame {
             }
         });
 
-        btn_updateSubject.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         btn_updateSubject.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8_update_file_32px.png"))); // NOI18N
         btn_updateSubject.setText("Cập nhật");
         btn_updateSubject.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -3599,21 +3591,21 @@ public class TrangChuHC extends javax.swing.JFrame {
             File file = jFileChooser1.getSelectedFile();
             if (file.exists()) {
                 int dialogButton = JOptionPane.YES_NO_OPTION;
-                int dialogResult = JOptionPane.showConfirmDialog(this, "Bạn muốn nhập học sinh", "Hệ thống quản lý đào tạo", dialogButton);
+                int dialogResult = JOptionPane.showConfirmDialog(this, "Bạn muốn nhập học sinh" , "Hệ thống quản lý đào tạo", dialogButton);
                 if (dialogResult == 0) {
                     System.out.println("starting write user.csv file: " + file.getPath());
                     fv.readHSCsv(file.getPath());
-                    DialogHelper.alert(this, "Xuất Excel thành công");
+                    DialogHelper.alert(this, "Nhập Excel thành công");
                 } else {
                     System.out.println("No Option");
                 }
             } else {
                 System.out.println("starting write file: " + file.getPath());
                 fv.readHSCsv(file.getPath());
-                DialogHelper.alert(this, "Xuất Excel thành công");
+                DialogHelper.alert(this, "Nhập Excel thành công");
             }
         } catch (Exception ex) {
-            DialogHelper.alert(this, "Xuất Excel không thành công");
+            DialogHelper.alert(this, "Nhập Excel không thành công");
         }
     }//GEN-LAST:event_Nhap_excel_hsActionPerformed
 

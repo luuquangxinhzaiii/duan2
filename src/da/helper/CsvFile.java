@@ -5,6 +5,7 @@
  */
 package da.helper;
 
+
 import da.dao.CsvDao;
 import da.dao.DiemDanhDAO;
 import da.dao.HocSinhDAO;
@@ -244,7 +245,7 @@ public class CsvFile {
             fileWriter1 = new PrintWriter(new OutputStreamWriter(os, "UTF-8"));
             fileWriter1.println(" Mã học sinh, Họ tên, Giới tính, Ngày sinh, Địa chỉ, Số điện thoại, Dân tộc, Tôn giáo, Ngày vào đoàn, Nơi sinh, Cmnd, Lớp");
             System.out.println("đã chạy y1");
-                System.out.println("Bắt đầu viết");
+            System.out.println("Bắt đầu viết");
             while (rs.next()) {
                 fileWriter1.append(rs.getString("mahocsinh"));
                 fileWriter1.append(",");
@@ -254,7 +255,7 @@ public class CsvFile {
                 fileWriter1.append(",");
                 fileWriter1.append(rs.getString("ngaysinh"));
                 fileWriter1.append(",");
-                fileWriter1.append('"'+rs.getString("diachi")+'"');
+                fileWriter1.append('"' + rs.getString("diachi") + '"');
                 fileWriter1.append(",");
                 fileWriter1.append(rs.getString("dienthoai"));
                 fileWriter1.append(",");
@@ -271,7 +272,7 @@ public class CsvFile {
                 fileWriter1.append(tenlop);
                 fileWriter1.append("\n");
             }
-               System.out.println("Viết thành công");
+            System.out.println("Viết thành công");
         } catch (Exception ex) {
             ex.printStackTrace();
         } finally {
@@ -370,7 +371,7 @@ public class CsvFile {
     }
 
     public void readHSCsv(String filePath) {
-
+        SimpleDateFormat fromUser = new SimpleDateFormat("dd/MM/yyyy");
         BufferedReader reader = null;
         try {
             HocSinh model = new HocSinh();
@@ -379,22 +380,31 @@ public class CsvFile {
             reader.readLine();
             System.out.println("đã chạy 1");
             while ((line = reader.readLine()) != null) {
-                String[] fields = line.split(",");
+                String[] fields = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
                 if (fields.length > 0) {
                     model.setMaHS(fields[0]);
                     model.setHoTen(fields[1]);
                     model.setGioiTinh(getGT(fields[2]));
-                    model.setNgaySinh(DateHelper.toDate(fields[3]));
+                    model.setNgaySinh(fromUser.parse(fields[3]));
                     model.setDiaChi(fields[4]);
                     model.setDienThoai(fields[5]);
                     model.setDanToc(fields[6]);
                     model.setTonGiao(fields[7]);
-                    model.setNgayVD(java.sql.Date.valueOf(fields[8]));
-                    model.setNgaySinh(java.sql.Date.valueOf(fields[9]));
+                    model.setNgayVD(fromUser.parse(fields[8]));
+                    model.setNoiSinh(fields[9]);
                     model.setCmND(fields[10]);
-                    model.setLop_id(lopDao.findByTenLop(fields[11]).getiD());
-                    hsDao.insert(model);
 
+                    System.out.println(lopDao.findByTenLop(fields[11]).getiD());
+                    model.setLop_id(lopDao.findByTenLop(fields[11]).getiD());
+                    System.out.println(model);
+                    HocSinh hocSinh = hsDao.select3(fields[0]);
+                    if (hocSinh.getMaHS() == null) {
+                        hsDao.insert(model);
+                        System.out.println("Insert Thành công");
+                    } else {
+                        hsDao.update(model);
+                        System.out.println("Update Thành công");
+                    }
                 }
             }
         } catch (Exception ex) {

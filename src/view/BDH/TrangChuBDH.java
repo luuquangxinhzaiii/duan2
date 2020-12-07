@@ -13,17 +13,21 @@ import da.dao.TaiKhoanDAO;
 import da.helper.BCrypt;
 import da.helper.DialogHelper;
 import da.helper.ShareHelper;
+import da.helper.write_PDF;
 import da.model.GiaoVien;
 import da.model.HocSinh;
 import da.model.NamHoc;
 import da.model.TaiKhoan;
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.Frame;
 
 import java.awt.Image;
 import java.awt.event.MouseEvent;
+import java.io.File;
 import java.io.IOException;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -38,6 +42,7 @@ import javax.swing.JTextField;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
+import view.GV.TrangChuGV;
 
 /**
  *
@@ -58,6 +63,7 @@ public class TrangChuBDH extends javax.swing.JFrame {
     NamHocDAO nhDAO = new NamHocDAO();
     GiaoVienDAO gvdao = new GiaoVienDAO();
     HocSinhDAO hsDAO = new HocSinhDAO();
+    write_PDF pdf = new write_PDF();
 
     public TrangChuBDH() {
         initComponents();
@@ -83,7 +89,7 @@ public class TrangChuBDH extends javax.swing.JFrame {
                     nh.getNienHoc(),
                     nh.getNgayBD(),
                     nh.getNgayKT(),
-                    nh.getTrangThai() == true ? "Đang học" :"Kết thúc",};
+                    nh.getTrangThai() == true ? "Đang học" : "Kết thúc",};
                 model.addRow(row);
             }
         } catch (Exception e) {
@@ -142,7 +148,7 @@ public class TrangChuBDH extends javax.swing.JFrame {
         model.setDiaChi(txtDiaChiGV.getText());
         return model;
     }
-    
+
 //    gen 1 account
     TaiKhoan genaccount() {
         TaiKhoan model = new TaiKhoan();
@@ -220,7 +226,6 @@ public class TrangChuBDH extends javax.swing.JFrame {
         }
     }
 
-
     private void updatenamhoc() {
         NamHoc model = getModel();
         try {
@@ -234,9 +239,9 @@ public class TrangChuBDH extends javax.swing.JFrame {
 
     private NamHoc getModel() {
         NamHoc model = new NamHoc();
-        if(lbl_id.getText().equals("")){
+        if (lbl_id.getText().equals("")) {
             model.setMaNamHoc(UUID.randomUUID());
-        }else{
+        } else {
             model.setMaNamHoc(UUID.fromString(lbl_id.getText()));
         }
         model.setNienHoc(txt_nienhoc.getText());
@@ -244,8 +249,6 @@ public class TrangChuBDH extends javax.swing.JFrame {
         model.setNgayKT(txt_ketthuc.getDate());
         return model;
     }
-    
-    
 
     public TaiKhoan getModelGV() {
         TaiKhoan model = new TaiKhoan();
@@ -286,8 +289,8 @@ public class TrangChuBDH extends javax.swing.JFrame {
         }
         return model;
     }
-    
-     public TaiKhoan getModel3() {
+
+    public TaiKhoan getModel3() {
         cboChucVu.setSelectedItem("Học Sinh");
         cboChucVu.enable(false);
         TaiKhoan model = tkDAO.findById(tblGridView2.getValueAt(tblGridView2.getSelectedRow(), 0).toString());
@@ -332,7 +335,7 @@ public class TrangChuBDH extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }
-    
+
     public void updateHS() {
         TaiKhoan model = getModel3();
         try {
@@ -1509,7 +1512,6 @@ public class TrangChuBDH extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-cancel-delete-32.png"))); // NOI18N
         jButton2.setText("Xóa");
         jButton2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -1519,7 +1521,6 @@ public class TrangChuBDH extends javax.swing.JFrame {
             }
         });
 
-        jButton4.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-available-updates-32.png"))); // NOI18N
         jButton4.setText("Làm mới");
         jButton4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -1542,7 +1543,6 @@ public class TrangChuBDH extends javax.swing.JFrame {
             }
         });
 
-        tblGridView.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         tblGridView.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"1", "1", null}
@@ -1587,7 +1587,6 @@ public class TrangChuBDH extends javax.swing.JFrame {
             }
         });
 
-        tblGridView2.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         tblGridView2.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"1", "1", null}
@@ -1629,7 +1628,6 @@ public class TrangChuBDH extends javax.swing.JFrame {
 
         jTabbedPane1.addTab("Tài khoản học sinh", jPanel3);
 
-        jButton5.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8_add_user_male_32px.png"))); // NOI18N
         jButton5.setText("Cập nhật");
         jButton5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -1730,7 +1728,6 @@ public class TrangChuBDH extends javax.swing.JFrame {
         jLabel16.setForeground(new java.awt.Color(0, 51, 255));
         jLabel16.setText("Thông tin năm học.");
 
-        tblnamhoc.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         tblnamhoc.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"1", "1", "1", null, null}
@@ -1781,7 +1778,6 @@ public class TrangChuBDH extends javax.swing.JFrame {
         jLabel21.setFont(new java.awt.Font("Times New Roman", 1, 20)); // NOI18N
         jLabel21.setText("Ngày kết thúc :");
 
-        jButton6.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-clipboard-list-32.png"))); // NOI18N
         jButton6.setText("Cập nhật");
         jButton6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -1791,7 +1787,6 @@ public class TrangChuBDH extends javax.swing.JFrame {
             }
         });
 
-        jButton7.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jButton7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-available-updates-32.png"))); // NOI18N
         jButton7.setText("Làm mới");
         jButton7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -1801,7 +1796,6 @@ public class TrangChuBDH extends javax.swing.JFrame {
             }
         });
 
-        jButton8.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         jButton8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-education-32.png"))); // NOI18N
         jButton8.setText("Kết thúc năm học");
         jButton8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -1924,7 +1918,7 @@ public class TrangChuBDH extends javax.swing.JFrame {
         lbl_gt3.setText("04/06/2000");
 
         lbl_mhs3.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        lbl_mhs3.setText("02932823");
+        lbl_mhs3.setText("HS0010");
 
         jLabel37.setFont(new java.awt.Font("Times New Roman", 1, 17)); // NOI18N
         jLabel37.setText("Ngày sinh:");
@@ -2161,7 +2155,6 @@ public class TrangChuBDH extends javax.swing.JFrame {
         jLabel22.setForeground(new java.awt.Color(0, 51, 255));
         jLabel22.setText("Danh sách giáo viên");
 
-        tblGridView1.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         tblGridView1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -2237,7 +2230,6 @@ public class TrangChuBDH extends javax.swing.JFrame {
         jLabel72.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jLabel72.setText("Địa chỉ :");
 
-        btnThemMOi.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         btnThemMOi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8_add_user_male_32px.png"))); // NOI18N
         btnThemMOi.setText("Thêm mới");
         btnThemMOi.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -2247,7 +2239,6 @@ public class TrangChuBDH extends javax.swing.JFrame {
             }
         });
 
-        btnCapNhat.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         btnCapNhat.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8_update_file_32px.png"))); // NOI18N
         btnCapNhat.setText("Cập nhật");
         btnCapNhat.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -2257,7 +2248,6 @@ public class TrangChuBDH extends javax.swing.JFrame {
             }
         });
 
-        btnLuu.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         btnLuu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-update-32.png"))); // NOI18N
         btnLuu.setText("Lưu");
         btnLuu.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -3025,11 +3015,11 @@ public class TrangChuBDH extends javax.swing.JFrame {
     }//GEN-LAST:event_txtHotenGVActionPerformed
 
     private void txt_searchdiemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txt_searchdiemKeyReleased
-        
+
     }//GEN-LAST:event_txt_searchdiemKeyReleased
 
     private void cbo_Mon_DiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbo_Mon_DiemActionPerformed
-       
+
     }//GEN-LAST:event_cbo_Mon_DiemActionPerformed
 
     private void cbo_Mon_Diem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbo_Mon_Diem1ActionPerformed
@@ -3041,11 +3031,37 @@ public class TrangChuBDH extends javax.swing.JFrame {
     }//GEN-LAST:event_cbo_Mon_Diem2ActionPerformed
 
     private void btn_capNhat9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_capNhat9ActionPerformed
-       
+
+        File file = new File(System.getProperty("user.dir") + "học Bạ.pdf");
+        try {
+            pdf.write_PDF(file.getPath(), lbl_mhs3.getText(), (String) cbbNamHoc.getSelectedItem());
+        } catch (IOException ex) {
+            Logger.getLogger(TrangChuGV.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(TrangChuGV.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        Desktop desktop = Desktop.getDesktop();
+        if (file.exists()) {
+            try {
+                desktop.open(file);
+            } catch (IOException ex) {
+                Logger.getLogger(TrangChuGV.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+
+        //let's try to open PDF file
+        if (file.exists()) {
+            try {
+                desktop.open(file);
+            } catch (IOException ex) {
+                Logger.getLogger(TrangChuGV.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
     }//GEN-LAST:event_btn_capNhat9ActionPerformed
 
     private void tblGridView3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblGridView3MouseClicked
-      
+
     }//GEN-LAST:event_tblGridView3MouseClicked
 
     private void tblGridView3KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tblGridView3KeyPressed

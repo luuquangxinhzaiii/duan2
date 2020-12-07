@@ -112,11 +112,25 @@ public class HocSinhDAO {
 
         }
     }
-    
+
+    public ResultSet loadWithCSV(String tenlop, String nienhoc) {
+        String sql = "select hs.mahocsinh,hs.hoten,hs.gioitinh,hs.ngaysinh,hs.diachi,hs.dienthoai,hs.dantoc,hs.tongiao,hs.ngayvaodoan,hs.noisinh,hs.cmnd from hocsinh as hs  join lophoc as lh on hs.lop_id=lh.id join namhoc as nh on lh.namhoc_manamhoc=nh.manamhoc  and lh.tenlop=?  and nh.nienhoc=?";
+        try {
+            PreparedStatement ps = Jdbc.prepareStatement(sql);
+            ps.setString(1, tenlop);
+            ps.setString(2, nienhoc);
+            ResultSet rs = ps.executeQuery();
+            return rs;
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+
+        }
+    }
+
     public HocSinh select3(String mahocsinh) {
         String sql = "select * from hocsinh where mahocsinh=?";
         List<HocSinh> list = select(sql, mahocsinh);
-        return list.size() >0 ? list.get(0) : null;
+        return list.size() > 0 ? list.get(0) : null;
     }
 
     public ResultSet loadWith2(String tenlop, String nienhoc) {
@@ -145,11 +159,11 @@ public class HocSinhDAO {
         }
     }
 
-    public ResultSet selectWithMaGV(UUID magiaovien) {
-        String sql = "select gv.hoten,lh.tenlop from giaovien as gv  join phancong as pc on gv.id=pc.giaovien_id join lophoc as lh on pc.lop_id=lh.id and gv.magiaovien=? where pc.vaitro = false";
+    public ResultSet selectWithMaGV(String magiaovien) {
+        String sql = "select gv.hoten,lh.tenlop from giaovien as gv  join phancong as pc on gv.id=pc.giaovien_id join lophoc as lh on pc.lop_id=lh.id and gv.magiaovien=?";
         try {
             PreparedStatement ps = Jdbc.prepareStatement(sql);
-            ps.setString(1, magiaovien.toString());
+            ps.setString(1, magiaovien);
 
             ResultSet rs = ps.executeQuery();
             return rs;
@@ -169,7 +183,7 @@ public class HocSinhDAO {
         Date ngaysinh = Date.valueOf(DateHelper.toString(model.getNgaySinh()));
         Date ngayvd = Date.valueOf(DateHelper.toString(model.getNgayVD()));
         String sql = "insert into hocsinh(id,mahocsinh,hoten,gioitinh,ngaysinh,diachi,dienthoai,dantoc,tongiao,ngayvaodoan,noisinh,cmnd,lop_id,hoten_bo,hoten_me,dienthoai_bo,dienthoai_me,dv_cong_tac_bo,dv_cong_tac_me,nguoidamho,trangthai,anh) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-        JdbcHelper.executeUpdate(sql, UUID.randomUUID(),model.getMaHS(), model.getHoTen(), model.getGioiTinh(), ngaysinh, model.getDiaChi(), model.getDienThoai(), model.getDanToc(), model.getTonGiao(), ngayvd, model.getNoiSinh(), model.getCmND(), model.getLop_id(), model.getHotenBo(), model.getHotenMe(), model.getDienThoaiBo(), model.getDienThoaiMe(), model.getDvctBo(), model.getDvctMe(), model.getNguoiDamHo(), model.getTrangThai(), model.getAnh());
+        JdbcHelper.executeUpdate(sql, UUID.randomUUID(), model.getMaHS(), model.getHoTen(), model.getGioiTinh(), ngaysinh, model.getDiaChi(), model.getDienThoai(), model.getDanToc(), model.getTonGiao(), ngayvd, model.getNoiSinh(), model.getCmND(), model.getLop_id(), model.getHotenBo(), model.getHotenMe(), model.getDienThoaiBo(), model.getDienThoaiMe(), model.getDvctBo(), model.getDvctMe(), model.getNguoiDamHo(), model.getTrangThai(), model.getAnh());
     }
 
     public void update(HocSinh model) {
@@ -191,6 +205,21 @@ public class HocSinhDAO {
             return rs;
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
+        }
+    }
+
+    public ResultSet selectWithMaHSandNH(String mahocsinh, String nienhoc) {
+        String sql = "select hs.mahocsinh,hs.hoten,hs.gioitinh,hs.ngaysinh,hs.diachi,hs.dienthoai,hs.dantoc,hs.tongiao,hs.ngayvaodoan,hs.noisinh,hs.cmnd,hs.hoten_bo,hs.hoten_me,hs.nguoidamho,hs.anh,lh.tenlop from hocsinh as hs join lophoc as lh  on  hs.lop_id=lh.id join namhoc as nh on lh.namhoc_manamhoc=nh.manamhoc and hs.mahocsinh=? and nh.nienhoc= ?";
+        try {
+            PreparedStatement ps = Jdbc.prepareStatement(sql);
+            ps.setString(1, mahocsinh);
+            ps.setString(2, nienhoc);
+            System.out.println(ps);
+            ResultSet rs = ps.executeQuery();
+            return rs;
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+
         }
     }
 
