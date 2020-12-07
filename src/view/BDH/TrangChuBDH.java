@@ -2899,6 +2899,7 @@ public class TrangChuBDH extends javax.swing.JFrame {
                 txtDiaChiGV.setText(rs.getString("diachi"));
             }
         } catch (Exception e) {
+            e.printStackTrace();
         }
         btnCapNhat.setEnabled(true);
     }//GEN-LAST:event_tblGridView1MouseClicked
@@ -2916,8 +2917,15 @@ public class TrangChuBDH extends javax.swing.JFrame {
         ResultSet rs = gvdao.select4();
         try {
             if (rs.next()) {
-                int i = Integer.parseInt(rs.getString("max")) + 1;
-                lblMagv.setText(String.valueOf("GV" + i));
+                int max = Integer.parseInt(rs.getString("max"));
+                int i = max + 1;
+                if(i<10){
+                    lblMagv.setText(String.valueOf("GV00" + i));
+                }else if(10<=i && i<100){
+                    lblMagv.setText(String.valueOf("GV0" + i));
+                }else{
+                    lblMagv.setText(String.valueOf("GV" + i));
+                }      
             }
         } catch (Exception e) {
         }

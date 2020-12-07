@@ -5,6 +5,8 @@
  */
 package da.helper;
 
+
+import da.dao.CsvDao;
 import da.dao.DiemDanhDAO;
 import da.dao.HocSinhDAO;
 import da.dao.LopHocDAO;
@@ -263,7 +265,7 @@ public class CsvFile {
                 fileWriter1.append(",");
                 fileWriter1.append(rs.getString("ngayvaodoan"));
                 fileWriter1.append(",");
-                fileWriter1.append('"' + rs.getString("noisinh") + '"');
+                fileWriter1.append('"'+rs.getString("noisinh")+'"');
                 fileWriter1.append(",");
                 fileWriter1.append(rs.getString("cmnd"));
                 fileWriter1.append(",");
@@ -388,7 +390,6 @@ public class CsvFile {
                     model.setDienThoai(fields[5]);
                     model.setDanToc(fields[6]);
                     model.setTonGiao(fields[7]);
-
                     model.setNgayVD(fromUser.parse(fields[8]));
                     model.setNoiSinh(fields[9]);
                     model.setCmND(fields[10]);

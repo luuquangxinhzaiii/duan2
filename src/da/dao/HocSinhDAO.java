@@ -73,6 +73,20 @@ public class HocSinhDAO {
         return list;
 
     }
+    
+    public ResultSet loadWithCSV(String tenlop, String nienhoc) {
+        String sql = "select hs.mahocsinh,hs.hoten,hs.gioitinh,hs.ngaysinh,hs.diachi,hs.dienthoai,hs.dantoc,hs.tongiao,hs.ngayvaodoan,hs.noisinh,hs.cmnd from hocsinh as hs  join lophoc as lh on hs.lop_id=lh.id join namhoc as nh on lh.namhoc_manamhoc=nh.manamhoc  and lh.tenlop=?  and nh.nienhoc=?";
+        try {
+            PreparedStatement ps = Jdbc.prepareStatement(sql);
+            ps.setString(1, tenlop);
+            ps.setString(2, nienhoc);
+            ResultSet rs = ps.executeQuery();
+            return rs;
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+
+        }
+    }
 
     public ResultSet select() {
         String sql = "select max(substring(mahocsinh,3,5)) as max from hocsinh";
@@ -129,7 +143,6 @@ public class HocSinhDAO {
             return rs;
         } catch (Exception ex) {
             throw new RuntimeException(ex);
-
         }
     }
 
@@ -229,6 +242,11 @@ public class HocSinhDAO {
     public List<HocSinh> findAll() {
         String sql = "select * from hocsinh";
         return select(sql);
+    }
+
+    public List<HocSinh> findByTenLop(String tenlop) {
+        String sql = "select * from hocsinh join lophoc on hocsinh.lop_id = lophoc.id where lophoc.tenlop =?";
+        return select(sql, tenlop);
     }
 
 }
