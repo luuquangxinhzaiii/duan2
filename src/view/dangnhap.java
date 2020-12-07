@@ -64,19 +64,18 @@ public class dangnhap extends javax.swing.JFrame {
         String code = rand.randomAlphaNumeric(numberOfCharactor);
         this.sendmail(txt_email.getText(), code);
         macode.setText(code);
+        System.out.println(code);
     }
 
     public void updatepass() {
-
         String email = txt_tentk.getText();
         String mk1 = new String(txt_mk1.getPassword());
         String mk2 = new String(txt_mk2.getPassword());
-
         try {
             TaiKhoan nhanVien = uDAO.findById(email);
             if (nhanVien != null) {
                 if (mk1.equals(mk2)) {
-                    uDAO.update2(email, mk2);
+                    uDAO.update2(email, BCrypt.hashpw(mk2, BCrypt.gensalt(12)));
                     pnlBody.removeAll();
                     pnlBody.repaint();
                     pnlBody.revalidate();
@@ -198,13 +197,11 @@ public class dangnhap extends javax.swing.JFrame {
                 pnlBody.add(pnlNews2);
                 pnlBody.repaint();
                 pnlBody.revalidate();
-
-                String secs = "10";
+                String secs = "100";
                 int delay = 1000;
                 int period = 1000;
                 timer = new Timer();
                 interval = Integer.parseInt(secs);
-
                 timer.scheduleAtFixedRate(new TimerTask() {
 
                     public void run() {
@@ -212,7 +209,6 @@ public class dangnhap extends javax.swing.JFrame {
                         String s = String.valueOf(interval);
                         txtdemso.setText(s);
                         if (interval == 0) {
-
                             txtthongbao.setText("Lấy lại mã xác nhận");
                             txtdemso.setText(null);
                             macode.setText(null);
@@ -255,19 +251,18 @@ public class dangnhap extends javax.swing.JFrame {
             Authenticator auth;
             auth = new Authenticator() {
                 public PasswordAuthentication getPasswordAuthentication() {
-                    return new PasswordAuthentication("nguyenbach04062000@gmail.com", "xuanbach123");
+                    return new PasswordAuthentication("quangllph08786@fpt.edu.vn", "1123581321345589");
                 }
             };
             Session session = Session.getInstance(props, auth);
             Message msg = new MimeMessage(session);
-
-            msg.setFrom(new InternetAddress("nguyenbach04062000@gmail.com"));
+            msg.setFrom(new InternetAddress("quangllph08786@fpt.edu.vn"));
             msg.setSubject("Mã Xác Nhận Tài Khoản");
             msg.setRecipient(Message.RecipientType.TO, new InternetAddress(email));
             msg.setContent(" Mã xác nhận tài khoản của bạn : " + code, "text/html");
-
             Transport.send(msg);
         } catch (Exception ex) {
+            ex.printStackTrace();
             System.out.print(ex.toString());
         }
     }
@@ -1134,7 +1129,9 @@ public class dangnhap extends javax.swing.JFrame {
     private void btn_login2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_login2ActionPerformed
 
         String code = macode.getText();
+        System.out.println(code);
         String ma = txt_code.getText();
+        System.out.println(ma);
         if (ma.equals(code)) {
             pnlBody.removeAll();
             pnlBody.repaint();

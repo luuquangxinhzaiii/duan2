@@ -47,6 +47,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.RowFilter;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
@@ -627,14 +628,7 @@ public class TrangChuHC extends javax.swing.JFrame {
             body.add(quanlyhocsinh);
             body.repaint();
             body.revalidate();
-        } else if (tentab.equals("Quản lý tin tức")) {
-            body.removeAll();
-            body.repaint();
-            body.revalidate();
-            body.add(quanlytintuc);
-            body.repaint();
-            body.revalidate();
-        } else if (tentab.equals("Danh sách lớp")) {
+        }  else if (tentab.equals("Danh sách lớp")) {
             body.removeAll();
             body.repaint();
             body.revalidate();
@@ -690,10 +684,6 @@ public class TrangChuHC extends javax.swing.JFrame {
         lane2 = new javax.swing.JLabel();
         lblquanlyhocsinh = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
-        qlytintuc = new javax.swing.JPanel();
-        lane3 = new javax.swing.JLabel();
-        lblqlytintuc = new javax.swing.JButton();
-        jLabel5 = new javax.swing.JLabel();
         dslop = new javax.swing.JPanel();
         lane4 = new javax.swing.JLabel();
         lbldslop = new javax.swing.JButton();
@@ -721,7 +711,6 @@ public class TrangChuHC extends javax.swing.JFrame {
         body = new javax.swing.JPanel();
         trangchinh = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
-        quanlytintuc = new javax.swing.JPanel();
         danhsachlop = new javax.swing.JPanel();
         jLabel19 = new javax.swing.JLabel();
         jPanel25 = new javax.swing.JPanel();
@@ -831,6 +820,7 @@ public class TrangChuHC extends javax.swing.JFrame {
         suaDVCTMe = new javax.swing.JTextArea();
         jPanel5 = new javax.swing.JPanel();
         Btn_Xuat_Excel_HS = new javax.swing.JButton();
+        Nhap_excel_hs = new javax.swing.JButton();
         btn_Luu = new javax.swing.JButton();
         btnThemMoi = new javax.swing.JButton();
         jLabel32 = new javax.swing.JLabel();
@@ -1128,56 +1118,6 @@ public class TrangChuHC extends javax.swing.JFrame {
             .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        qlytintuc.setBackground(new java.awt.Color(255, 255, 255));
-        qlytintuc.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                qlytintucMouseClicked(evt);
-            }
-        });
-
-        lane3.setBackground(new java.awt.Color(255, 255, 255));
-        lane3.setOpaque(true);
-
-        lblqlytintuc.setBackground(new java.awt.Color(255, 255, 255));
-        lblqlytintuc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8-save-tabs-list-32.png"))); // NOI18N
-        lblqlytintuc.setContentAreaFilled(false);
-        lblqlytintuc.setFocusable(false);
-        lblqlytintuc.setOpaque(true);
-        lblqlytintuc.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                lblqlytintucMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                lblqlytintucMouseExited(evt);
-            }
-        });
-        lblqlytintuc.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                lblqlytintucActionPerformed(evt);
-            }
-        });
-
-        jLabel5.setFont(new java.awt.Font("Times New Roman", 1, 18)); // NOI18N
-        jLabel5.setText("Quản lý tin tức");
-
-        javax.swing.GroupLayout qlytintucLayout = new javax.swing.GroupLayout(qlytintuc);
-        qlytintuc.setLayout(qlytintucLayout);
-        qlytintucLayout.setHorizontalGroup(
-            qlytintucLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(qlytintucLayout.createSequentialGroup()
-                .addComponent(lane3, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblqlytintuc, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        qlytintucLayout.setVerticalGroup(
-            qlytintucLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lane3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(lblqlytintuc, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
-            .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-
         dslop.setBackground(new java.awt.Color(255, 255, 255));
         dslop.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -1251,7 +1191,6 @@ public class TrangChuHC extends javax.swing.JFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(qlytintuc, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(dslop, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(qlyhocsinh, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(trangchu, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -1283,10 +1222,8 @@ public class TrangChuHC extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(qlyhocsinh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(qlytintuc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addComponent(dslop, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(183, Short.MAX_VALUE))
+                .addContainerGap(250, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel1);
@@ -1537,21 +1474,6 @@ public class TrangChuHC extends javax.swing.JFrame {
         );
 
         body.add(trangchinh, "card2");
-
-        quanlytintuc.setBackground(new java.awt.Color(0, 102, 102));
-
-        javax.swing.GroupLayout quanlytintucLayout = new javax.swing.GroupLayout(quanlytintuc);
-        quanlytintuc.setLayout(quanlytintucLayout);
-        quanlytintucLayout.setHorizontalGroup(
-            quanlytintucLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1186, Short.MAX_VALUE)
-        );
-        quanlytintucLayout.setVerticalGroup(
-            quanlytintucLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 635, Short.MAX_VALUE)
-        );
-
-        body.add(quanlytintuc, "card3");
 
         danhsachlop.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -2491,19 +2413,31 @@ public class TrangChuHC extends javax.swing.JFrame {
             }
         });
 
+        Nhap_excel_hs.setText("Nhập Excel");
+        Nhap_excel_hs.setToolTipText("");
+        Nhap_excel_hs.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Nhap_excel_hsActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
                 .addContainerGap(80, Short.MAX_VALUE)
-                .addComponent(Btn_Xuat_Excel_HS, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(Nhap_excel_hs, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(Btn_Xuat_Excel_HS, javax.swing.GroupLayout.DEFAULT_SIZE, 331, Short.MAX_VALUE))
                 .addGap(59, 59, 59))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(169, 169, 169)
+                .addGap(109, 109, 109)
+                .addComponent(Nhap_excel_hs, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(Btn_Xuat_Excel_HS, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(185, Short.MAX_VALUE))
         );
@@ -2522,7 +2456,7 @@ public class TrangChuHC extends javax.swing.JFrame {
 
         btnThemMoi.setFont(new java.awt.Font("Tahoma", 0, 16)); // NOI18N
         btnThemMoi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/icons8_add_user_male_32px.png"))); // NOI18N
-        btnThemMoi.setText("Thêm mới");
+        btnThemMoi.setText("Làm Mới");
         btnThemMoi.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         btnThemMoi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -2882,9 +2816,7 @@ public class TrangChuHC extends javax.swing.JFrame {
         lbltrangchu.setBackground(new Color(255, 255, 255));
         trangchu.setBackground(new Color(255, 255, 255));
 
-        lane3.setBackground(new Color(255, 255, 255));
-        lblqlytintuc.setBackground(new Color(255, 255, 255));
-        qlytintuc.setBackground(new Color(255, 255, 255));
+
 
         lane4.setBackground(new Color(255, 255, 255));
         lbldslop.setBackground(new Color(255, 255, 255));
@@ -2913,9 +2845,7 @@ public class TrangChuHC extends javax.swing.JFrame {
         lblquanlyhocsinh.setBackground(new Color(255, 255, 255));
         qlyhocsinh.setBackground(new Color(255, 255, 255));
 
-        lane3.setBackground(new Color(255, 255, 255));
-        lblqlytintuc.setBackground(new Color(255, 255, 255));
-        qlytintuc.setBackground(new Color(255, 255, 255));
+ 
 
         lane4.setBackground(new Color(255, 255, 255));
         lbldslop.setBackground(new Color(255, 255, 255));
@@ -3083,46 +3013,6 @@ public class TrangChuHC extends javax.swing.JFrame {
         btntab5.setBackground(new Color(240, 240, 240));
     }//GEN-LAST:event_btntab5ActionPerformed
 
-    private void lblqlytintucMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblqlytintucMouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_lblqlytintucMouseEntered
-
-    private void lblqlytintucMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblqlytintucMouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_lblqlytintucMouseExited
-
-    private void lblqlytintucActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lblqlytintucActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_lblqlytintucActionPerformed
-
-    private void qlytintucMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_qlytintucMouseClicked
-        lane3.setBackground(new Color(119, 84, 248));
-        lblqlytintuc.setBackground(new Color(237, 234, 242));
-        qlytintuc.setBackground(new Color(237, 234, 242));
-
-        lane1.setBackground(new Color(255, 255, 255));
-        lbltrangchu.setBackground(new Color(255, 255, 255));
-        trangchu.setBackground(new Color(255, 255, 255));
-
-        lane2.setBackground(new Color(255, 255, 255));
-        lblquanlyhocsinh.setBackground(new Color(255, 255, 255));
-        qlyhocsinh.setBackground(new Color(255, 255, 255));
-
-        lane4.setBackground(new Color(255, 255, 255));
-        lbldslop.setBackground(new Color(255, 255, 255));
-        dslop.setBackground(new Color(255, 255, 255));
-
-        String tieude2 = "Quản lý tin tức";
-        checktab(tieude2);
-
-        body.removeAll();
-        body.repaint();
-        body.revalidate();
-        body.add(quanlytintuc);
-        body.repaint();
-        body.revalidate();
-    }//GEN-LAST:event_qlytintucMouseClicked
-
     private void lbldslopMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbldslopMouseEntered
         // TODO add your handling code here:
     }//GEN-LAST:event_lbldslopMouseEntered
@@ -3148,9 +3038,7 @@ public class TrangChuHC extends javax.swing.JFrame {
         lblquanlyhocsinh.setBackground(new Color(255, 255, 255));
         qlyhocsinh.setBackground(new Color(255, 255, 255));
 
-        lane3.setBackground(new Color(255, 255, 255));
-        lblqlytintuc.setBackground(new Color(255, 255, 255));
-        qlytintuc.setBackground(new Color(255, 255, 255));
+    
 
         String tieude2 = "Danh sách lớp";
         checktab(tieude2);
@@ -3215,7 +3103,7 @@ public class TrangChuHC extends javax.swing.JFrame {
                 suaCMND.setText(rs.getString("cmnd"));
                 jDateChooser6.setDate(rs.getDate("ngayvaodoan"));
                 suaSDT.setText(rs.getString("dienthoai"));
-                if (rs.getBoolean("trangthai")==true) {
+                if (rs.getBoolean("trangthai") == true) {
                     cbbSuaTrangThai.setSelectedItem("Đi học");
                 } else {
                     cbbSuaTrangThai.setSelectedItem("Nghỉ học");
@@ -3287,11 +3175,21 @@ public class TrangChuHC extends javax.swing.JFrame {
         List<HocSinh> list = hsDAO.findAll();
         try {
             if (list.isEmpty()) {
-                lbl_Mahocsinh.setText(String.valueOf("hs" + 1));
+                lbl_Mahocsinh.setText(String.valueOf("HS" + 1));
             } else {
                 while (rs.next()) {
-                    int i = Integer.parseInt(rs.getString("max")) + 1;
-                    lbl_Mahocsinh.setText(String.valueOf("hs" + i));
+                    int i = Integer.parseInt(rs.getString("max"));
+                    int max = i+1;
+                    if(max <10){
+                        lbl_Mahocsinh.setText(String.valueOf("HS000" + max));
+                    }else if(max >=10 && max <100){
+                        lbl_Mahocsinh.setText(String.valueOf("HS00" + max));
+                    }else if(max >=100 && max <1000){
+                        lbl_Mahocsinh.setText(String.valueOf("HS0" + max));
+                    }else{
+                        lbl_Mahocsinh.setText(String.valueOf("HS" + max));
+                    }
+                    
                 }
             }
         } catch (Exception e) {
@@ -3366,8 +3264,13 @@ public class TrangChuHC extends javax.swing.JFrame {
                 lbl_malop.setText(String.valueOf("lop" + 1));
             } else {
                 while (rs.next()) {
-                    int i = Integer.parseInt(rs.getString("max")) + 1;
-                    lbl_malop.setText(String.valueOf("lop" + i));
+                    int i = Integer.parseInt(rs.getString("max"));
+                    int max = i + 1;
+                    if (max < 10) {
+                        lbl_malop.setText(String.valueOf("lop0" + max));
+                    } else {
+                        lbl_malop.setText(String.valueOf("lop" + max));
+                    }
                 }
             }
         } catch (Exception e) {
@@ -3555,10 +3458,10 @@ public class TrangChuHC extends javax.swing.JFrame {
         int file = open.showOpenDialog(null);
         if (file == JFileChooser.APPROVE_OPTION) {
             String[] ary = open.getCurrentDirectory().toString().split("\\\\");
-            for(String w: ary){
+            for (String w : ary) {
                 System.out.println(w);
             }
-            suaAnh.setText(ary[0] + "\\" +ary[1] + "\\" +ary[2] + "\\" + ary[3] + "\\" + open.getSelectedFile().getName());
+            suaAnh.setText(ary[0] + "\\" + ary[1] + "\\" + ary[2] + "\\" + ary[3] + "\\" + open.getSelectedFile().getName());
             ImageIcon icon = new ImageIcon(suaAnh.getText());
             Image img = icon.getImage().getScaledInstance(110, 121, Image.SCALE_SMOOTH);
             System.out.println(img);
@@ -3580,7 +3483,7 @@ public class TrangChuHC extends javax.swing.JFrame {
 
     private void Btn_Xuat_Excel_LopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Btn_Xuat_Excel_LopActionPerformed
         try {
-            jFileChooser1.setSelectedFile(new File("C:\\Danh sách Lớp khối " + CbbKhoiHoc.getSelectedItem().toString() + " kì " + cbo_hocKi.getSelectedItem().toString() + " năm " + cbbNamHoc.getSelectedItem().toString() + ".csv"));
+            jFileChooser1.setSelectedFile(new File("C:\\Danh sách Lớp khối " + CbbKhoiHoc.getSelectedItem().toString() + " năm " + cbbNamHoc.getSelectedItem().toString() + ".csv"));
             jFileChooser1.showSaveDialog(null);
             File file = jFileChooser1.getSelectedFile();
             if (file.exists()) {
@@ -3613,14 +3516,14 @@ public class TrangChuHC extends javax.swing.JFrame {
                 int dialogResult = JOptionPane.showConfirmDialog(this, "Bạn muốn ghi đè lên File đã có", "Hệ thống quản lý đào tạo", dialogButton);
                 if (dialogResult == 0) {
                     System.out.println("starting write user.csv file: " + file.getPath());
-                    fv.writeHSCsv(file.getPath(), (String) cbbLopHoc.getSelectedItem(), (String) cbbNamHoc.getSelectedItem(), (String) cbo_hocKi.getSelectedItem());
+                    fv.writeHSCsv(file.getPath(), (String) cbbLopHoc.getSelectedItem(), (String) cbbNamHoc.getSelectedItem());
                     DialogHelper.alert(this, "Xuất Excel thành công");
                 } else {
                     System.out.println("No Option");
                 }
             } else {
                 System.out.println("starting write file: " + file.getPath());
-                fv.writeHSCsv(file.getPath(), (String) cbbLopHoc.getSelectedItem(), (String) cbbNamHoc.getSelectedItem(), (String) cbo_hocKi.getSelectedItem());
+                fv.writeHSCsv(file.getPath(), (String) cbbLopHoc.getSelectedItem(), (String) cbbNamHoc.getSelectedItem());
                 DialogHelper.alert(this, "Xuất Excel thành công");
             }
         } catch (Exception ex) {
@@ -3687,6 +3590,32 @@ public class TrangChuHC extends javax.swing.JFrame {
     private void txtTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTimKiemActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtTimKiemActionPerformed
+
+    private void Nhap_excel_hsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Nhap_excel_hsActionPerformed
+        try {
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("File csv", "csv");
+            jFileChooser1.setFileFilter(filter);
+            jFileChooser1.showSaveDialog(null);
+            File file = jFileChooser1.getSelectedFile();
+            if (file.exists()) {
+                int dialogButton = JOptionPane.YES_NO_OPTION;
+                int dialogResult = JOptionPane.showConfirmDialog(this, "Bạn muốn nhập học sinh", "Hệ thống quản lý đào tạo", dialogButton);
+                if (dialogResult == 0) {
+                    System.out.println("starting write user.csv file: " + file.getPath());
+                    fv.readHSCsv(file.getPath());
+                    DialogHelper.alert(this, "Xuất Excel thành công");
+                } else {
+                    System.out.println("No Option");
+                }
+            } else {
+                System.out.println("starting write file: " + file.getPath());
+                fv.readHSCsv(file.getPath());
+                DialogHelper.alert(this, "Xuất Excel thành công");
+            }
+        } catch (Exception ex) {
+            DialogHelper.alert(this, "Xuất Excel không thành công");
+        }
+    }//GEN-LAST:event_Nhap_excel_hsActionPerformed
 
     /**
      * @param args the command line arguments
@@ -3855,6 +3784,7 @@ public class TrangChuHC extends javax.swing.JFrame {
     private javax.swing.JButton Btn_Xuat_Excel_Lop;
     private javax.swing.JComboBox<String> CbbKhoi;
     private javax.swing.JComboBox<String> CbbKhoiHoc;
+    private javax.swing.JButton Nhap_excel_hs;
     private javax.swing.JPopupMenu PopUpMenu;
     private javax.swing.JScrollPane banglop;
     private javax.swing.JScrollPane banglop1;
@@ -3930,7 +3860,6 @@ public class TrangChuHC extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel38;
     private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel57;
     private javax.swing.JLabel jLabel58;
     private javax.swing.JLabel jLabel59;
@@ -3977,7 +3906,6 @@ public class TrangChuHC extends javax.swing.JFrame {
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JLabel lane1;
     private javax.swing.JLabel lane2;
-    private javax.swing.JLabel lane3;
     private javax.swing.JLabel lane4;
     private javax.swing.JLabel lbl_Gv;
     private javax.swing.JLabel lbl_Mahocsinh;
@@ -3988,7 +3916,6 @@ public class TrangChuHC extends javax.swing.JFrame {
     private javax.swing.JTextField lbl_tenMon;
     private javax.swing.JTextField lbl_timkiem;
     private javax.swing.JButton lbldslop;
-    private javax.swing.JButton lblqlytintuc;
     private javax.swing.JButton lblquanlyhocsinh;
     private javax.swing.JLabel lbltab1;
     private javax.swing.JLabel lbltab2;
@@ -4001,9 +3928,7 @@ public class TrangChuHC extends javax.swing.JFrame {
     private javax.swing.JPanel pnlHeader;
     private javax.swing.JLabel qlnamhoc;
     private javax.swing.JPanel qlyhocsinh;
-    private javax.swing.JPanel qlytintuc;
     private javax.swing.JPanel quanlyhocsinh;
-    private javax.swing.JPanel quanlytintuc;
     private javax.swing.JRadioButton rdoBoMon;
     private javax.swing.JRadioButton rdoChuNghiem;
     private javax.swing.JTextField suaAnh;
