@@ -20,7 +20,7 @@ public class JdbcHelper {
 //    private static String driver = "org.postgresql.Driver";
 //    private static String dburl = "jdbc:postgresql://localhost:5432/fpt";
 //    private static String username = "postgres";
-//    private static String password = "tuan123";
+//    private static String password = "tuan123";   
     
     private static String driver = "org.postgresql.Driver";
     private static String dburl = "jdbc:postgresql://35.213.128.4:5432/datn";

@@ -19,50 +19,51 @@ import java.util.UUID;
  * @author BNC
  */
 public class DiemDanhDAO {
+
     JdbcHelper Jdbc = new JdbcHelper();
 
     public List<DiemDanh> select() {
         String sql = "SELECT * danhgia";
         return select(sql);
     }
-    
-    public int selectNghiCoPhep(String maHS){
+
+    public int selectNghiCoPhep(String maHS) {
         String sql = "select count(hocsinh_id) as solannghihoc from diemdanh join hocsinh on diemdanh.hocsinh_id = hocsinh.id where hocsinh.mahocsinh = ? and diemdanh.trangthai = true ";
         int sobuoinghicophep = 0;
-        try{
+        try {
             PreparedStatement ps = Jdbc.prepareStatement(sql);
             ps.setString(1, maHS);
             ResultSet rs = ps.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 sobuoinghicophep = rs.getInt("solannghihoc");
             }
-        }catch(SQLException ex){
+        } catch (SQLException ex) {
             throw new RuntimeException(ex);
         }
         return sobuoinghicophep;
     }
-    
-    public int selectNghiKoCoPhep(String maHS){
+
+    public int selectNghiKoCoPhep(String maHS) {
         String sql = "select count(hocsinh_id) as solannghihoc from diemdanh join hocsinh on diemdanh.hocsinh_id = hocsinh.id where hocsinh.mahocsinh = ? and diemdanh.trangthai = false ";
         int sobuoinghikophep = 0;
-        try{
+        try {
             PreparedStatement ps = Jdbc.prepareStatement(sql);
             ps.setString(1, maHS);
             ResultSet rs = ps.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 sobuoinghikophep = rs.getInt("solannghihoc");
             }
-        }catch(SQLException ex){
+        } catch (SQLException ex) {
             throw new RuntimeException(ex);
         }
         return sobuoinghikophep;
     }
-    
+
     public List<DiemDanh> selectByDG() {
         String sql = "SELECT * FROM mon where hinhthucdanhgia ='1' ";
         return select(sql);
     }
-   
+
     private List<DiemDanh> select(String sql, Object... args) {
         List<DiemDanh> list = new ArrayList<>();
         try {
@@ -82,13 +83,31 @@ public class DiemDanhDAO {
         return list;
     }
 
+    public int selectNghi_ki(String maHS, boolean ki, boolean status) {
+        String sql = "select count(hocsinh_id) as solannghihoc from diemdanh join hocsinh on diemdanh.hocsinh_id = hocsinh.id where hocsinh.mahocsinh = ? and diemdanh.hocki = ? and diemdanh.trangthai = ? ";
+        int sobuoinghi = 0;
+        try {
+            PreparedStatement ps = Jdbc.prepareStatement(sql);
+            ps.setString(1, maHS);
+            ps.setBoolean(2, ki);
+            ps.setBoolean(3, status);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                sobuoinghi = rs.getInt("solannghihoc");
+            }
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+        return sobuoinghi;
+    }
+
     private DiemDanh readFromResultSet(ResultSet rs) throws SQLException {
         DiemDanh model = new DiemDanh();
         model.setId(UUID.fromString(rs.getString("id")));
         model.setNgay(rs.getDate("ngay"));
         model.setMaGv(UUID.fromString(rs.getString("giaovien_magiaovien")));
         model.setMaHs(UUID.fromString(rs.getString("hocsinh_id")));
-        model.setTrangThai(rs.getBoolean("trangthai"));       
+        model.setTrangThai(rs.getBoolean("trangthai"));
         return model;
     }
 }

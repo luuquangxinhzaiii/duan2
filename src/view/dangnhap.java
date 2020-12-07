@@ -346,7 +346,7 @@ public class dangnhap extends javax.swing.JFrame {
         lbl_user6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Cube UI");
+        setTitle("Đăng Nhập");
         setUndecorated(true);
         setSize(new java.awt.Dimension(1000, 600));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());

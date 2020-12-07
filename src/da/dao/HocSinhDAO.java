@@ -39,7 +39,7 @@ public class HocSinhDAO {
         model.setNgayVD(rs.getDate("ngayvaodoan"));
         model.setNoiSinh(rs.getString("noisinh"));
         model.setCmND(rs.getString("cmnd"));
-        model.setLop(UUID.fromString(rs.getString("lop_id")));
+        model.setLop_id(UUID.fromString(rs.getString("lop_id")));
         model.setHotenBo(rs.getString("hoten_bo"));
         model.setHotenMe(rs.getString("hoten_me"));
         model.setDienThoaiBo(rs.getString("dienthoai_bo"));
@@ -98,11 +98,25 @@ public class HocSinhDAO {
 
         }
     }
-    
+
+    public ResultSet loadWithCSV(String tenlop, String nienhoc) {
+        String sql = "select hs.mahocsinh,hs.hoten,hs.gioitinh,hs.ngaysinh,hs.diachi,hs.dienthoai,hs.dantoc,hs.tongiao,hs.ngayvaodoan,hs.noisinh,hs.cmnd from hocsinh as hs  join lophoc as lh on hs.lop_id=lh.id join namhoc as nh on lh.namhoc_manamhoc=nh.manamhoc  and lh.tenlop=?  and nh.nienhoc=?";
+        try {
+            PreparedStatement ps = Jdbc.prepareStatement(sql);
+            ps.setString(1, tenlop);
+            ps.setString(2, nienhoc);
+            ResultSet rs = ps.executeQuery();
+            return rs;
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+
+        }
+    }
+
     public HocSinh select3(String mahocsinh) {
         String sql = "select * from hocsinh where mahocsinh=?";
         List<HocSinh> list = select(sql, mahocsinh);
-        return list.size() >0 ? list.get(0) : null;
+        return list.size() > 0 ? list.get(0) : null;
     }
 
     public ResultSet loadWith2(String tenlop, String nienhoc) {
@@ -118,25 +132,12 @@ public class HocSinhDAO {
 
         }
     }
-   public ResultSet loadWithCSV(String tenlop, String nienhoc) {
-        String sql = "select hs.mahocsinh,hs.hoten,hs.gioitinh,hs.ngaysinh,hs.diachi,hs.dienthoai,hs.dantoc,hs.tongiao,hs.ngayvaodoan,hs.noisinh,hs.cmnd from hocsinh as hs  join lophoc as lh on hs.lop_id=lh.id join namhoc as nh on lh.namhoc_manamhoc=nh.manamhoc  and lh.tenlop=?  and nh.nienhoc=?";
-        try {
-            PreparedStatement ps = Jdbc.prepareStatement(sql);
-            ps.setString(1, tenlop);
-            ps.setString(2, nienhoc);
-            ResultSet rs = ps.executeQuery();
-            return rs;
-        } catch (Exception ex) {
-            throw new RuntimeException(ex);
 
-        }
-    }
     public ResultSet selectWithMaHS(String mahocsinh) {
-        String sql = "select hs.mahocsinh,hs.hoten,hs.gioitinh,hs.ngaysinh,hs.diachi,hs.dienthoai,hs.dantoc,hs.tongiao,hs.ngayvaodoan,hs.noisinh,hs.cmnd,hs.hotenBo,hs.hotenMe,hs.dienthoaiBo,hs.dienthoaiMe,hs.dvCongTacBo,hs.dvCongTacMe,hs.nguoidamho,hs.trangthai,hs.anh,lh.tenlop from hocsinh as hs join lophoc as lh  on hs.lop=lh.malop and hs.mahocsinh=?";
+        String sql = "select * from hocsinh as hs join lophoc as lh on hs.lop_id=lh.id and hs.mahocsinh=?";
         try {
             PreparedStatement ps = Jdbc.prepareStatement(sql);
             ps.setString(1, mahocsinh);
-
             ResultSet rs = ps.executeQuery();
             return rs;
         } catch (Exception ex) {
@@ -169,13 +170,14 @@ public class HocSinhDAO {
         Date ngaysinh = Date.valueOf(DateHelper.toString(model.getNgaySinh()));
         Date ngayvd = Date.valueOf(DateHelper.toString(model.getNgayVD()));
         String sql = "insert into hocsinh(id,mahocsinh,hoten,gioitinh,ngaysinh,diachi,dienthoai,dantoc,tongiao,ngayvaodoan,noisinh,cmnd,lop_id,hoten_bo,hoten_me,dienthoai_bo,dienthoai_me,dv_cong_tac_bo,dv_cong_tac_me,nguoidamho,trangthai,anh) values(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-        JdbcHelper.executeUpdate(sql, UUID.randomUUID(),model.getMaHS(), model.getHoTen(), model.getGioiTinh(), ngaysinh, model.getDiaChi(), model.getDienThoai(), model.getDanToc(), model.getTonGiao(), ngayvd, model.getNoiSinh(), model.getCmND(), model.getLop(), model.getHotenBo(), model.getHotenMe(), model.getDienThoaiBo(), model.getDienThoaiMe(), model.getDvctBo(), model.getDvctMe(), model.getNguoiDamHo(), model.isTrangThai(), model.getAnh());
+        JdbcHelper.executeUpdate(sql, UUID.randomUUID(), model.getMaHS(), model.getHoTen(), model.getGioiTinh(), ngaysinh, model.getDiaChi(), model.getDienThoai(), model.getDanToc(), model.getTonGiao(), ngayvd, model.getNoiSinh(), model.getCmND(), model.getLop_id(), model.getHotenBo(), model.getHotenMe(), model.getDienThoaiBo(), model.getDienThoaiMe(), model.getDvctBo(), model.getDvctMe(), model.getNguoiDamHo(), model.getTrangThai(), model.getAnh());
     }
 
     public void update(HocSinh model) {
-        SimpleDateFormat sfd = new SimpleDateFormat("yyyy-MM-dd");
-        String sql = "update hocsinh set hoten=?,gioitinh=?,ngaysinh=?,diachi=?,dienthoai=?,dantoc=?,tongiao=?,ngayvaodoan=?,noisinh=?,cmnd=?,lop=?,hotenBo=?,hotenMe=?,dienthoaiBo=?,dienthoaiMe=?,dvCongTacBo=?,dvCongTacMe=?,nguoidamho=?,trangthai=?,anh=? where mahocsinh=?";
-        JdbcHelper.executeUpdate(sql, model.getHoTen(), model.getGioiTinh(), sfd.format(model.getNgaySinh()), model.getDiaChi(), model.getDienThoai(), model.getDanToc(), model.getTonGiao(), sfd.format(model.getNgayVD()), model.getNoiSinh(), model.getCmND(), model.getLop(), model.getHotenBo(), model.getHotenMe(), model.getDienThoaiBo(), model.getDienThoaiMe(), model.getDvctBo(), model.getDvctMe(), model.getNguoiDamHo(), model.isTrangThai(), model.getAnh(), model.getMaHS());
+        Date ngaysinh = Date.valueOf(DateHelper.toString(model.getNgaySinh()));
+        Date ngayvd = Date.valueOf(DateHelper.toString(model.getNgayVD()));
+        String sql = "update hocsinh set hoten=?,gioitinh=?,ngaysinh=?,diachi=?,dienthoai=?,dantoc=?,tongiao=?,ngayvaodoan=?,noisinh=?,cmnd=?,lop_id=?,hoten_bo=?,hoten_me=?,dienthoai_bo=?,dienthoai_me=?,dv_cong_tac_bo=?,dv_cong_tac_me=?,nguoidamho=?,trangthai=?,anh=? where mahocsinh=?";
+        JdbcHelper.executeUpdate(sql, model.getHoTen(), model.getGioiTinh(), ngaysinh, model.getDiaChi(), model.getDienThoai(), model.getDanToc(), model.getTonGiao(), ngayvd, model.getNoiSinh(), model.getCmND(), model.getLop_id(), model.getHotenBo(), model.getHotenMe(), model.getDienThoaiBo(), model.getDienThoaiMe(), model.getDvctBo(), model.getDvctMe(), model.getNguoiDamHo(), model.getTrangThai(), model.getAnh(), model.getMaHS());
     }
 
     public ResultSet selectSiSoTong(String tenLop, boolean ki, String nienhoc) {
@@ -193,6 +195,21 @@ public class HocSinhDAO {
         }
     }
 
+    public ResultSet selectWithMaHSandNH(String mahocsinh, String nienhoc) {
+        String sql = "select hs.mahocsinh,hs.hoten,hs.gioitinh,hs.ngaysinh,hs.diachi,hs.dienthoai,hs.dantoc,hs.tongiao,hs.ngayvaodoan,hs.noisinh,hs.cmnd,hs.hoten_bo,hs.hoten_me,hs.nguoidamho,hs.anh,lh.tenlop from hocsinh as hs join lophoc as lh  on  hs.lop_id=lh.id join namhoc as nh on lh.namhoc_manamhoc=nh.manamhoc and hs.mahocsinh=? and nh.nienhoc= ?";
+        try {
+            PreparedStatement ps = Jdbc.prepareStatement(sql);
+            ps.setString(1, mahocsinh);
+            ps.setString(2, nienhoc);
+            System.out.println(ps);
+            ResultSet rs = ps.executeQuery();
+            return rs;
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+
+        }
+    }
+
     public ResultSet selectSiSoNam(String tenLop, boolean ki, String nienhoc) {
         String sql = "select count(*) as ss from hocsinh join lophoc as lh on hocsinh.lop_id=lh.id join phancong as pc on lh.id=pc.lop_id join namhoc as nh on pc.namhoc_manamhoc=nh.manamhoc and lh.tenlop=? and hocsinh.trangthai=true and pc.hocki=? and nh.nienhoc=? and hocsinh.gioitinh=true";
         try {
@@ -207,6 +224,11 @@ public class HocSinhDAO {
         } catch (SQLException ex) {
             throw new RuntimeException(ex);
         }
+    }
+
+    public List<HocSinh> findAll() {
+        String sql = "select * from hocsinh";
+        return select(sql);
     }
 
 }

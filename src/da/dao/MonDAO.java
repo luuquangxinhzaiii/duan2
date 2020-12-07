@@ -103,7 +103,7 @@ public class MonDAO {
     }
     
     public ResultSet selecttoPC(String tenkhoi) {
-        String sql = "select * from mon join khoi on mon.khoi_makhoi = khoi.makhoi where khoi.tenkhoi = ? and not exists (select * from phancong where mon.mamon = phancong.mon_mamon ) ";
+        String sql = "select * from mon join khoi on mon.khoi_makhoi = khoi.makhoi where khoi.tenkhoi = ? ";
         try {
             PreparedStatement ps = Jdbc.prepareStatement(sql);
             ps.setString(1, tenkhoi);

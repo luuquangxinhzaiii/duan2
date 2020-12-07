@@ -45,6 +45,7 @@
   </NonVisualComponents>
   <Properties>
     <Property name="defaultCloseOperation" type="int" value="3"/>
+    <Property name="title" type="java.lang.String" value="H&#xe0;nh Ch&#xed;nh"/>
     <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
       <Color blue="fb" green="f8" red="f4" type="rgb"/>
     </Property>
@@ -1041,12 +1042,12 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="1130" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="1186" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <EmptySpace min="0" pref="630" max="32767" attributes="0"/>
+                  <EmptySpace min="0" pref="635" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
           </Layout>
@@ -1084,7 +1085,7 @@
                               </Group>
                           </Group>
                       </Group>
-                      <EmptySpace pref="22" max="32767" attributes="0"/>
+                      <EmptySpace pref="78" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -1099,7 +1100,7 @@
                           <Component id="jPanel25" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
-                      <Component id="bodylop" pref="327" max="32767" attributes="0"/>
+                      <Component id="bodylop" pref="331" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -2114,7 +2115,7 @@
                           <Component id="jScrollPane2" min="-2" pref="583" max="-2" attributes="0"/>
                           <Component id="jLabel18" alignment="0" min="-2" pref="254" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="36" max="32767" attributes="0"/>
+                      <EmptySpace pref="64" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Group type="102" attributes="0">
                               <Component id="jLabel32" min="-2" pref="77" max="-2" attributes="0"/>
@@ -2177,7 +2178,7 @@
                           </Group>
                           <Component id="jScrollPane2" min="-2" pref="539" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace pref="30" max="32767" attributes="0"/>
+                      <EmptySpace pref="35" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -2192,9 +2193,6 @@
               <SubComponents>
                 <Component class="javax.swing.JTable" name="tblGridView">
                   <Properties>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Tahoma" size="16" style="0"/>
-                    </Property>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="4" rowCount="1">
                         <Column editable="true" title="M&#xe3; HS" type="java.lang.Object">
@@ -2292,7 +2290,7 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Component id="jLabel58" alignment="0" pref="107" max="32767" attributes="0"/>
+                                          <Component id="jLabel58" alignment="0" max="32767" attributes="0"/>
                                           <Component id="jLabel57" alignment="0" max="32767" attributes="0"/>
                                           <Group type="102" alignment="0" attributes="0">
                                               <Component id="jLabel59" min="-2" max="-2" attributes="0"/>
@@ -2373,7 +2371,7 @@
                                   <Component id="suaCMND" alignment="3" min="-2" pref="31" max="-2" attributes="0"/>
                                   <Component id="jLabel67" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace pref="18" max="32767" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -2534,7 +2532,7 @@
                                           <Component id="jScrollPane3" alignment="0" max="32767" attributes="0"/>
                                           <Component id="jScrollPane6" alignment="1" max="32767" attributes="0"/>
                                       </Group>
-                                      <EmptySpace min="0" pref="3" max="32767" attributes="0"/>
+                                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                   </Group>
                                   <Component id="jDateChooser6" alignment="0" max="32767" attributes="0"/>
                               </Group>
@@ -2771,7 +2769,7 @@
                                   <Component id="jLabel77" alignment="0" min="-2" pref="25" max="-2" attributes="0"/>
                                   <Component id="jScrollPane5" alignment="0" min="-2" pref="77" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace pref="24" max="32767" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -2882,9 +2880,9 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="1" attributes="0">
                               <EmptySpace pref="80" max="32767" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="Btn_Xuat_Excel_HS" pref="331" max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
                                   <Component id="Nhap_excel_hs" max="32767" attributes="0"/>
+                                  <Component id="Btn_Xuat_Excel_HS" pref="331" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
                           </Group>
@@ -2893,9 +2891,9 @@
                     <DimensionLayout dim="1">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="98" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="95" max="-2" attributes="0"/>
                               <Component id="Nhap_excel_hs" min="-2" pref="42" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                               <Component id="Btn_Xuat_Excel_HS" min="-2" pref="36" max="-2" attributes="0"/>
                               <EmptySpace pref="185" max="32767" attributes="0"/>
                           </Group>
@@ -2929,9 +2927,6 @@
             </Container>
             <Component class="javax.swing.JButton" name="btn_Luu">
               <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Tahoma" size="16" style="0"/>
-                </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/img/icons8-update-32.png"/>
                 </Property>
@@ -2948,9 +2943,6 @@
             </Component>
             <Component class="javax.swing.JButton" name="btnThemMoi">
               <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Tahoma" size="16" style="0"/>
-                </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/img/icons8_add_user_male_32px.png"/>
                 </Property>
@@ -3020,9 +3012,6 @@
             </Component>
             <Component class="javax.swing.JButton" name="btn_ChinhSua">
               <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Tahoma" size="16" style="0"/>
-                </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/img/icons8-update-32.png"/>
                 </Property>
@@ -3097,14 +3086,14 @@
                               <Component id="jLabel36" alignment="0" min="-2" pref="254" max="-2" attributes="0"/>
                               <Component id="jScrollPane8" alignment="0" min="-2" pref="595" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace pref="552" max="32767" attributes="0"/>
+                          <EmptySpace pref="572" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="103" rootIndex="2" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="644" max="-2" attributes="0"/>
                           <Component id="btn_addSubject" min="-2" pref="203" max="-2" attributes="0"/>
-                          <EmptySpace pref="319" max="32767" attributes="0"/>
+                          <EmptySpace pref="339" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -3139,7 +3128,7 @@
                       </Group>
                       <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
                       <Component id="btn_updateSubject" min="-2" pref="42" max="-2" attributes="0"/>
-                      <EmptySpace pref="66" max="32767" attributes="0"/>
+                      <EmptySpace pref="71" max="32767" attributes="0"/>
                       <Component id="btn_reloadSubject" min="-2" pref="42" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
                   </Group>
@@ -3149,12 +3138,12 @@
                           <Component id="jLabel36" min="-2" pref="39" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jScrollPane8" min="-2" pref="539" max="-2" attributes="0"/>
-                          <EmptySpace pref="17" max="32767" attributes="0"/>
+                          <EmptySpace pref="22" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <Group type="103" rootIndex="2" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace pref="446" max="32767" attributes="0"/>
+                          <EmptySpace pref="451" max="32767" attributes="0"/>
                           <Component id="btn_addSubject" min="-2" pref="42" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="142" max="-2" attributes="0"/>
                       </Group>
@@ -3183,9 +3172,6 @@
               <SubComponents>
                 <Component class="javax.swing.JTable" name="tbl_DanhSachMon">
                   <Properties>
-                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                      <Font name="Tahoma" size="16" style="0"/>
-                    </Property>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="4" rowCount="1">
                         <Column editable="true" title="M&#xe3; m&#xf4;n" type="java.lang.Object">
@@ -3274,9 +3260,6 @@
             </Component>
             <Component class="javax.swing.JButton" name="btn_reloadSubject">
               <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Tahoma" size="16" style="0"/>
-                </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/img/icons8-update-32.png"/>
                 </Property>
@@ -3293,9 +3276,6 @@
             </Component>
             <Component class="javax.swing.JButton" name="btn_addSubject">
               <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Tahoma" size="16" style="0"/>
-                </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/img/icons8_add_user_male_32px.png"/>
                 </Property>
@@ -3312,9 +3292,6 @@
             </Component>
             <Component class="javax.swing.JButton" name="btn_updateSubject">
               <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Tahoma" size="16" style="0"/>
-                </Property>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/img/icons8_update_file_32px.png"/>
                 </Property>

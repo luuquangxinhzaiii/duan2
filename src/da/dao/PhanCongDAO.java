@@ -29,11 +29,13 @@ public class PhanCongDAO {
         model.setMaLop(UUID.fromString(rs.getString("lop_id")));
         model.setMaGV(UUID.fromString(rs.getString("giaovien_id")));
         model.setVaiTro(rs.getBoolean("vaitro"));
-        model.setMaMon(UUID.fromString(rs.getString("mon_mamon")));
+        
         if(rs.getBoolean("vaitro") == true){
-            model.setHocKi(rs.getBoolean("hocki"));
-        }else{
             model.setHocKi(null);
+            model.setMaMon(null);  
+        }else{
+            model.setHocKi(rs.getBoolean("hocki"));
+            model.setMaMon(UUID.fromString(rs.getString("mon_mamon")));
         }
         model.setMaNamHoc(UUID.fromString(rs.getString("namhoc_manamhoc")));
         return model;
@@ -78,7 +80,7 @@ public class PhanCongDAO {
     }
 
     public ResultSet select3(String nienhoc, Boolean ki) {
-        String sql = "select phancong.maphancong, lophoc.tenlop, giaovien.hoten, mon.ten_mon, phancong.vaitro from phancong join lophoc on phancong.lop_id = lophoc.id"
+        String sql = "select phancong.maphancong, lophoc.tenlop, giaovien.hoten, mon.ten_mon, phancong.vaitro, phancong.hocki from phancong join lophoc on phancong.lop_id = lophoc.id"
                 + " join giaovien on phancong.giaovien_id = giaovien.id join mon on phancong.mon_mamon = mon.mamon join namhoc on phancong.namhoc_manamhoc = namhoc.manamhoc "
                 + "where namhoc.nienhoc=? and phancong.hocki=?";
         try {
@@ -113,6 +115,12 @@ public class PhanCongDAO {
         return list.size()>0 ? list.get(0) : null;
     }
     
+    public PhanCong selectCN(String tenLop, Boolean vaitro){
+        String sql = "SELECT * FROM phancong INNER JOIN lophoc on phancong.lop_id = lophoc.id where lophoc.malop = ? and phancong.vaitro=?";
+        List<PhanCong> list = select(sql,tenLop,vaitro);
+        return list.size()>0 ? list.get(0) : null;
+    }
+    
     public ResultSet select5(String magv, boolean hocKi) {
         String sql = "select pc.maphancong,pc.lop_id,gv.hoten,m.ten_mon,m.hinhthucdanhgia,pc.vaitro,pc.giaovien_id from phancong as pc join mon as m on pc.mon_mamon=m.mamon join giaovien as gv on pc.giaovien_id=gv.id join namhoc as nh on pc.namhoc_manamhoc=nh.manamhoc and gv.magiaovien=? and pc.hocki=?";
         try {
@@ -130,7 +138,7 @@ public class PhanCongDAO {
     
     
     public ResultSet selectLopCN(String maGv) {
-        String sql = "select lophoc.tenlop from phancong join lophoc on phancong.lop_id = lophoc.id join giaovien on phancong.giaovien_id = giaovien.id where giaovien.magiaovien = ? and vaitro = false";
+        String sql = "select lophoc.tenlop from phancong join lophoc on phancong.lop_id = lophoc.id join giaovien on phancong.giaovien_id = giaovien.id where giaovien.magiaovien = ? and vaitro = true";
         try {
             PreparedStatement ps = Jdbc.prepareStatement(sql);
             ps.setString(1, maGv);
