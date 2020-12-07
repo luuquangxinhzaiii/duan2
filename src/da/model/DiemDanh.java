@@ -14,18 +14,23 @@ import java.util.UUID;
  */
 public class DiemDanh {
     private UUID id;
+    private Boolean hocki;
     private Date Ngay;
     private UUID maGv;
     private UUID maHs;
     private Boolean trangThai;
+    private UUID namhoc;
     
     public DiemDanh(){}
-    public DiemDanh(UUID id, Date Ngay, UUID maGv, UUID maHs, Boolean trangThai){
+    public DiemDanh(UUID id,Boolean hocki, Date Ngay, UUID maGv, UUID maHs, Boolean trangThai,UUID namhoc){
         super();
+        this.id = id;
+        this.hocki = hocki;
         this.Ngay = Ngay;
         this.maGv = maGv;
         this.maHs = maHs;
         this.trangThai = trangThai;
+        this.namhoc = namhoc;
     }
 
     public UUID getId() {
@@ -66,6 +71,22 @@ public class DiemDanh {
 
     public void setTrangThai(Boolean trangThai) {
         this.trangThai = trangThai;
+    }
+
+    public UUID getNamhoc() {
+        return namhoc;
+    }
+
+    public void setNamhoc(UUID namhoc) {
+        this.namhoc = namhoc;
+    }
+
+    public Boolean getHocki() {
+        return hocki;
+    }
+
+    public void setHocki(Boolean hocki) {
+        this.hocki = hocki;
     }
 
     

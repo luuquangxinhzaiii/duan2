@@ -22,7 +22,7 @@ public class DiemDanhDAO {
     JdbcHelper Jdbc = new JdbcHelper();
 
     public List<DiemDanh> select() {
-        String sql = "SELECT * danhgia";
+        String sql = "SELECT * diemdanh";
         return select(sql);
     }
     
@@ -58,10 +58,10 @@ public class DiemDanhDAO {
         return sobuoinghikophep;
     }
     
-    public List<DiemDanh> selectByDG() {
-        String sql = "SELECT * FROM mon where hinhthucdanhgia ='1' ";
-        return select(sql);
-    }
+//    public List<DiemDanh> selectByDG() {
+//        String sql = "SELECT * FROM mon where hinhthucdanhgia ='1' ";
+//        return select(sql);
+//    }
    
     private List<DiemDanh> select(String sql, Object... args) {
         List<DiemDanh> list = new ArrayList<>();
@@ -85,10 +85,32 @@ public class DiemDanhDAO {
     private DiemDanh readFromResultSet(ResultSet rs) throws SQLException {
         DiemDanh model = new DiemDanh();
         model.setId(UUID.fromString(rs.getString("id")));
+        model.setHocki(rs.getBoolean("hocki"));
         model.setNgay(rs.getDate("ngay"));
-        model.setMaGv(UUID.fromString(rs.getString("giaovien_magiaovien")));
+        model.setMaGv(UUID.fromString(rs.getString("giaovien_id")));
         model.setMaHs(UUID.fromString(rs.getString("hocsinh_id")));
-        model.setTrangThai(rs.getBoolean("trangthai"));       
+        model.setTrangThai(rs.getBoolean("trangthai"));   
+        model.setNamhoc(UUID.fromString(rs.getString("namhoc_manamhoc")));
         return model;
+    }
+
+    public ResultSet loadData(String tenlop) {
+        String sql = "select dd.ngay, hs,hoten, dd.trangthai, dd.hocki, nh.nienhoc from diemdanh"
+                + " dd join hocsinh hs on dd.hocsinh_id = hs.id join namhoc nh on dd.namhoc_manamhoc = nh.manamhoc "
+                + "join lophoc lh on hs.lop_id= lh.id where lh.tenlop=?";
+        try {
+            PreparedStatement ps = Jdbc.prepareStatement(sql);
+            ps.setString(1, tenlop);
+            ResultSet rs = ps.executeQuery();
+            return rs;
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+
+        }
+    }
+    
+    public void insert(DiemDanh model) {
+        String sql = "insert into diemdanh(id,hocki,ngay,trangthai,giaovien_id,hocsinh_id,namhoc_manamhoc) values(?,?,?,?,?,?,?)";
+        JdbcHelper.executeUpdate(sql, UUID.randomUUID(), model.getHocki(), model.getNgay(), model.getTrangThai(), model.getMaGv(), model.getMaHs(), model.getNamhoc());
     }
 }
