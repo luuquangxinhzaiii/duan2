@@ -460,13 +460,13 @@ public class TrangChuGV extends javax.swing.JFrame {
     }
 
     public void LoadTenLop() {
-        UUID maGV =  ShareHelper.TaiKhoan.getGiaovien_id();
-        GiaoVien giaoVien = gvDAO.findByUUID(ShareHelper.TaiKhoan.getGiaovien_id());
-        ResultSet rs = pcDAO.selectLopCN(giaoVien.getMaGV());
+        String maGV = (String) ShareHelper.TaiKhoan.getHoten();
+        ResultSet rs = hsDAO.selectWithMaGV(maGV);
+
         try {
-            while (rs.next()) {
-                lbl_Lop1.setText(rs.getString("tenlop"));
-//                lbl_giaovien.setText("Tên GV: " + rs.getString("gv.hoten"));
+            if (rs.next()) {
+                lbl_Lop1.setText(rs.getString("lh.tenlop"));
+                lbl_giaovien.setText("Tên GV: " + rs.getString("gv.hoten"));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -5404,29 +5404,30 @@ public class TrangChuGV extends javax.swing.JFrame {
     }//GEN-LAST:event_Xuat_DiemActionPerformed
 
     private void Nhap_DiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Nhap_DiemActionPerformed
-//        try {
-//            FileNameExtensionFilter filter = new FileNameExtensionFilter("File csv", "csv");
-//            jFileChooser1.setFileFilter(filter);
-//            jFileChooser1.showSaveDialog(null);
-//            File file = jFileChooser1.getSelectedFile();
-//            if (file.exists()) {
-//                int dialogButton = JOptionPane.YES_NO_OPTION;
-//                int dialogResult = JOptionPane.showConfirmDialog(this, "Bạn muốn nhập điểm vào Lớp: " + cbo_Lop_Diem.getSelectedItem().toString() + " || Môn: " + cbo_Mon_Diem.getSelectedItem().toString() + " || Kì: " + (String) cbo_hocKi.getSelectedItem() + " || Năm: " + (String) cbbNamHoc.getSelectedItem(), "Hệ thống quản lý đào tạo", dialogButton);
-//                if (dialogResult == 0) {
-//                    System.out.println("starting write user.csv file: " + file.getPath());
-//                    fv.readDiemCsv(file.getPath(), (String) cbo_Mon_Diem.getSelectedItem(), (String) cbo_Lop_Diem.getSelectedItem(), (String) cbo_hocKi.getSelectedItem(), (String) cbbNamHoc.getSelectedItem());
-//                    DialogHelper.alert(this, "Xuất Excel thành công");
-//                } else {
-//                    System.out.println("No Option");
-//                }
-//            } else {
-//                System.out.println("starting write file: " + file.getPath());
-//                fv.readDiemCsv(file.getPath(), (String) cbo_Mon_Diem.getSelectedItem(), (String) cbo_Lop_Diem.getSelectedItem(), (String) cbo_hocKi.getSelectedItem(), (String) cbbNamHoc.getSelectedItem());
-//                DialogHelper.alert(this, "Xuất Excel thành công");
-//            }
-//        } catch (Exception ex) {
-//            DialogHelper.alert(this, "Xuất Excel không thành công");
-//        }
+try {
+            FileNameExtensionFilter filter = new FileNameExtensionFilter("File csv", "csv");
+            jFileChooser1.setFileFilter(filter);
+            jFileChooser1.showSaveDialog(null);
+            File file = jFileChooser1.getSelectedFile();
+            if (file.exists()) {
+                int dialogButton = JOptionPane.YES_NO_OPTION;
+                int dialogResult = JOptionPane.showConfirmDialog(this, "Bạn muốn nhập điểm vào Lớp: " + cbo_Lop_Diem.getSelectedItem().toString() + " || Môn: " + cbo_Mon_Diem.getSelectedItem().toString() + " || Kì: " + (String) cbo_hocKi.getSelectedItem() + " || Năm: " + (String) cbbNamHoc.getSelectedItem(), "Hệ thống quản lý đào tạo", dialogButton);
+                if (dialogResult == 0) {
+                    System.out.println("starting write user.csv file: " + file.getPath());
+                    fv.readDiemCsv(file.getPath(), (String) cbo_Mon_Diem.getSelectedItem(), (String) cbo_Lop_Diem.getSelectedItem(), (String) cbo_hocKi.getSelectedItem());
+                    DialogHelper.alert(this, "Nhập Excel thành công");
+                } else {
+                    System.out.println("No Option");
+                }
+            } else {
+                System.out.println("starting write file: " + file.getPath());
+                fv.readDiemCsv(file.getPath(), (String) cbo_Mon_Diem.getSelectedItem(), (String) cbo_Lop_Diem.getSelectedItem(), (String) cbo_hocKi.getSelectedItem());
+                DialogHelper.alert(this, "Nhập Excel thành công");
+            }
+        } catch (Exception ex) {
+            DialogHelper.alert(this, "Nhập Excel không thành công");
+        }
+
     }//GEN-LAST:event_Nhap_DiemActionPerformed
 
     private void Tai_Form_DiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Tai_Form_DiemActionPerformed
