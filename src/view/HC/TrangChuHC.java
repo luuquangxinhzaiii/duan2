@@ -3034,7 +3034,6 @@ public class TrangChuHC extends javax.swing.JFrame {
 
         String tieude2 = "Danh sách lớp";
         checktab(tieude2);
-
         body.removeAll();
         body.repaint();
         body.revalidate();
@@ -3116,7 +3115,6 @@ public class TrangChuHC extends javax.swing.JFrame {
                 } else {
                     image.setIcon(null);
                 }
-
             }
         } catch (Exception e) {
             e.printStackTrace();

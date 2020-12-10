@@ -99,6 +99,20 @@ public class LopHocDAO {
 
         }
     }
+    
+    public ResultSet selectLopByNienhocandtenKhoi(String nienhoc, String tenkhoi) {
+        String sql = "select lh.malop,lh.tenlop,nh.nienhoc from lophoc as lh join namhoc as nh on lh.namhoc_manamhoc=nh.manamhoc join khoi as k on lh.khoi_makhoi = k.makhoi and nh.nienhoc=? and k.tenkhoi=?";
+        try {
+            PreparedStatement ps = Jdbc.prepareStatement(sql);
+            ps.setString(1, nienhoc);
+            ps.setString(2, tenkhoi);
+            ResultSet rs = ps.executeQuery();
+            return rs;
+        } catch (Exception ex) {
+            throw new RuntimeException(ex);
+
+        }
+    }
 
     public ResultSet selectWithMalop(String malop) {
         String sql = "select * from  lophoc where malop=?";

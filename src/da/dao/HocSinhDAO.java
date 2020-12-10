@@ -248,5 +248,12 @@ public class HocSinhDAO {
         String sql = "select * from hocsinh join lophoc on hocsinh.lop_id = lophoc.id where lophoc.tenlop =?";
         return select(sql, tenlop);
     }
+    
+    public List<HocSinh> findByTenLopandNienhoc(String tenlop, String nienhoc) {
+        String sql = "select * from hocsinh join lophoc on hocsinh.lop_id = lophoc.id join namhoc on lophoc.namhoc_manamhoc = namhoc.manamhoc where lophoc.tenlop =? and namhoc.nienhoc=?";
+        return select(sql, tenlop, nienhoc);
+    }
+    
+    
 
 }

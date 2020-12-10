@@ -53,12 +53,12 @@ public class write_PDF {
                         + "        <div style=\"margin-left: 30px;\">\n"
                         + "            <h3 style=\"text-align: center;\">HỌC BẠ</h3> \n"
                         + "            <p style=\"text-align: justify;\">Họ và tên học sinh: " + rs.getString("hoten") + "          Giới tính: " + gioitinh + "</p>\n"
-                        + "            <p style=\"text-align: justify;\">Ngày, tháng, năm sinh: " + rs.getDate("ngaysinh") + "          Dân tộc: " + rs.getString("dantoc") + "         Quốc tịch: Việt Nam </p> \n"
-                        + "            <p style=\"text-align: justify;\">Nơi sinh: " + rs.getString("noisinh") + "</p> \n"
-                        + "            <p style=\"text-align: justify;\">Nơi ở hiện nay: " + rs.getString("diachi") + "</p> \n"
-                        + "            <p style=\"text-align: justify;\">Họ và tên bố: " + rs.getString("hoten_bo") + "</p>\n"
-                        + "            <p style=\"text-align: justify;\">Họ và tên mẹ: " + rs.getString("hoten_me") + "</p> \n"
-                        + "            <p style=\"text-align: justify;\">Người giám hộ (nếu có): " + rs.getString("nguoidamho") + "</p> \n"
+                        + "            <p style=\"text-align: justify;\">Ngày, tháng, năm sinh: " + rs.getDate("ngaysinh") + "          Dân tộc: " + check_null(rs.getString("dantoc")) + "         Quốc tịch: Việt Nam </p> \n"
+                        + "            <p style=\"text-align: justify;\">Nơi sinh: " + check_null(rs.getString("noisinh")) + "</p> \n"
+                        + "            <p style=\"text-align: justify;\">Nơi ở hiện nay: " + check_null(rs.getString("diachi")) + "</p> \n"
+                        + "            <p style=\"text-align: justify;\">Họ và tên bố: " + check_null(rs.getString("hoten_bo")) + "</p>\n"
+                        + "            <p style=\"text-align: justify;\">Họ và tên mẹ: " + check_null(rs.getString("hoten_me")) + "</p> \n"
+                        + "            <p style=\"text-align: justify;\">Người giám hộ (nếu có): " + check_null(rs.getString("nguoidamho")) + "</p> \n"
                         + "        </div>\n"
                         + "        <table style=\"width: 100%;\" border=\"0\"> \n"
                         + "            <tbody> \n"
@@ -103,14 +103,12 @@ public class write_PDF {
                         + "                    <td style=\"text-align: center;\"><strong>Năm học</strong></td> \n"
                         + "                    <td style=\"text-align: center;\"><strong>Lớp</strong></td> \n"
                         + "                    <td style=\"text-align: center;\"><strong>Tên trường</strong></td> \n"
-                        + "                    <td style=\"text-align: center;\"><strong>Số đăng bộ</strong></td> \n"
                         + "                    <td style=\"text-align: center;\"><strong>Ngày nhập học/chuyển đến</strong></td> \n"
                         + "                </tr> \n"
                         + "                <tr> \n"
-                        + "                    <td style=\"text-align: center;\">20.... - 20....</td> \n"
                         + "                    <td>" + nienhoc + " </td> \n"
                         + "                    <td> " + rs.getString("tenlop") + "</td> \n"
-                        + "                    <td> </td> \n"
+                        + "                    <td> Trung học cơ sở Minh Khôi</td> \n"
                         + "                    <td> </td> \n"
                         + "                </tr> \n"
                         + "            </tbody> \n"
@@ -243,6 +241,12 @@ public class write_PDF {
                     + "        <br>\n"
                     + "        <br>\n"
                     + "        <br>\n"
+                    + "        <br>\n"
+                    + "        <br>\n"
+                    + "        <br>\n"
+                    + "        <br>\n"
+                    + "        <br>\n"
+                    + "        <br>\n"
                     + "        <table style=\"width: 100%;\" border=\"0\"> \n"
                     + "            <tbody> \n"
                     + "                <tr> \n"
@@ -254,6 +258,21 @@ public class write_PDF {
                     + "                </tr> \n"
                     + "            </tbody> \n"
                     + "        </table>\n"
+                    + "        <br>\n"
+                    + "        <br>\n"
+                    + "        <br>\n"
+                    + "        <br>\n"
+                    + "        <br>\n"
+                    + "        <br>\n"
+                    + "        <br>\n"
+                    + "        <br>\n"
+                    + "        <br>\n"
+                    + "        <br>\n"
+                    + "        <br>\n"
+                    + "        <br>\n"
+                    + "        <br>\n"
+                    + "        <br>\n"
+                    + "        <br>\n"
                     + "    </body>\n"
                     + "</html>";
             System.out.println("start 2");
@@ -299,4 +318,12 @@ public class write_PDF {
         return kq;
     }
 
+    private String check_null(String line) {
+
+        if (line == null) {
+            line = "";
+
+        }
+        return line;
+    }
 }

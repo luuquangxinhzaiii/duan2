@@ -129,7 +129,7 @@ public class diemDAO {
                 + "WHERE HOCSINH.MAHOCSINH = ?\n"
                 + "				AND NH.NIENHOC = ?\n"
                 + "				AND MON.HINHTHUCDANHGIA = TRUE\n"
-                + "				AND HOCKI = TRUE\n"
+                + "				AND HOCKI = FALSE\n"
                 + "GROUP BY MON.TEN_MON";
         try {
             PreparedStatement ps = Jdbc.prepareStatement(sql);

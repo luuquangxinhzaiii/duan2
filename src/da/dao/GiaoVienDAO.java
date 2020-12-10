@@ -123,9 +123,9 @@ public class GiaoVienDAO {
     }
 
     public void update(GiaoVien model) {
-        SimpleDateFormat sfd = new SimpleDateFormat("yyyy-MM-dd");
+        Date ngaysinh = Date.valueOf(DateHelper.toString(model.getNgaySinh()));
         String sql = "update giaovien set hoten=?,gioitinh=?,ngaysinh=?,dienthoai=?,cmnd=?,diachi=? where magiaovien=?";
-        JdbcHelper.executeUpdate(sql, model.getHoTen(),model.getGioiTinh(), sfd.format(model.getNgaySinh()),model.getDienThoai(),model.getCmnd(),model.getDiaChi(),model.getMaGV());
+        JdbcHelper.executeUpdate(sql, model.getHoTen(),model.getGioiTinh(), ngaysinh,model.getDienThoai(),model.getCmnd(),model.getDiaChi(),model.getMaGV());
     }
 
 }

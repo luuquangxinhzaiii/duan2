@@ -253,7 +253,7 @@ public class CsvFile {
                 fileWriter1.append(",");
                 fileWriter1.append(rs.getString("ngaysinh"));
                 fileWriter1.append(",");
-                fileWriter1.append('"' + rs.getString("diachi") + '"');
+                fileWriter1.append(rs.getString("diachi"));
                 fileWriter1.append(",");
                 fileWriter1.append(rs.getString("dienthoai"));
                 fileWriter1.append(",");
@@ -263,7 +263,7 @@ public class CsvFile {
                 fileWriter1.append(",");
                 fileWriter1.append(rs.getString("ngayvaodoan"));
                 fileWriter1.append(",");
-                fileWriter1.append('"'+rs.getString("noisinh")+'"');
+                fileWriter1.append(rs.getString("noisinh"));
                 fileWriter1.append(",");
                 fileWriter1.append(rs.getString("cmnd"));
                 fileWriter1.append(",");
@@ -277,7 +277,6 @@ public class CsvFile {
             try {
                 fileWriter1.flush();
                 fileWriter1.close();
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -305,7 +304,6 @@ public class CsvFile {
                 fileWriter1.append(",");
                 fileWriter1.append(rs.getString("nienhoc"));
                 fileWriter1.append("\n");
-
             }
             System.out.println("Ghi thành công");
         } catch (Exception ex) {
@@ -353,7 +351,6 @@ public class CsvFile {
                         dDAO.update(model);
                         System.out.println("Update Thành công");
                     }
-
                 }
             }
         } catch (Exception ex) {
@@ -365,7 +362,6 @@ public class CsvFile {
                 e.printStackTrace();
             }
         }
-
     }
 
     public void readHSCsv(String filePath) {
