@@ -92,7 +92,31 @@ public class CsvFile {
             }
         }
     }
+    public void writeFormHSCsv(String filePath) {
+        try {
+            FileOutputStream os = new FileOutputStream(filePath);
+            os.write(239);
+            os.write(187);
+            os.write(191);
+            fileWriter1 = new PrintWriter(new OutputStreamWriter(os, "UTF-8"));
+            fileWriter1.println(" Mã học sinh, Họ tên, Giới tính, Ngày sinh, Địa chỉ, Số điện thoại, Dân tộc, Tôn giáo, Ngày vào đoàn, Nơi sinh, Cmnd, Lớp, Họ tên bố, Số điện thoại bố,Nơi công tác bố,Họ tên mẹ, Số điện thoại mẹ,Nơi công tác mẹ,Người giám hộ,Trạng thái");
+            System.out.println("đã chạy y1");
+            System.out.println("Bắt đầu viết");
+            
+            
+            System.out.println("Viết thành công");
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        } finally {
+            try {
+                fileWriter1.flush();
+                fileWriter1.close();
 
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
     public void writeKQCNCsv(String tenLop, String filePath) {
         try {
             ResultSet rs = dDAO.kqHk1(tenLop);
@@ -234,6 +258,7 @@ public class CsvFile {
 
     public void writeHSCsv(String filePath, String tenlop, String nienhoc) {
         try {
+            SimpleDateFormat fromUser = new SimpleDateFormat("yyyy-MM-dd");
             System.out.println(tenlop + "---" + nienhoc);
             ResultSet rs = hsDao.loadWithCSV(tenlop, nienhoc);
             FileOutputStream os = new FileOutputStream(filePath);
@@ -241,7 +266,7 @@ public class CsvFile {
             os.write(187);
             os.write(191);
             fileWriter1 = new PrintWriter(new OutputStreamWriter(os, "UTF-8"));
-            fileWriter1.println(" Mã học sinh, Họ tên, Giới tính, Ngày sinh, Địa chỉ, Số điện thoại, Dân tộc, Tôn giáo, Ngày vào đoàn, Nơi sinh, Cmnd, Lớp");
+            fileWriter1.println(" Mã học sinh, Họ tên, Giới tính, Ngày sinh, Địa chỉ, Số điện thoại, Dân tộc, Tôn giáo, Ngày vào đoàn, Nơi sinh, Cmnd, Lớp, Họ tên bố, Số điện thoại bố,Nơi công tác bố,Họ tên mẹ, Số điện thoại mẹ,Nơi công tác mẹ,Người giám hộ,Trạng thái");
             System.out.println("đã chạy y1");
             System.out.println("Bắt đầu viết");
             while (rs.next()) {
@@ -253,7 +278,9 @@ public class CsvFile {
                 fileWriter1.append(",");
                 fileWriter1.append(rs.getString("ngaysinh"));
                 fileWriter1.append(",");
+                fileWriter1.append('"');
                 fileWriter1.append(rs.getString("diachi"));
+                fileWriter1.append('"');
                 fileWriter1.append(",");
                 fileWriter1.append(rs.getString("dienthoai"));
                 fileWriter1.append(",");
@@ -263,11 +290,33 @@ public class CsvFile {
                 fileWriter1.append(",");
                 fileWriter1.append(rs.getString("ngayvaodoan"));
                 fileWriter1.append(",");
+                fileWriter1.append('"');
                 fileWriter1.append(rs.getString("noisinh"));
+                fileWriter1.append('"');
                 fileWriter1.append(",");
                 fileWriter1.append(rs.getString("cmnd"));
                 fileWriter1.append(",");
                 fileWriter1.append(tenlop);
+                fileWriter1.append(",");
+                fileWriter1.append(rs.getString("hoten_bo"));
+                fileWriter1.append(",");
+                fileWriter1.append(rs.getString("dienthoai_bo"));
+                fileWriter1.append(",");
+                fileWriter1.append('"');
+                fileWriter1.append(rs.getString("dv_cong_tac_bo"));
+                fileWriter1.append('"');
+                fileWriter1.append(",");
+                fileWriter1.append(rs.getString("hoten_me"));
+                fileWriter1.append(",");
+                fileWriter1.append(rs.getString("dienthoai_me"));
+                fileWriter1.append(",");
+                fileWriter1.append('"');
+                fileWriter1.append(rs.getString("dv_cong_tac_me"));
+                fileWriter1.append('"');
+                fileWriter1.append(",");
+                fileWriter1.append(rs.getString("nguoidamho"));
+                fileWriter1.append(",");
+                fileWriter1.append(setTT(rs.getString("trangthai")));
                 fileWriter1.append("\n");
             }
             System.out.println("Viết thành công");
@@ -277,6 +326,7 @@ public class CsvFile {
             try {
                 fileWriter1.flush();
                 fileWriter1.close();
+
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -304,6 +354,7 @@ public class CsvFile {
                 fileWriter1.append(",");
                 fileWriter1.append(rs.getString("nienhoc"));
                 fileWriter1.append("\n");
+
             }
             System.out.println("Ghi thành công");
         } catch (Exception ex) {
@@ -330,6 +381,7 @@ public class CsvFile {
             while ((line = reader.readLine()) != null) {
                 String[] fields = line.split(",");
                 if (fields.length > 0) {
+                    if(!fields[0].equals("")){
                     model.setNgay(java.sql.Date.valueOf(LocalDate.now()));
                     model.setDiemMieng1(Integer.parseInt(fields[2]));
                     model.setDiemMieng2(Integer.parseInt(fields[3]));
@@ -342,15 +394,16 @@ public class CsvFile {
                     model.setDiemThi(Float.parseFloat(fields[10]));
                     model.setDiemTBM(TinhDiemTB(model.getDiemMieng1(), model.getDiemMieng2(), model.getDiemMieng3(), model.getDiem15p1(), model.getDiem15p2(), model.getDiem15p3(), model.getDiem1Tiet1(), model.getDiem1Tiet2(), model.getDiemThi()));
                     model.setMapc(PCDao.selectPc(ShareHelper.TaiKhoan.getGiaovien_id(), tenLop, tenMon, sethocki(ki)).getMaPC());
-                    HocSinh hocSinh = hsDao.select3(fields[0]);
-                    if (hocSinh.getMaHS() == null) {
+                    if (hsDao.select3(fields[0]) == null) {
                         dDAO.insert(model);
                         System.out.println("Insert Thành công");
                     } else {
+                        HocSinh hocSinh = hsDao.select3(fields[0]);
                         model.setMaHocSinh(hocSinh.getiD());
                         dDAO.update(model);
                         System.out.println("Update Thành công");
-                    }
+                    }}
+
                 }
             }
         } catch (Exception ex) {
@@ -362,10 +415,11 @@ public class CsvFile {
                 e.printStackTrace();
             }
         }
+
     }
 
     public void readHSCsv(String filePath) {
-        SimpleDateFormat fromUser = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat fromUser = new SimpleDateFormat("dd/MM/YYYY");
         BufferedReader reader = null;
         try {
             HocSinh model = new HocSinh();
@@ -376,29 +430,35 @@ public class CsvFile {
             while ((line = reader.readLine()) != null) {
                 String[] fields = line.split(",(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)", -1);
                 if (fields.length > 0) {
+                    if(!fields[0].equals("")){
                     model.setMaHS(fields[0]);
                     model.setHoTen(fields[1]);
                     model.setGioiTinh(getGT(fields[2]));
                     model.setNgaySinh(fromUser.parse(fields[3]));
-                    model.setDiaChi(fields[4]);
+                    model.setDiaChi(fields[4].replace("\"", ""));
                     model.setDienThoai(fields[5]);
                     model.setDanToc(fields[6]);
                     model.setTonGiao(fields[7]);
                     model.setNgayVD(fromUser.parse(fields[8]));
-                    model.setNoiSinh(fields[9]);
+                    model.setNoiSinh(fields[9].replace("\"", ""));
                     model.setCmND(fields[10]);
-
-                    System.out.println(lopDao.findByTenLop(fields[11]).getiD());
                     model.setLop_id(lopDao.findByTenLop(fields[11]).getiD());
-                    System.out.println(model);
-                    HocSinh hocSinh = hsDao.select3(fields[0]);
-                    if (hocSinh.getMaHS() == null) {
+                    model.setHotenBo(fields[12]);
+                    model.setDienThoaiBo(fields[13]);
+                    model.setDvctBo(fields[14].replace("\"", ""));
+                    model.setHotenBo(fields[15]);
+                    model.setDienThoaiBo(fields[16]);
+                    model.setDvctBo(fields[17].replace("\"", ""));
+                    model.setNguoiDamHo(fields[18]);
+                    model.setTrangThai(getTT(fields[19]));
+                    System.out.println(fields[19]);
+                    if (hsDao.select3(fields[0]) == null) {
                         hsDao.insert(model);
                         System.out.println("Insert Thành công");
                     } else {
                         hsDao.update(model);
                         System.out.println("Update Thành công");
-                    }
+                    }}
                 }
             }
         } catch (Exception ex) {
@@ -446,9 +506,9 @@ public class CsvFile {
     }
 
     private String setTT(String TT) {
-        if (TT.equals("1")) {
+        if (TT.equals("t")) {
             return "Đi học";
-        } else {
+        } else  {
             return "Nghỉ học";
         }
     }

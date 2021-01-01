@@ -255,11 +255,15 @@ public class dangnhap extends javax.swing.JFrame {
                 }
             };
             Session session = Session.getInstance(props, auth);
-            Message msg = new MimeMessage(session);
+            MimeMessage msg = new MimeMessage(session);
             msg.setFrom(new InternetAddress("quangllph08786@fpt.edu.vn"));
-            msg.setSubject("Mã Xác Nhận Tài Khoản");
+//            msg.setSubject();
             msg.setRecipient(Message.RecipientType.TO, new InternetAddress(email));
             msg.setContent(" Mã xác nhận tài khoản của bạn : " + code, "text/html");
+//            msg.setContent("<h1>Đây là mesage thật sự</h1>",
+//                            "text/html" );
+            msg.setSubject("Mã Xác Nhận Tài Khoản", "UTF-8");
+            msg.setText("Mã xác nhận tài khoản của bạn : " + code, "UTF-8");
             Transport.send(msg);
         } catch (Exception ex) {
             ex.printStackTrace();

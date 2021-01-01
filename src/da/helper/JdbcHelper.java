@@ -17,15 +17,15 @@ import java.sql.SQLException;
  */
 public class JdbcHelper {
     BCrypt bcrypt;
-//    private static String driver = "org.postgresql.Driver";
-//    private static String dburl = "jdbc:postgresql://localhost:5432/fpt";
-//    private static String username = "postgres";
-//    private static String password = "tuan123";   
-    
     private static String driver = "org.postgresql.Driver";
-    private static String dburl = "jdbc:postgresql://35.213.128.4:5432/datn";
-    private static String username = "huyenntn";
-    private static String password = "huyenntnph08193";
+    private static String dburl = "jdbc:postgresql://localhost:5432/fpt";
+    private static String username = "postgres";
+    private static String password = "tuan123";   
+    
+//    private static String driver = "org.postgresql.Driver";
+//    private static String dburl = "jdbc:postgresql://35.213.128.4:5432/datn";
+//    private static String username = "huyenntn";
+//    private static String password = "huyenntnph08193";
 
     static {
         try {

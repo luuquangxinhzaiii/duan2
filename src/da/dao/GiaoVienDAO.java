@@ -128,4 +128,9 @@ public class GiaoVienDAO {
         JdbcHelper.executeUpdate(sql, model.getHoTen(),model.getGioiTinh(), ngaysinh,model.getDienThoai(),model.getCmnd(),model.getDiaChi(),model.getMaGV());
     }
 
+    public List<GiaoVien> getall() {
+        String sql = "select * from giaovien";
+        return select(sql);
+    }
+
 }

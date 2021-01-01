@@ -28,7 +28,7 @@ public class write_PDF {
             System.out.println("start 1");
             String html = "";
             Pdfcrowd.HtmlToPdfClient client
-                    = new Pdfcrowd.HtmlToPdfClient("kien5620", "c94142e867c91420c25d9c7d52438b35");
+                    = new Pdfcrowd.HtmlToPdfClient("adarkness", "b1b0e60d5e815bfe5d574969f0d96667");
             HocSinhDAO hsDAO = new HocSinhDAO();
             ResultSet rs = hsDAO.selectWithMaHSandNH(Mahocsinh, nienhoc);
             if (rs.next()) {

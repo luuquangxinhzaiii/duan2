@@ -80,7 +80,7 @@ public class diemDAO {
     public ResultSet LoadDataGrade(String maLop, String maMon, Boolean ki) {
         String sql = "SELECT hocsinh.mahocsinh, hocsinh.hoten, hocsinh.gioitinh, diemmieng1, diemmieng2, diemmieng3, diem15phut1, diem15phut2, diem15phut3, diem1tiet1, diem1tiet2, diemthi, diemtbm "
                 + " FROM diem inner join hocsinh on diem.hocsinh_id = hocsinh.id inner join phancong on diem.phancong_maphancong = phancong.maphancong inner join mon on phancong.mon_mamon = mon.mamon INNER JOIN lophoc on phancong.lop_id = lophoc.id"
-                + " where lophoc.tenlop = ? and mon.ten_mon = ? and phancong.hocki = ?";
+                + " where lophoc.tenlop = ? and mon.ten_mon = ? and phancong.hocki = ? order by hocsinh.mahocsinh asc";
         try {
             PreparedStatement ps = Jdbc.prepareStatement(sql);
             ps.setString(1, maLop);

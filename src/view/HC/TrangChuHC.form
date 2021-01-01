@@ -547,7 +547,7 @@
               <Font name="Times New Roman" size="14" style="1"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="T&#xea;n gi&#xe1;o vi&#xea;n"/>
+            <Property name="text" type="java.lang.String" value="&#x110;&#xc0;O T&#x1ea0;O"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="lbl_Gv">
@@ -573,6 +573,9 @@
               <Color id="Hand Cursor"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel102MouseClicked"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -584,7 +587,7 @@
       </Properties>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-          <AbsoluteConstraints x="230" y="50" width="1130" height="40"/>
+          <AbsoluteConstraints x="220" y="50" width="1130" height="40"/>
         </Constraint>
       </Constraints>
 
@@ -1682,7 +1685,7 @@
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" alignment="0" attributes="0">
-                                          <Component id="btn_capNhat2" min="-2" pref="141" max="-2" attributes="0"/>
+                                          <Component id="btn_lop_themmoi" min="-2" pref="141" max="-2" attributes="0"/>
                                           <EmptySpace type="separate" max="-2" attributes="0"/>
                                           <Component id="btn_capNhat3" min="-2" pref="152" max="-2" attributes="0"/>
                                       </Group>
@@ -1701,7 +1704,7 @@
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="btn_capNhat2" alignment="3" min="-2" pref="45" max="-2" attributes="0"/>
+                                      <Component id="btn_lop_themmoi" alignment="3" min="-2" pref="45" max="-2" attributes="0"/>
                                       <Component id="btn_capNhat3" alignment="3" min="-2" pref="45" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -1715,7 +1718,7 @@
                         </DimensionLayout>
                       </Layout>
                       <SubComponents>
-                        <Component class="javax.swing.JButton" name="btn_capNhat2">
+                        <Component class="javax.swing.JButton" name="btn_lop_themmoi">
                           <Properties>
                             <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                               <Image iconType="3" name="/img/icons8-user-account-32.png"/>
@@ -1723,7 +1726,7 @@
                             <Property name="text" type="java.lang.String" value="Th&#xea;m m&#x1edb;i"/>
                           </Properties>
                           <Events>
-                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_capNhat2ActionPerformed"/>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_lop_themmoiActionPerformed"/>
                           </Events>
                         </Component>
                         <Component class="javax.swing.JButton" name="btn_capNhat3">
@@ -2788,6 +2791,7 @@
                               <Group type="103" groupAlignment="1" max="-2" attributes="0">
                                   <Component id="Nhap_excel_hs" max="32767" attributes="0"/>
                                   <Component id="Btn_Xuat_Excel_HS" pref="331" max="32767" attributes="0"/>
+                                  <Component id="Nhap_excel_hs1" alignment="0" max="32767" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" pref="59" max="-2" attributes="0"/>
                           </Group>
@@ -2797,10 +2801,12 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="109" max="-2" attributes="0"/>
+                              <Component id="Nhap_excel_hs1" min="-2" pref="42" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="Nhap_excel_hs" min="-2" pref="42" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="Btn_Xuat_Excel_HS" min="-2" pref="36" max="-2" attributes="0"/>
-                              <EmptySpace pref="185" max="32767" attributes="0"/>
+                              <EmptySpace pref="125" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -2824,6 +2830,15 @@
                       </Properties>
                       <Events>
                         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Nhap_excel_hsActionPerformed"/>
+                      </Events>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="Nhap_excel_hs1">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Form nh&#x1ead;p Excel"/>
+                        <Property name="toolTipText" type="java.lang.String" value=""/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="Nhap_excel_hs1ActionPerformed"/>
                       </Events>
                     </Component>
                   </SubComponents>
@@ -2951,38 +2966,38 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="642" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Group type="102" alignment="1" attributes="0">
-                              <EmptySpace min="0" pref="277" max="32767" attributes="0"/>
-                              <Component id="btn_updateSubject" min="-2" pref="198" max="-2" attributes="0"/>
-                              <EmptySpace min="-2" pref="49" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <Component id="btn_mon_themmoi" min="-2" pref="203" max="-2" attributes="0"/>
+                              <EmptySpace pref="74" max="32767" attributes="0"/>
+                              <Component id="btn_mon_capnhat" min="-2" pref="198" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="69" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" attributes="0">
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="jLabel68" alignment="0" min="-2" pref="91" max="-2" attributes="0"/>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="jLabel63" max="32767" attributes="0"/>
-                                      <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" attributes="0">
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="jLabel68" alignment="0" min="-2" pref="91" max="-2" attributes="0"/>
+                                          <Component id="jLabel38" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="jLabel39" alignment="0" pref="206" max="32767" attributes="0"/>
+                                          <Component id="jLabel37" alignment="0" max="32767" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="lbl_timkiem" pref="266" max="32767" attributes="0"/>
+                                          <Component id="lbl_tenMon" alignment="0" pref="266" max="32767" attributes="0"/>
+                                          <Component id="cbo_hinhthuc" alignment="0" pref="266" max="32767" attributes="0"/>
+                                          <Component id="cbo_Khoi" alignment="0" pref="266" max="32767" attributes="0"/>
+                                      </Group>
                                   </Group>
-                                  <Component id="jLabel38" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="jLabel39" alignment="0" pref="206" max="32767" attributes="0"/>
-                                  <Component id="jLabel37" alignment="0" max="32767" attributes="0"/>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="btn_reloadSubject" min="-2" pref="203" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="74" max="-2" attributes="0"/>
+                                      <Component id="btn_mon_xoamon" min="-2" pref="203" max="-2" attributes="0"/>
+                                  </Group>
                               </Group>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                  <Component id="lbl_timkiem" pref="266" max="32767" attributes="0"/>
-                                  <Component id="lbl_tenMon" alignment="0" pref="266" max="32767" attributes="0"/>
-                                  <Component id="cbo_hinhthuc" alignment="0" pref="266" max="32767" attributes="0"/>
-                                  <Component id="cbo_Khoi" alignment="0" pref="266" max="32767" attributes="0"/>
-                                  <Component id="lbl_mamon" alignment="0" max="32767" attributes="0"/>
-                              </Group>
-                              <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="60" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                  </Group>
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="btn_reloadSubject" min="-2" pref="198" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="178" max="-2" attributes="0"/>
                   </Group>
                   <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
@@ -2992,13 +3007,6 @@
                               <Component id="jScrollPane8" alignment="0" min="-2" pref="595" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace pref="572" max="32767" attributes="0"/>
-                      </Group>
-                  </Group>
-                  <Group type="103" rootIndex="2" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="644" max="-2" attributes="0"/>
-                          <Component id="btn_addSubject" min="-2" pref="203" max="-2" attributes="0"/>
-                          <EmptySpace pref="339" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -3011,31 +3019,32 @@
                           <Component id="jLabel37" alignment="3" min="-2" pref="39" max="-2" attributes="0"/>
                           <Component id="lbl_timkiem" alignment="3" min="-2" pref="39" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="jLabel63" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
-                          <Component id="lbl_mamon" alignment="3" min="-2" pref="37" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel38" alignment="3" min="-2" pref="39" max="-2" attributes="0"/>
                           <Component id="lbl_tenMon" alignment="3" min="-2" pref="39" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel39" alignment="3" min="-2" pref="39" max="-2" attributes="0"/>
                           <Component id="cbo_hinhthuc" alignment="3" min="-2" pref="39" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel68" alignment="3" min="-2" pref="39" max="-2" attributes="0"/>
                           <Component id="cbo_Khoi" alignment="3" min="-2" pref="39" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
-                      <Component id="btn_updateSubject" min="-2" pref="42" max="-2" attributes="0"/>
-                      <EmptySpace pref="71" max="32767" attributes="0"/>
-                      <Component id="btn_reloadSubject" min="-2" pref="42" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="btn_mon_capnhat" alignment="3" min="-2" pref="42" max="-2" attributes="0"/>
+                          <Component id="btn_mon_themmoi" alignment="3" min="-2" pref="42" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="btn_reloadSubject" alignment="3" min="-2" pref="42" max="-2" attributes="0"/>
+                          <Component id="btn_mon_xoamon" alignment="3" min="-2" pref="42" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace pref="91" max="32767" attributes="0"/>
                   </Group>
                   <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
@@ -3044,13 +3053,6 @@
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jScrollPane8" min="-2" pref="539" max="-2" attributes="0"/>
                           <EmptySpace pref="22" max="32767" attributes="0"/>
-                      </Group>
-                  </Group>
-                  <Group type="103" rootIndex="2" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="1" attributes="0">
-                          <EmptySpace pref="451" max="32767" attributes="0"/>
-                          <Component id="btn_addSubject" min="-2" pref="42" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="142" max="-2" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -3124,14 +3126,6 @@
             </Component>
             <Component class="javax.swing.JTextField" name="lbl_timkiem">
             </Component>
-            <Component class="javax.swing.JLabel" name="jLabel63">
-              <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Tahoma" size="16" style="1"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="M&#xe3; m&#xf4;n :"/>
-              </Properties>
-            </Component>
             <Component class="javax.swing.JLabel" name="jLabel38">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -3179,7 +3173,7 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_reloadSubjectActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="btn_addSubject">
+            <Component class="javax.swing.JButton" name="btn_mon_themmoi">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/img/icons8_add_user_male_32px.png"/>
@@ -3192,10 +3186,10 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_addSubjectActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_mon_themmoiActionPerformed"/>
               </Events>
             </Component>
-            <Component class="javax.swing.JButton" name="btn_updateSubject">
+            <Component class="javax.swing.JButton" name="btn_mon_capnhat">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
                   <Image iconType="3" name="/img/icons8_update_file_32px.png"/>
@@ -3208,7 +3202,7 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_updateSubjectActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_mon_capnhatActionPerformed"/>
               </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel39">
@@ -3232,10 +3226,21 @@
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JLabel" name="lbl_mamon">
+            <Component class="javax.swing.JButton" name="btn_mon_xoamon">
               <Properties>
-                <Property name="text" type="java.lang.String" value="auto generate"/>
+                <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                  <Image iconType="3" name="/img/icons8-cancel-delete-32.png"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="X&#xf3;a"/>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                    <LineBorder/>
+                  </Border>
+                </Property>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_mon_xoamonActionPerformed"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

@@ -55,6 +55,11 @@ public class NamHocDAO {
         return list;
 
     }
+    
+    public List<NamHoc> checkTrangThai(){
+        String sql = "SELECT * from namhoc where trangthai = true";
+        return select(sql);
+    }
 
     public List<NamHoc> select() {
         String sql = "select * from namhoc where trangthai = true";
@@ -101,11 +106,11 @@ public class NamHocDAO {
         }
     }
 
-    public void ketthuc(NamHoc model) {
+    public void ketthuc(UUID manamhoc) {
         String sql
-                = "UPDATE namhoc SET trangthai=false WHERE  manamhoc =  ?";
+                = "UPDATE namhoc SET trangthai=false WHERE manamhoc =  ?";
         JdbcHelper.executeUpdate(sql,
-                model.getMaNamHoc());
+                manamhoc);
     }
 
     

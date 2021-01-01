@@ -96,7 +96,7 @@ public class PhanCongDAO {
     }
 
     public ResultSet select4(String mapc) {
-        String sql = "select pc.mapc,pc.malop,gv.hoten,m.tenmon,pc.vaitro,pc.magiaovien from phancong as pc join mon as m on pc.mamon=m.mamon join giaovien as gv on pc.magiaovien=gv.magiaovien join namhoc as nh on pc.manamhoc=nh.manamhoc and pc.mapc=?";
+        String sql = "select pc.mapc,pc.malop,gv.hoten,m.tenmon,pc.vaitro,pc.magiaovien from phancong as pc join mon as m on pc.mon_mamon=m.mamon join giaovien as gv on pc.giaovien_id=gv.id join namhoc as nh on pc.namhoc_manamhoc=nh.manamhoc and pc.mapc=?";
         try {
             PreparedStatement ps = Jdbc.prepareStatement(sql);
             ps.setString(1, mapc);

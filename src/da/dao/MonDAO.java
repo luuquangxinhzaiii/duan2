@@ -142,4 +142,16 @@ public class MonDAO {
         }
     }
 
+    public Mon findByTenMonvaKhoi(String tenmon, String tenkhoi) {
+        String sql = "select * from mon join khoi on mon.khoi_makhoi = khoi.makhoi where ten_mon=? and khoi.tenkhoi=?";
+        List<Mon> list = select(sql, tenmon,tenkhoi);
+        return list.size()>0 ? list.get(0) : null ;
+    }
+
+    public void deletesubject(UUID maMon) {
+        String sql = "delete from mon where mamon=?";
+        JdbcHelper.executeUpdate(sql, maMon);
+        
+    }
+
 }
